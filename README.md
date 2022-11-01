@@ -3,7 +3,7 @@ Title - ArcadeMania
 Team Members -
 1. Mayur Prabhakar Sangale    Email - sangale.m@northeastern.edu
 2. Harika Ramidi    Email - ramidi.h@northeastern.edu
-3.
+3. Divya Kharche     Email: kharche.d@northeastern.edu
 4.
 
 
@@ -103,6 +103,15 @@ User can view the recently played games as well.
     * Login to the website 
     * Expand the left pane 
     * View the 3 recently played games
+
+---------------------------------------------------------------------------------------------------------------------
+
+### Games:
+1. Car Crash
+2. Tic-tac-toe
+3. Memory card
+4. Connect4
+5. Minesweeper
 
 ---------------------------------------------------------------------------------------------------------------------
 
