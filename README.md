@@ -115,3 +115,9 @@ User can view the recently played games as well.
 - Search a game
 - More games to be added to the website
 - Add and delete games for admin
+
+----------------------------------------------------------------------------------------------------------------------
+### References:
+1. https://nextjs.org/docs
+2. https://www.webtips.dev/javascript-game-ideas
+3. https://www.mirkosertic.de/blog/2013/04/domain-driven-design-example/
