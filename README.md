@@ -130,3 +130,12 @@ User can view the recently played games as well.
 1. https://nextjs.org/docs
 2. https://www.webtips.dev/javascript-game-ideas
 3. https://www.mirkosertic.de/blog/2013/04/domain-driven-design-example/
+
+----------------------------------------------------------------------------------------------------------------------
+
+Class diagram:
+
+![Class Diagram](https://user-images.githubusercontent.com/113252176/199360531-e488671f-7673-486e-a3ea-590b57a6c8d5.png)
+
+----------------------------------------------------------------------------------------------------------------------
+
