@@ -13,7 +13,7 @@
 
 ## Project Description
 
-* The idea is to develop a website which will allow user to select and play games according to their choice.
+* The idea is to develop a website with multiple games which will allow user to select and play games according to their choice.
 * Different types of games will be available on the portal.
 * User will have to signup & login to play the games.
 * Scores for each game will be stored & we will maintain a Leaderboard displaying user performace across the games.
@@ -26,10 +26,11 @@
 
 1. Login
 2. Sign Up
-3. Leaderboard
-4. Favourites
-5. Recently viewed
-6. Most liked games
+3. Games
+4. Leaderboard
+5. Favourites
+6. Recently viewed
+7. Most liked games
 
 -----------------------------------------------------------------------------------------------------------------
 
@@ -100,6 +101,7 @@
     * game will be opened in a container on the top left corner
     * user can see the help button in bottom
     * Click on help button & it will direct to the help page
+
 5. As a user I should be able to play a game
     * Login to the website
     * View the games
@@ -133,10 +135,39 @@
     * Click on save
     * Profile data should be updated and displayed the updated content on reload
 
-10. As a user I should be able to view recently played games
+10. As a user I should be able to view recently played games on left pane
     * Login to the website
     * Expand the left pane
-    * View the 3 recently played games
+    * View recently played games section with the 3 most recently played games
+
+11. As a user I should be able to view My favourite games on left pane
+    * Login to the website
+    * Expand the left pane
+    * View the favourite games section with 3 favourite games
+
+12. As a user I should be able to navigate to favourites page from left pane
+	* Login to the website
+    * Expand the left pane
+    * click on the the favourite games section header
+	* User should be navigated to the favourites page
+
+13. As a user I should be able to view the global leaderboard
+	* Login to the website
+    * click on the leaderboard
+    * global leaderboard should be visible on a right pane which slides in immediately after the click is performed
+
+14. As a user I should be able to see Most liked/Played games
+	* Login to the website
+    * On the Homepage, there should be a section which will have most played games
+
+## Other Stories
+
+11. Develop Car Crash game
+12. Develop Tic-tac-toe game
+13. Develop Memory card game
+14. Develop Connect4 game
+15. Develop Minesweeper game
+
 
 -----------------------------------------------------------------------------------------------------------------
 
