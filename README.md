@@ -38,6 +38,7 @@
 
 ![Domain Diagram](diagrams/Domain.png)
 ![Subdomain & Context Diagram](diagrams/Domain%20Context.png)
+![Domain Layers](diagrams/Arch.png)
 
 -----------------------------------------------------------------------------------------------------------------
 
@@ -146,28 +147,27 @@
     * View the favourite games section with 3 favourite games
 
 12. As a user I should be able to navigate to favourites page from left pane
-	* Login to the website
+    * Login to the website
     * Expand the left pane
     * click on the the favourite games section header
-	* User should be navigated to the favourites page
+    * User should be navigated to the favourites page
 
 13. As a user I should be able to view the global leaderboard
-	* Login to the website
+    * Login to the website
     * click on the leaderboard
     * global leaderboard should be visible on a right pane which slides in immediately after the click is performed
 
 14. As a user I should be able to see Most liked/Played games
-	* Login to the website
+    * Login to the website
     * On the Homepage, there should be a section which will have most played games
 
-## Other Stories
+### Other Stories
 
-11. Develop Car Crash game
-12. Develop Tic-tac-toe game
-13. Develop Memory card game
-14. Develop Connect4 game
-15. Develop Minesweeper game
-
+1. Develop Car Crash game
+2. Develop Tic-tac-toe game
+3. Develop Memory card game
+4. Develop Connect4 game
+5. Develop Minesweeper game
 
 -----------------------------------------------------------------------------------------------------------------
 
