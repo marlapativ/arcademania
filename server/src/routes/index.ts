@@ -6,7 +6,7 @@ import swaggerDoc from './swagger.json';
 
 const routes = (app: Express) => {
     // Signup Routes
-    app.use('/', authRouter);
+    app.use('/api/v1', authRouter);
 
     // Setting up swagger
     setupSwagger(app);
