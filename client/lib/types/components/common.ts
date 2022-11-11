@@ -1,6 +1,5 @@
-import React from "react";
+import type { ReactChildrenProps } from '../globals';
 
-export interface Side {
-    direction: 'left' | 'right';
-    children?: React.ReactNode;
-}
+export interface GameInfoProps extends ReactChildrenProps {
+    id: string;
+};
