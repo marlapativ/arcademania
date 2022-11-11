@@ -10,7 +10,6 @@ export default function Home() {
         <meta name="description" content="ArcadeMania is a an arcade of multiple games" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar/>
       <main className={styles.main}>
         <h4 className={styles.description}>
           <span>Most Recently played games</span>
