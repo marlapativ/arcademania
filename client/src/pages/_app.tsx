@@ -7,6 +7,7 @@ import defaultSEOConfig from "../../next-seo.config";
 import { Chakra } from "lib/components/Chakra";
 import Layout from "lib/layout";
 import "lib/styles/globals.css";
+import NavBar from "lib/components/common/NavBar/NavBar";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
