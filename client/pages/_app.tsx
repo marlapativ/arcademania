@@ -5,8 +5,6 @@ import { ChakraProvider } from '@chakra-ui/react'
 import theme from './theme'
 
 export default function App({ Component, pageProps }: AppProps) {
-  // Temporary fix to default to dark theme
-  localStorage.setItem('chakra-ui-color-mode', 'dark');
 
   return (
     <ChakraProvider theme={theme}>
