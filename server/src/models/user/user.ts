@@ -10,7 +10,11 @@ const schemaOptions = {
         updatedAt: 'lastModifiedDate'
     },
     toJSON: {
-        virtuals: true
+        virtuals: true,
+        transform (doc: mongoose.Document, ret: IUser) {
+            delete ret.password;
+            return ret;
+        }
     },
     toObject: {
         virtuals: true

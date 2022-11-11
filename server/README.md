@@ -1,7 +1,4 @@
-# Assignment 8 - Todo Express Server
-
-NUID: 002756088
-Name: Marlapati Venkata Naga Sai Teja
+# ArcadeManina API Server
 
 ## Requirements
 
@@ -41,4 +38,4 @@ Install dependencies:
 
 Start the server:
 
-    npm start
+    npm run start
