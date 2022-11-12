@@ -1,1 +1,4 @@
 /* Global Styling here */
+.asideLeftPane{
+    position: fixed;
+}

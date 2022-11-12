@@ -18,8 +18,9 @@ const Layout = ({ children }: LayoutProps) => {
     <Box margin="0 auto" transition="0.5s ease-out">
       <Box>
         <Header />
-        <Box as="main">
-          <SideBar/>
+        <aside className="asideLeftPane"><SideBar/></aside>
+        <Box as="main" display="inline-block">
+          {/* <SideBar/> */}
           {children}
         </Box>
         <Footer />
