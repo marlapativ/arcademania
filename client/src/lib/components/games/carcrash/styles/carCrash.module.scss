@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #34adff;
+    background-image: -webkit-linear-gradient(45deg,#7c7e8c 45%, #323333 55%);
+    min-height: 800px;
+
+    .startBtn{
+        background-color: aqua;
+        padding: 0.3rem 2rem;
+        font-weight: bold;
+        border: none;
+        margin: 1% 47% 0;
+        cursor: pointer;
+    }
+
+    .game{
+        height: 780px;
+        width: 600px;
+        border: 1px solid black;
+        margin: 1rem auto;
+        background-image: url("../images/road.png");
+        background-size: contain;
+        overflow: hidden;
+        .blueCar{
+            height: 100px;
+            width: 130px;
+            position: relative;
+            top: 5px;
+            left: 93px;
+            text-align: center;
+            animation: mover 1s linear infinite;
+            img{
+                height: 100px;
+            }
+        }
+        .redCar{
+            height: 100px;
+            width: 130px;
+            position: relative;
+            top: 350px;
+            left: 93px;
+            text-align: center;
+            img{
+                height: 100px;
+            }
+        }
+    }
+    .resultCard{
+        height: 200px;
+        width: 400px;
+        background-color: rgb(231,105,105);
+        margin: 1rem auto;
+        border-radius: 20px;
+        font-size: 30px;
+        text-align: center;
+        color: white;
+        display: none;
+        .score{
+            font-size: 2.2rem;
+            color: goldenrod;
+        }
+        .restartBtn{
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: none;
+            background-color: black;
+            color: cyan;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 25px;
+            text-transform: uppercase;
+        }
+    }
+}
+
+@keyframes mover {
+    0%{
+        top: -1px;
+    }
+    100%{
+        top: 781px;
+    }
+}

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from 'next/image';
-import styles from '../../styles/Home.module.css';
 import { Box, Button, Flex, Text, Stack, useBreakpointValue, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
