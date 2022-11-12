@@ -1,16 +1,14 @@
 import Link from "next/link";
 import Image from 'next/image';
 import { Box, Button, Flex, Text, Stack, useBreakpointValue, useColorMode, useColorModeValue } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import ThemeToggle from "./ThemeToggle";
 
 const NavBar = () => {
-  const { colorMode, toggleColorMode } = useColorMode()
   return (
     <header>
       <nav>
 
         <Box>
-
           <Flex
             bg={useColorModeValue('white', 'gray.800')}
             color={useColorModeValue('gray.600', 'white')}
@@ -44,9 +42,7 @@ const NavBar = () => {
               justify={'flex-end'}
               direction={'row'}
               spacing={4}>
-              <Button onClick={toggleColorMode}>
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-              </Button>
+              <ThemeToggle />
               <Button variant='outline'> Sign In </Button>
               <Button
                 variant='outline'
