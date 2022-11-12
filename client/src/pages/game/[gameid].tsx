@@ -5,7 +5,7 @@ import GameDashboard from "lib/components/GameDashboard/GameDashboard";
 const GamePage = () => {
   const router = useRouter();
   const { gameid } = router.query;
-  const id = gameid as string;
+  const id = parseInt(gameid as string, 10);
   return <GameDashboard id={id} />;
 };
 

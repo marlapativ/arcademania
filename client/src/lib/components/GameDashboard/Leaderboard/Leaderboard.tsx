@@ -16,6 +16,7 @@ const elements: LeaderboardItemProps[] = [
     id: 1,
     name: "Teja",
     score: 3400,
+    icon: "https://s.gravatar.com/avatar/0fd4415ee5dca68c65ee8171cbeb4d24?s=80",
   },
   {
     id: 2,
@@ -23,32 +24,35 @@ const elements: LeaderboardItemProps[] = [
     score: 2400,
   },
   {
-    id: 1,
+    id: 3,
+    name: "Veronica",
+    score: 1400,
+    icon: "https://i.pravatar.cc/200",
+  },
+  {
+    id: 4,
+    name: "Vello",
+    score: 1400,
+    icon: "https://i.pravatar.cc/300",
+  },
+  {
+    id: 5,
+    name: "Vello",
+    score: 1400,
+    icon: "https://i.pravatar.cc/400",
+  },
+  {
+    id: 6,
     name: "Vello",
     score: 1400,
   },
   {
-    id: 1,
+    id: 7,
     name: "Vello",
     score: 1400,
   },
   {
-    id: 1,
-    name: "Vello",
-    score: 1400,
-  },
-  {
-    id: 1,
-    name: "Vello",
-    score: 1400,
-  },
-  {
-    id: 1,
-    name: "Vello",
-    score: 1400,
-  },
-  {
-    id: 1,
+    id: 8,
     name: "Vello",
     score: 1400,
   },
@@ -62,7 +66,7 @@ const Leaderboard: React.FC = () => {
   }, []);
 
   return (
-    <Center p={2}>
+    <Center p={1}>
       <Box
         maxW="445px"
         maxH="80vh"
@@ -70,7 +74,7 @@ const Leaderboard: React.FC = () => {
         bg={useColorModeValue("gray.300", "gray.500")}
         boxShadow="2xl"
         rounded="md"
-        p={4}
+        p={{ base: "2", sm: "2", md: "4" }}
         overflow="hidden"
       >
         <Stack>
@@ -81,7 +85,7 @@ const Leaderboard: React.FC = () => {
             letterSpacing={1.1}
             fontSize="xl"
             fontFamily="body"
-            p={2}
+            p={{ base: "1", sm: "1", md: "2" }}
           >
             Top Players
           </Heading>

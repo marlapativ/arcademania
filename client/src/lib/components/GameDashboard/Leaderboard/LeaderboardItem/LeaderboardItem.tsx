@@ -3,13 +3,12 @@ import {
   Center,
   Text,
   Stack,
-  Avatar,
   Icon,
   useColorModeValue,
-  VisuallyHidden,
 } from "@chakra-ui/react";
 import { RiTrophyFill } from "react-icons/ri";
 
+import GameAvatar from "../../../User/GameAvatar/GameAvatar";
 import type {
   LeaderboardItemContainerProps,
   LeaderboardItemProps,
@@ -40,16 +39,17 @@ const LeaderboardItem: React.FC<LeaderboardItemProps> = ({
         px={6}
         overflow="hidden"
       >
-        <VisuallyHidden>{id}</VisuallyHidden>
         <Stack py={4} direction="row" justifyContent="space-between">
           <Stack direction="row" align="center">
-            <Avatar name={name} src={icon} />
+            <GameAvatar id={id} name={name} icon={icon} />
             <Text fontWeight={600}>{name}</Text>
           </Stack>
           <Stack direction="row" spacing={2} fontSize="2xl" alignItems="center">
-            <Icon alignItems="center">
-              <RiTrophyFill color="#ffab20" />
-            </Icon>
+            {index === 0 ? (
+              <Icon alignItems="center">
+                <RiTrophyFill color="#ffab20" />
+              </Icon>
+            ) : null}
             <Text color="pink.500">{score}</Text>
           </Stack>
         </Stack>
@@ -65,7 +65,7 @@ const LeaderboardItemContainer: React.FC<LeaderboardItemContainerProps> = ({
     <>
       {users.map((e: LeaderboardItemProps, i: number) => (
         <LeaderboardItem
-          icon=""
+          icon={e.icon}
           id={e.id}
           index={i}
           name={e.name}

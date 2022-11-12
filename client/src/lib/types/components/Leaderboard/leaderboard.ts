@@ -1,8 +1,7 @@
-export type LeaderboardItemProps = {
-  icon?: string;
+import type { UserInfo } from "../common";
+
+export type LeaderboardItemProps = UserInfo & {
   index?: number;
-  id: number;
-  name: string;
   score: number;
 };
 

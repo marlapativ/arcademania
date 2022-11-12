@@ -1,18 +1,20 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 
-import type { GameInfoProps } from "../../types/components/common";
+import type { GameInfo, GameInfoProps } from "../../types/components/common";
 import { Minesweeper } from "../Game";
-import Leaderboard from "../Leaderboard/Leaderboard";
 
-const Game: React.FC<GameInfoProps> = ({ id }) => {
-  return (
-    <div>
-      {id === "1" ? <Minesweeper rows={8} columns={8} bombs={10} /> : null}
-    </div>
-  );
+import Leaderboard from "./Leaderboard/Leaderboard";
+
+const games: GameInfo = {
+  1: {
+    id: 1,
+    name: "Minesweeper",
+    component: <Minesweeper rows={8} columns={8} bombs={10} />,
+  },
 };
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
+  const game = games[id];
   return (
     <Box m={2}>
       <Grid
@@ -31,12 +33,15 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         fontWeight="bold"
       >
         <GridItem pl="2" bg="orange.300" area="header">
-          Header
+          {game?.name}
         </GridItem>
         <GridItem pl="2" bg="green.300" area="main">
-          <Game id={id} />
+          {game?.component}
         </GridItem>
-        <GridItem area="leaderboard" display={{ base: "none", md: "block" }}>
+        <GridItem
+          area="leaderboard"
+          display={{ base: "none", sm: "none", md: "block" }}
+        >
           <Leaderboard />
         </GridItem>
       </Grid>
