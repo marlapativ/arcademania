@@ -1,8 +1,7 @@
 {
-  "name": "nextarter-chakra",
+  "name": "arcademania",
   "version": "0.1.0",
   "private": true,
-  "author": "sozonome",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

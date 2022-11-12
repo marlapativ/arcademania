@@ -1,4 +1,4 @@
-const APP_NAME = "nextarter-chakra";
+const APP_NAME = "arcademania";
 
 const Meta = () => {
   return (
@@ -10,7 +10,7 @@ const Meta = () => {
       <meta name="format-detection" content="telephone=no" />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="theme-color" content="#FFFFFF" />
-
+      <meta name="msapplication-starturl" content="/" />
       <link rel="shortcut icon" href="/favicon.ico" />
 
       <link rel="manifest" href="/manifest.json" />

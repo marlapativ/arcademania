@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   Flex,
-  Text,
+  Heading,
   Stack,
   useBreakpointValue,
   useColorModeValue,
@@ -28,7 +28,11 @@ const NavBar = () => {
             borderColor={useColorModeValue("gray.200", "gray.900")}
             align="center"
           >
-            <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+            <Flex
+              flex={{ base: 1 }}
+              justify={{ base: "center", md: "start" }}
+              alignItems="center"
+            >
               <Link href="/">
                 <Image
                   src="/images/logo.png"
@@ -38,7 +42,7 @@ const NavBar = () => {
                 />
               </Link>
               <Link href="/">
-                <Text
+                <Heading
                   size="lg"
                   marginLeft="2"
                   textAlign={useBreakpointValue({ base: "center", md: "left" })}
@@ -46,7 +50,7 @@ const NavBar = () => {
                   color={useColorModeValue("gray.800", "white")}
                 >
                   ArcadeMania
-                </Text>
+                </Heading>
               </Link>
             </Flex>
 
@@ -57,7 +61,9 @@ const NavBar = () => {
               spacing={4}
             >
               <ThemeToggle />
-              <Button variant="outline"> Sign In </Button>
+              <Button variant="outline" id="signin">
+                Sign In
+              </Button>
               <Button
                 variant="outline"
                 display={{ base: "none", md: "inline-flex" }}
@@ -66,6 +72,7 @@ const NavBar = () => {
                 _hover={{
                   bg: "blue.300",
                 }}
+                id="signup"
               >
                 Sign Up
               </Button>
