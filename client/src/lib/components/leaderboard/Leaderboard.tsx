@@ -1,8 +1,5 @@
 const Leaderboard: React.FC = () => {
-    return (
-        <span>
-        </span>
-    );
+  return <span> Leaderboard </span>;
 };
 
 export default Leaderboard;

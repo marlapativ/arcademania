@@ -1,5 +1,3 @@
-import Minesweeper from './minesweeper/Minesweeper';
+import Minesweeper from "./minesweeper/Minesweeper";
 
-export {
-    Minesweeper
-}
+export { Minesweeper };

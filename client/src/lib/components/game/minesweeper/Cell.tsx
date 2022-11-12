@@ -1,28 +1,25 @@
-import { useState } from 'react';
-import { CellProps, MinesweeperCellValue, MinesweeperGameStatus } from './types';
+// import { useState } from "react";
 import styles from "./styles/Cell.module.scss";
+import type { CellProps } from "./types";
+import { MinesweeperCellValue } from "./types";
 
 const Cell: React.FC<CellProps> = ({
-    isHidden,
-    value,
-    coordinate,
-    unhide,
-    endGame
+  //   isHidden,
+  value,
+  coordinate,
+  unhide,
+  endGame,
 }) => {
-    const [isCellHidden, setIsCellHidden] = useState(true);
-    const cellClick = () => {
-        if (value == MinesweeperCellValue.BOMB) {
-            endGame();
-        }
-        else {
-            unhide(coordinate)
-        }
+  //   const [isCellHidden, setIsCellHidden] = useState(true);
+  const cellClick = () => {
+    if (value === MinesweeperCellValue.BOMB) {
+      endGame();
+    } else {
+      unhide(coordinate);
     }
+  };
 
-    return (
-        <span onClick={cellClick} className={`${styles.cell}`}>
-        </span>
-    );
+  return <div onClick={cellClick} className={`${styles.cell}`} />;
 };
 
 export default Cell;

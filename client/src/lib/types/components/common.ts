@@ -1,5 +1,5 @@
-import type { ReactChildrenProps } from '../globals';
+import type { ReactChildrenProps } from "../globals";
 
 export interface GameInfoProps extends ReactChildrenProps {
-    id: string;
-};
+  id: string;
+}
