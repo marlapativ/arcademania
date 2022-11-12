@@ -1,5 +1,5 @@
 import { GameInfoProps } from "../../types/components/common";
-import { Minesweeper } from "../game";
+import { Minesweeper } from "../games";
 import Leaderboard from "../leaderboard/Leaderboard";
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {

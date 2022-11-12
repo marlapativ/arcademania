@@ -6,11 +6,7 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <header>
-      <nav>
-
         <Box>
-
           <Flex
             bg={useColorModeValue('white', 'gray.800')}
             color={useColorModeValue('gray.600', 'white')}
@@ -21,7 +17,6 @@ const NavBar = () => {
             borderStyle={'solid'}
             borderColor={useColorModeValue('gray.200', 'gray.900')}
             align={'center'}>
-
 
             <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
               <Link href={"/"}>
@@ -47,21 +42,14 @@ const NavBar = () => {
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-              <Button variant='outline'> Sign In </Button>
-              <Button
-                variant='outline'
+              <Button variant='outline'
                 display={{ base: 'none', md: 'inline-flex' }} color={'white'} bg={'blue.400'}
                 _hover={{
                   bg: 'blue.300',
-                }}>
-                Sign Up
-              </Button>
-
+                }}> Sign In </Button>
             </Stack>
           </Flex>
         </Box>
-      </nav>
-    </header>
   );
 };
 

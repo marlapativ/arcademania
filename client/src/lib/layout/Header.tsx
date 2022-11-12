@@ -8,7 +8,6 @@ const Header = () => {
   return (
     <header>
       <LeftPane children={undefined}/>
-      <NavBar />
     </header>
   );
 };
