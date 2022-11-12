@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from 'next/image';
-import MenuItems from "../menu/MenuItems";
+import MenuItems from "./MenuItems";
 import { Box, Button, Flex, Text, HStack,IconButton, useBreakpointValue, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import {FiStar} from 'react-icons/fi';

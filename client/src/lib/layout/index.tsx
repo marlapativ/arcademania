@@ -3,17 +3,23 @@ import type { ReactNode } from "react";
 
 import Footer from "./Footer";
 import Header from "./Header";
+import SideBar from "../components/common/leftPane/LeftBar"
 
 type LayoutProps = {
   children: ReactNode;
 };
+
+export async function getStaticProps() {
+  return { props: { title: 'SideBar' } }
+}
 
 const Layout = ({ children }: LayoutProps) => {
   return (
     <Box margin="0 auto" transition="0.5s ease-out">
       <Box>
         <Header />
-        <Box as="main" marginY={22}>
+        <Box as="main">
+          <SideBar/>
           {children}
         </Box>
         <Footer />
