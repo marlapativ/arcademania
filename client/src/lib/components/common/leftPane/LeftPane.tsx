@@ -85,7 +85,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
               <Link href={"/"}>
-                <Image src="/images/logo.png" alt="Logo" width={32} height={24} />
+                <Image src="/images/logo.png" alt="Logo" width={32} />
               </Link>
               <Link href={"/"}>
                 <Text
