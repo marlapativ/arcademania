@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import GameDashboard from "lib/components/Dashboard/GameDashboard";
+import GameDashboard from "lib/components/GameDashboard/GameDashboard";
 
 const GamePage = () => {
   const router = useRouter();

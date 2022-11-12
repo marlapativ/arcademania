@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 import defaultSEOConfig from "../../next-seo.config";
-import { Chakra } from "lib/components/common/Chakra";
+import { Chakra } from "lib/components/Common/Chakra";
 import Layout from "lib/layout";
 import "lib/styles/globals.css";
 
