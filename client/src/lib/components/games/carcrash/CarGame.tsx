@@ -39,7 +39,6 @@ class CarGame extends React.Component{
     }
 }
     onKeyDown = (e: any) => {
-        e = e || window.event;
         switch (e.keyCode) {
               case 38:
                   this.setState({direction: 'UP'});

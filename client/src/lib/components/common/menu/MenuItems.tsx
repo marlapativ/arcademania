@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { AuthProps } from '../../../types/components/auth';
 import {
   Avatar,
@@ -13,15 +14,14 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Button
+  Button,
+  Stack,
+  useColorMode
 } from '@chakra-ui/react';
 import {
   FiChevronDown,
 } from 'react-icons/fi';
-
 const MenuItems: React.FC<AuthProps> = ({ isAuth }) => {
-  console.log(isAuth);
-  debugger
     if(isAuth){
         return <LoggedInMenu />
       } else {
@@ -72,6 +72,7 @@ const LoggedInMenu = () => {
 }
 
 const SignInMenu = () => {
+  const { colorMode, toggleColorMode } = useColorMode()
   return (
   <HStack
       flex={{ base: 1, md: 0 }}
@@ -79,7 +80,20 @@ const SignInMenu = () => {
       direction={'row'}
       spacing={4}>
       {
-      <Button variant='outline'> Sign In </Button>
+      <Stack
+      flex={{ base: 1, md: 0 }}
+      justify={'flex-end'}
+      direction={'row'}
+      spacing={4}>
+      <Button onClick={toggleColorMode}>
+        {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+      </Button>
+      <Button variant='outline'
+        display={{ base: 'none', md: 'inline-flex' }} color={'white'} bg={'blue.400'}
+        _hover={{
+          bg: 'blue.300',
+        }}> Sign In </Button>
+    </Stack>
       }
     </HStack>
   );

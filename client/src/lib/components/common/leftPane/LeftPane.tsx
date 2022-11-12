@@ -1,14 +1,10 @@
 import React, { ReactNode } from 'react';
-import MenuItems from '../menu/MenuItems';
 import NavBar from '../NavBar/NavBar';
 import {
   IconButton,
-  Avatar,
   Box,
   CloseButton,
   Flex,
-  HStack,
-  VStack,
   Icon,
   useColorModeValue,
   Link,
@@ -18,19 +14,13 @@ import {
   useDisclosure,
   BoxProps,
   FlexProps,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  Button
+  Image,
+  useBreakpointValue
 } from '@chakra-ui/react';
 import {
   FiHome,
   FiTrendingUp,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
+  FiMenu
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
@@ -93,9 +83,21 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+              <Link href={"/"}>
+                <Image src="/images/logo.png" alt="Logo" width={32} height={24} />
+              </Link>
+              <Link href={"/"}>
+                <Text
+                  size={'lg'}
+                  marginLeft="2"
+                  textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+                  fontFamily={'heading'}
+                  color={useColorModeValue('gray.800', 'white')}>
+                  ArcadeMania
+                </Text>
+              </Link>
+            </Flex>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -174,15 +176,6 @@ const MobileNav = ({ onOpen, isAuth, ...rest }: MobileProps) => {
         Logo
       </Text>
       <NavBar />
-      <HStack spacing={{ base: '0', md: '6' }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
-       <MenuItems isAuth={false} />
-      </HStack>
     </Flex>
   );
 };
