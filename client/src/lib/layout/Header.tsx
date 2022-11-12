@@ -1,11 +1,15 @@
 import { Box, Flex } from "@chakra-ui/react";
-import NavBar from "lib/components/common/NavBar/NavBar";
+import NavBar from "../components/common/NavBar/NavBar";
+import LeftPane from "../components/common/leftPane/LeftPane"
 
 import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   return (
-    <NavBar />
+    <header>
+      <LeftPane children={undefined}/>
+      <NavBar />
+    </header>
   );
 };
 

@@ -1,5 +1,4 @@
-import { SassArgumentList } from 'sass';
-import CarGame from '../../components/Games/CarCrash/CarGame'
+import CarGame from '../../components/games/carcrash/CarGame'
 
 export default function snakeGame(){
     return (
