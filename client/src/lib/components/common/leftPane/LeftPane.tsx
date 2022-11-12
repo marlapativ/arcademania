@@ -18,9 +18,9 @@ import {
   useBreakpointValue
 } from '@chakra-ui/react';
 import {
-  FiHome,
   FiTrendingUp,
-  FiMenu
+  FiMenu,
+  FiStar
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
@@ -30,8 +30,8 @@ interface LinkItemProps {
   icon: IconType;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Most Recently Played', icon: FiHome },
-  { name: 'Your Favourites', icon: FiTrendingUp },
+  { name: 'Most Recently Played', icon: FiTrendingUp },
+  { name: 'Your Favourites', icon: FiStar },
 ];
 
 export default function LeftPane({
