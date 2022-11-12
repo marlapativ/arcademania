@@ -85,9 +85,6 @@ const SignInMenu = () => {
       justify={'flex-end'}
       direction={'row'}
       spacing={4}>
-      <Button onClick={toggleColorMode}>
-        {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-      </Button>
       <Button variant='outline'
         display={{ base: 'none', md: 'inline-flex' }} color={'white'} bg={'blue.400'}
         _hover={{

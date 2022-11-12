@@ -41,7 +41,7 @@ export default function LeftPane({
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
@@ -59,10 +59,7 @@ export default function LeftPane({
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} isAuth={false} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        {children}
-      </Box>
+      {/* <MobileNav onOpen={onOpen} isAuth={false} /> */}
     </Box>
   );
 }
@@ -82,22 +79,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       pos="fixed"
       h="full"
       {...rest}>
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-              <Link href={"/"}>
-                <Image src="/images/logo.png" alt="Logo" width={32} />
-              </Link>
-              <Link href={"/"}>
-                <Text
-                  size={'lg'}
-                  marginLeft="2"
-                  textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-                  fontFamily={'heading'}
-                  color={useColorModeValue('gray.800', 'white')}>
-                  ArcadeMania
-                </Text>
-              </Link>
-            </Flex>
+      <Flex alignItems="center" mx="8" justifyContent="space-between">
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -175,7 +157,6 @@ const MobileNav = ({ onOpen, isAuth, ...rest }: MobileProps) => {
         fontWeight="bold">
         Logo
       </Text>
-      <NavBar />
     </Flex>
   );
 };

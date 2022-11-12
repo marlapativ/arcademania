@@ -7,6 +7,7 @@ import ThemeToggle from "./ThemeToggle";
 const Header = () => {
   return (
     <header>
+      <NavBar />
       <LeftPane children={undefined}/>
     </header>
   );
