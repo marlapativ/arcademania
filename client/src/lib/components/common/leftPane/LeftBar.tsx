@@ -1,5 +1,4 @@
 
-import type { ReactNode } from "react";
 import { Divider, Flex, IconButton } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiMenu, FiHome, FiClock, FiStar, FiPhone } from "react-icons/fi";
