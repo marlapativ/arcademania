@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { getLeaderboard } from "lib/services/leaderboard-service";
-import type { LeaderboardItemData } from "lib/types/components/leaderboard/leaderboard";
+import type { LeaderboardItemData } from "lib/types/components/leaderboard/leaderboard.types";
 
 import LeaderboardItemContainer from "./leaderboardItem/LeaderboardItem";
 

@@ -12,7 +12,7 @@ import GameAvatar from "../../../user/gameAvatar/GameAvatar";
 import type {
   LeaderboardItemContainerProps,
   LeaderboardItemData,
-} from "lib/types/components/leaderboard/leaderboard";
+} from "lib/types/components/leaderboard/leaderboard.types";
 
 const LeaderboardItem: React.FC<LeaderboardItemData> = ({
   id,

@@ -1,4 +1,4 @@
-import type { LeaderboardItemData } from "lib/types/components/leaderboard/leaderboard";
+import type { LeaderboardItemData } from "lib/types/components/leaderboard/leaderboard.types";
 
 export const getLeaderboard = async () => {
   //   function raiseAlert(err: Error) {
