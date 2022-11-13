@@ -4,7 +4,7 @@ import type {
   GameInfoCollection,
   GameInfoProps,
 } from "../../types/components/common";
-import { Minesweeper } from "../Game";
+import { Minesweeper, SnakeGame, CarGame } from "../Games";
 
 import GameBody from "./GameBody/GameBody";
 import GameFooter from "./GameFooter/GameFooter";
@@ -15,6 +15,16 @@ const games: GameInfoCollection = {
     id: 1,
     name: "Minesweeper",
     component: <Minesweeper rows={8} columns={8} bombs={10} />,
+  },
+  2: {
+    id: 2,
+    name: "Snake Game",
+    component: <SnakeGame />,
+  },
+  3: {
+    id: 3,
+    name: "Car Game",
+    component: <CarGame />,
   },
 };
 

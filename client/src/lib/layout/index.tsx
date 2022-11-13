@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
-import SideBar from "../components/common/leftPane/LeftBar";
+import SideBar from "../components/Common/LeftPane/LeftBar";
 
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
 
 type LayoutProps = {
   children: ReactNode;
