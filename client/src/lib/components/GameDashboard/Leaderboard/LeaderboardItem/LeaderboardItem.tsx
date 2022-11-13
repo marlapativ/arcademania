@@ -11,10 +11,10 @@ import { RiTrophyFill } from "react-icons/ri";
 import GameAvatar from "../../../User/GameAvatar/GameAvatar";
 import type {
   LeaderboardItemContainerProps,
-  LeaderboardItemProps,
+  LeaderboardItemData,
 } from "lib/types/components/Leaderboard/leaderboard";
 
-const LeaderboardItem: React.FC<LeaderboardItemProps> = ({
+const LeaderboardItem: React.FC<LeaderboardItemData> = ({
   id,
   icon,
   index,
@@ -63,7 +63,7 @@ const LeaderboardItemContainer: React.FC<LeaderboardItemContainerProps> = ({
 }) => {
   return (
     <>
-      {users.map((e: LeaderboardItemProps, i: number) => (
+      {users.map((e: LeaderboardItemData, i: number) => (
         <LeaderboardItem
           icon={e.icon}
           id={e.id}

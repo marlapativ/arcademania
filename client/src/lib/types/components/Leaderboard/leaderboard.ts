@@ -1,10 +1,10 @@
 import type { UserInfo } from "../common";
 
-export type LeaderboardItemProps = UserInfo & {
+export type LeaderboardItemData = UserInfo & {
   index?: number;
   score: number;
 };
 
 export type LeaderboardItemContainerProps = {
-  users: LeaderboardItemProps[];
+  users: LeaderboardItemData[];
 };
