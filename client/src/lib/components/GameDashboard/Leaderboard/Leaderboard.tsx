@@ -8,9 +8,9 @@ import {
 import { useEffect, useState } from "react";
 
 import { getLeaderboard } from "lib/services/leaderboard-service";
-import type { LeaderboardItemData } from "lib/types/components/Leaderboard/leaderboard";
+import type { LeaderboardItemData } from "lib/types/components/leaderboard/leaderboard";
 
-import LeaderboardItemContainer from "./LeaderboardItem/LeaderboardItem";
+import LeaderboardItemContainer from "./leaderboardItem/LeaderboardItem";
 
 const Leaderboard: React.FC = () => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardItemData[]>([]);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import type { CellProps } from "lib/types/components/Games/minesweeper.types";
-import { MinesweeperCellValue } from "lib/types/components/Games/minesweeper.types";
+import type { CellProps } from "lib/types/components/games/minesweeper.types";
+import { MinesweeperCellValue } from "lib/types/components/games/minesweeper.types";
 
 import styles from "./Cell.module.scss";
 

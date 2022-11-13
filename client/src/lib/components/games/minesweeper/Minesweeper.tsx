@@ -6,10 +6,10 @@ import type {
   MinesweeperCoordindate,
   MinesweeperMessage,
   MinesweeperCellData,
-} from "lib/types/components/Games/minesweeper.types";
-import { MinesweeperCellValue } from "lib/types/components/Games/minesweeper.types";
+} from "lib/types/components/games/minesweeper.types";
+import { MinesweeperCellValue } from "lib/types/components/games/minesweeper.types";
 
-import MinesweeperCell from "./MinesweeperCell/MinesweeperCell";
+import MinesweeperCell from "./minesweeperCell/MinesweeperCell";
 import styles from "./styles/Minesweeper.module.scss";
 
 const setBombsRandomly = (

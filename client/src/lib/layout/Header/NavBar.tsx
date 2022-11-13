@@ -64,18 +64,6 @@ const NavBar = () => {
               <Button variant="outline" id="signin">
                 Sign In
               </Button>
-              <Button
-                variant="outline"
-                display={{ base: "none", md: "inline-flex" }}
-                color="white"
-                bg="blue.400"
-                _hover={{
-                  bg: "blue.300",
-                }}
-                id="signup"
-              >
-                Sign Up
-              </Button>
             </Stack>
           </Flex>
         </Box>

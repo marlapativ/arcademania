@@ -8,11 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { RiTrophyFill } from "react-icons/ri";
 
-import GameAvatar from "../../../User/GameAvatar/GameAvatar";
+import GameAvatar from "../../../user/gameAvatar/GameAvatar";
 import type {
   LeaderboardItemContainerProps,
   LeaderboardItemData,
-} from "lib/types/components/Leaderboard/leaderboard";
+} from "lib/types/components/leaderboard/leaderboard";
 
 const LeaderboardItem: React.FC<LeaderboardItemData> = ({
   id,

@@ -4,11 +4,11 @@ import type {
   GameInfoCollection,
   GameInfoProps,
 } from "../../types/components/common";
-import { Minesweeper, SnakeGame, CarGame } from "../Games";
+import { Minesweeper, SnakeGame, CarGame } from "../games";
 
-import GameBody from "./GameBody/GameBody";
-import GameFooter from "./GameFooter/GameFooter";
-import Leaderboard from "./Leaderboard/Leaderboard";
+import GameBody from "./gameBody/GameBody";
+import GameFooter from "./gameFooter/GameFooter";
+import Leaderboard from "./leaderboard/Leaderboard";
 
 const games: GameInfoCollection = {
   1: {
@@ -48,7 +48,7 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         fontWeight="bold"
       >
         <GridItem px={1} area="main">
-          <GameBody>{game?.component}</GameBody>
+          {/* <GameBody>{game?.component}</GameBody> */}
         </GridItem>
         <GridItem px={1} area="footer">
           <GameFooter id={game?.id} name={game?.name} />
