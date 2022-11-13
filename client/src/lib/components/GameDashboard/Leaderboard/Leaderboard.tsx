@@ -19,16 +19,16 @@ const Leaderboard: React.FC = () => {
   }, []);
 
   return (
-    <Center p={1}>
+    <Center>
       <Box
         maxW="445px"
-        maxH="80vh"
+        maxH="88vh"
         w="full"
         bg={useColorModeValue("gray.300", "gray.500")}
         boxShadow="2xl"
         rounded="md"
         p={{ base: "2", sm: "2", md: "4" }}
-        overflow="hidden"
+        overflow="scroll"
       >
         <Stack>
           <Heading

@@ -1,11 +1,16 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 
-import type { GameInfo, GameInfoProps } from "../../types/components/common";
+import type {
+  GameInfoCollection,
+  GameInfoProps,
+} from "../../types/components/common";
 import { Minesweeper } from "../Game";
 
+import GameBody from "./GameBody/GameBody";
+import GameFooter from "./GameFooter/GameFooter";
 import Leaderboard from "./Leaderboard/Leaderboard";
 
-const games: GameInfo = {
+const games: GameInfoCollection = {
   1: {
     id: 1,
     name: "Minesweeper",
@@ -16,12 +21,12 @@ const games: GameInfo = {
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
   return (
-    <Box m={2}>
+    <Box m={1}>
       <Grid
-        templateAreas={`"header leaderboard"
-                  "main leaderboard"`}
+        templateAreas={`"main leaderboard"
+                  "footer leaderboard"`}
         gridTemplateRows={{
-          base: "10%",
+          base: "1fr",
           md: "1fr",
         }}
         gridTemplateColumns={{
@@ -32,11 +37,11 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem pl="2" bg="orange.300" area="header">
-          {game?.name}
+        <GridItem px={1} area="main">
+          <GameBody>{game?.component}</GameBody>
         </GridItem>
-        <GridItem pl="2" bg="green.300" area="main">
-          {game?.component}
+        <GridItem px={1} area="footer">
+          <GameFooter id={game?.id} name={game?.name} />
         </GridItem>
         <GridItem
           area="leaderboard"

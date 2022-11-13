@@ -4,13 +4,16 @@ export interface GameInfoProps extends ReactChildrenProps {
   id: number;
 }
 
-export type GameInfo = {
+export type GameInfoCollection = {
   [id: number]: GameInfoComponent;
 };
 
-export type GameInfoComponent = {
+export type GameInfo = {
   id: number;
   name: string;
+};
+
+export type GameInfoComponent = GameInfo & {
   component: React.ReactNode;
 };
 
