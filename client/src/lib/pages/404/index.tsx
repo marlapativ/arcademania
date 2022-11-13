@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Heading,
-  Image,
   Text,
   Link as ChakraLink,
   useColorMode,
@@ -10,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
-
 
 const Page404 = () => {
   const { colorMode } = useColorMode();

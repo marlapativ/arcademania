@@ -1,5 +1,5 @@
-import Minesweeper from './minesweeper/Minesweeper';
+import CarGame from "./carcrash/CarGame";
+import Minesweeper from "./minesweeper/Minesweeper";
+import SnakeGame from "./snakegame/SnakeGame";
 
-export {
-    Minesweeper
-}
+export { Minesweeper, SnakeGame, CarGame };
