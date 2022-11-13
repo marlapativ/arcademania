@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { CellProps } from "lib/types/components/Games/minesweeper.types";
 import { MinesweeperCellValue } from "lib/types/components/Games/minesweeper.types";
 
-import styles from "./styles/Cell.module.scss";
+import styles from "./Cell.module.scss";
 
 const MinesweeperCell: React.FC<CellProps> = ({
   isHidden,
