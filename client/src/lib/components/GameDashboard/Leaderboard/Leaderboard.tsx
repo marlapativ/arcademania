@@ -27,7 +27,7 @@ const Leaderboard: React.FC = () => {
         bg={useColorModeValue("gray.300", "gray.500")}
         boxShadow="2xl"
         rounded="md"
-        p={{ base: "2", sm: "2", md: "4" }}
+        p={{ base: "1", sm: "1", md: "2" }}
         overflow="scroll"
       >
         <Stack>
