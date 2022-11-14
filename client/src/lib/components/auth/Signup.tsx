@@ -9,26 +9,41 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   FormLabel,
   Input,
   InputGroup,
-  InputLeftAddon,
   InputRightAddon,
-  Select,
+  InputRightElement,
   Stack,
-  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
+import {
+  FiEye,
+  FiEyeOff
+} from 'react-icons/fi';
 import React from "react";
 
 const SignupDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const firstField = React.useRef();
+  const [showPassword, setShowPassword] = React.useState(false)
+  const handleClick = () => setShowPassword(!showPassword)
+
+  const createUser = () => {
+    
+    onClose();
+  }
 
   return (
     <>
-      <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpen}>
-        Create user
+      <Button variant='outline'
+        display={{ base: 'none', md: 'inline-flex' }} color={'white'} bg={'blue.400'}
+        _hover={{
+          bg: 'blue.300',
+        }}
+        onClick={onOpen}
+        >
+       Sign Up
       </Button>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
@@ -40,40 +55,70 @@ const SignupDrawer = () => {
 
           <DrawerBody>
             <Stack spacing="24px">
-              <Box>
-                <FormLabel htmlFor="username">Name</FormLabel>
+             
+              <Flex>
+                <FormLabel htmlFor="firstName">First Name</FormLabel>
                 <Input
-                  // TODO: check the ref
-                  // ref={firstField}
-                  id="username"
-                  placeholder="Please enter user name"
+                  id="firstName"
+                  placeholder="Please enter first name"
+                  required
                 />
-              </Box>
-
+             
+                <FormLabel htmlFor="LastName">Last Name</FormLabel>
+                <Input
+                  id="lastName"
+                  placeholder="Please enter last name"
+                  required
+                />
+              </Flex>
               <Box>
-                <FormLabel htmlFor="url">Url</FormLabel>
+                <FormLabel htmlFor="email">Email</FormLabel>
                 <InputGroup>
-                  <InputLeftAddon>http://</InputLeftAddon>
-                  <Input
-                    type="url"
-                    id="url"
-                    placeholder="Please enter domain"
-                  />
-                  <InputRightAddon>.com</InputRightAddon>
+                <Input
+                  id="email"
+                  placeholder="Please enter email"
+                  required
+                />
                 </InputGroup>
               </Box>
-
               <Box>
-                <FormLabel htmlFor="owner">Select Owner</FormLabel>
-                <Select id="owner" defaultValue="segun">
-                  <option value="segun">Segun Adebayo</option>
-                  <option value="kola">Kola Tioluwani</option>
-                </Select>
+                <FormLabel htmlFor="username">UserName</FormLabel>
+                <Input
+                  id="username"
+                  placeholder="Please enter user name"
+                  required
+                />
               </Box>
-
+              
               <Box>
-                <FormLabel htmlFor="desc">Description</FormLabel>
-                <Textarea id="desc" />
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <InputGroup size='md'>
+                  <Input
+                    pr='4.5rem'
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Enter password'
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleClick}>
+                      {showPassword ? <FiEyeOff/> : <FiEye/>}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </Box>
+              <Box>
+                <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+                <InputGroup size='md'>
+                  <Input
+                    pr='4.5rem'
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Enter password'
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleClick}>
+                      {showPassword ? <FiEyeOff/> : <FiEye/>}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </Box>
             </Stack>
           </DrawerBody>
@@ -82,12 +127,13 @@ const SignupDrawer = () => {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Submit</Button>
+            <Button colorScheme="blue" onClick={createUser}>Submit</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
   );
+
 };
 
 export default SignupDrawer;
