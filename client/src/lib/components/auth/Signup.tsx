@@ -16,6 +16,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
+  InputLeftAddon,
   InputRightElement,
   Stack,
   useDisclosure,
@@ -24,6 +25,7 @@ import {
   FiEye,
   FiEyeOff
 } from 'react-icons/fi';
+import { MdAccountCircle, MdVpnKey } from "react-icons/md";
 
 const SignupDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,7 +40,7 @@ const SignupDrawer = () => {
     onClose();
   }
   const showErrorMessage = (e:any) => {
-    const handleInputChange = (e:any) => setInput(e.target.value)
+    setInput(e.target.value)
     isError = input === ''
   }
 
@@ -118,6 +120,11 @@ const SignupDrawer = () => {
               <FormControl isRequired>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <InputGroup size='md'>
+                <InputLeftAddon
+              backgroundColor="white"
+              color="gray.500"
+              children={<Box as={MdVpnKey} />}
+            />
                   <Input
                     pr='4.5rem'
                     type={showPassword ? 'text' : 'password'}
@@ -135,10 +142,15 @@ const SignupDrawer = () => {
                 <FormControl isRequired>
                 <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
                 <InputGroup size='md'>
+                <InputLeftAddon
+              backgroundColor="white"
+              color="gray.500"
+              children={<Box as={MdVpnKey} />}
+            />
                   <Input
                     pr='4.5rem'
                     type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder='Enter password'
+                    placeholder='Confirm password'
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handlePassClick}>
