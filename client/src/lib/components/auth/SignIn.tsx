@@ -63,8 +63,7 @@ const SignInDrawer = () => {
           <Formik
           initialValues={{
             email: "",
-            password: "",
-            rememberMe: false
+            password: ""
           }}
           onSubmit={(values) => {
             login(values);
@@ -81,7 +80,15 @@ const SignInDrawer = () => {
                     name="email"
                     type="email"
                     variant="filled"
+                    validate={(value: string | any[]) => {
+                        let error;
+                        if (value.length == 0 || (value && value.includes('@'))) {
+                          error = "Invalid email address";
+                        }
+                        return error;
+                      }}
                   />
+                   <FormErrorMessage>{errors.email}</FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.password && touched.password}>
                 <FormLabel htmlFor="password">Password</FormLabel>
