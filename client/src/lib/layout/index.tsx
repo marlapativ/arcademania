@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
-import SideBar from "../components/common/leftPane/LeftBar";
+import LeftPane from "../components/common/SidePanes/LeftPane";
 
 import Footer from "./footer/Footer";
 import Header from "./header/Header";
@@ -11,7 +11,7 @@ type LayoutProps = {
 };
 
 export async function getStaticProps() {
-  return { props: { title: "SideBar" } };
+  return { props: { title: "LeftPane" } };
 }
 
 const Layout = ({ children }: LayoutProps) => {
@@ -20,7 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
       <Box>
         <Header />
         <aside className="asideLeftPane">
-          <SideBar />
+          <LeftPane />
         </aside>
         <Box as="main">{children}</Box>
         <Footer />

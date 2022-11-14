@@ -20,6 +20,7 @@ import {
 import {
   FiChevronDown,
 } from 'react-icons/fi';
+import SignupDrawer from 'lib/components/auth/Signup';
 const MenuItems: React.FC<AuthProps> = ({ isAuth }) => {
     if(isAuth){
         return <LoggedInMenu />
@@ -84,11 +85,7 @@ const SignInMenu = () => {
       justify={'flex-end'}
       direction={'row'}
       spacing={4}>
-      <Button variant='outline'
-        display={{ base: 'none', md: 'inline-flex' }} color={'white'} bg={'blue.400'}
-        _hover={{
-          bg: 'blue.300',
-        }}> Sign In </Button>
+         <SignupDrawer></SignupDrawer>
     </Stack>
       }
     </HStack>
