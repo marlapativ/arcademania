@@ -4,22 +4,9 @@ export interface MinesweeperGameProps {
   bombs: number;
 }
 
-export interface MinesweeperMessage {
-  show: boolean;
-  win: boolean;
-  playAgain: () => void;
-  score: number;
-}
-
 export interface MinesweeperCellData {
-  hidden: boolean;
-  value: MinesweeperCellValue;
-}
-
-export enum MinesweeperCellValue {
-  VALID,
-  BOMB,
-  EMPTY,
+  visible: boolean;
+  value: number;
 }
 
 export enum MinesweeperGameStatus {
@@ -32,10 +19,10 @@ export interface MinesweeperCoordindate {
   y: number;
 }
 
-export interface CellProps {
-  isHidden: boolean;
-  value: MinesweeperCellValue;
+export interface MinesweeperCellProps {
+  value: number;
+  show: boolean;
   coordinate: MinesweeperCoordindate;
-  unhide: (coordinate: MinesweeperCoordindate) => void;
+  unhide: (coordinate: MinesweeperCoordindate, value: number) => void;
   endGame: () => void;
 }

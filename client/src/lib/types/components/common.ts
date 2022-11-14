@@ -26,8 +26,16 @@ export type GameInfoComponent = GameInfo & {
   component: React.ReactNode;
 };
 
-export type UserInfo = {
+export type UserId = {
   id: number;
+};
+
+export type UserInfo = UserId & {
   name: string;
   icon?: string;
+};
+
+export type UseCallbackFunc<T> = {
+  apply: () => void;
+  data: T;
 };

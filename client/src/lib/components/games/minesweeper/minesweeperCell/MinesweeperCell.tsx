@@ -1,30 +1,49 @@
-import { useState } from "react";
+import { Box, GridItem } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
-import type { CellProps } from "lib/types/components/games/minesweeper.types";
-import { MinesweeperCellValue } from "lib/types/components/games/minesweeper.types";
+import type { MinesweeperCellProps } from "lib/types/components/games/minesweeper.types";
 
-import styles from "./Cell.module.scss";
-
-const MinesweeperCell: React.FC<CellProps> = ({
-  isHidden,
+const MinesweeperCell: React.FC<MinesweeperCellProps> = ({
   value,
-  coordinate,
-  unhide,
   endGame,
+  unhide,
+  show,
+  coordinate,
 }) => {
-  const [isCellHidden, setIsCellHidden] = useState(isHidden);
+  const [isHidden, setIsHidden] = useState(true);
+
   const cellClick = () => {
-    if (!isCellHidden) {
-      setIsCellHidden(true);
-    }
-    if (value === MinesweeperCellValue.BOMB) {
+    if (value === -1) {
       endGame();
     } else {
-      unhide(coordinate);
+      unhide(coordinate, value);
     }
   };
 
-  return <span onClick={cellClick} className={`${styles.cell}`} />;
+  useEffect(() => {
+    setIsHidden(!show);
+  }, [show]);
+
+  return (
+    <GridItem onClick={cellClick}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        bg={isHidden ? "red" : "white"}
+        maxW={{ base: "20px", lg: "12px" }}
+        maxH={{ base: "20px", lg: "12px" }}
+        color="black"
+        rounded="sm"
+        p={{ base: "4", lg: "5" }}
+        textAlign="center"
+        transition="transform 250ms, background-color 700ms"
+        border="1px solid black"
+      >
+        {isHidden || (value > 0 && value)}
+      </Box>
+    </GridItem>
+  );
 };
 
 export default MinesweeperCell;
