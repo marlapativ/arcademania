@@ -96,7 +96,7 @@ const SignupDrawer = () => {
                 </InputGroup>
                 {!isError ? (
                 <FormHelperText display="block">
-                  Enter the email you'd like to receive the newsletter on.
+                  Enter the email you'd like to receive the verification code.
                 </FormHelperText>
                 ) : (
                 <FormErrorMessage display="block">Email is required.</FormErrorMessage>
