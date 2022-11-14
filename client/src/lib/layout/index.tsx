@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
-import LeftPane from "../components/common/SidePanes/LeftPane";
+import LeftPane from "../components/common/sidePanes/LeftPane";
 
 import Footer from "./footer/Footer";
 import Header from "./header/Header";
