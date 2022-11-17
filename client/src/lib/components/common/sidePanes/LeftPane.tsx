@@ -4,7 +4,7 @@ import { FiMenu, FiHome, FiClock, FiStar, FiPhone } from "react-icons/fi";
 
 import NavItem from "./NavItem";
 
-const SideBar = () => {
+const LeftPane = () => {
   const [navSize, changeNavSize] = useState("small");
   const [isOpen, setOpenState] = useState(false);
   return (
@@ -74,4 +74,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default LeftPane;

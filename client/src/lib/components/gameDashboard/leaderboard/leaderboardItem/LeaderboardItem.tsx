@@ -13,6 +13,7 @@ import type {
   LeaderboardItemContainerProps,
   LeaderboardItemData,
 } from "lib/types/components/leaderboard/leaderboard.types";
+import { numberWithCommas } from "lib/utils/numberUtils";
 
 const LeaderboardItem: React.FC<LeaderboardItemData> = ({
   id,
@@ -36,10 +37,10 @@ const LeaderboardItem: React.FC<LeaderboardItemData> = ({
         bg="white"
         boxShadow="2xl"
         rounded="full"
-        px={6}
+        px={3}
         overflow="hidden"
       >
-        <Stack py={4} direction="row" justifyContent="space-between">
+        <Stack py={2} direction="row" justifyContent="space-between">
           <Stack direction="row" align="center">
             <GameAvatar id={id} name={name} icon={icon} />
             <Text fontWeight={600}>{name}</Text>
@@ -50,7 +51,7 @@ const LeaderboardItem: React.FC<LeaderboardItemData> = ({
                 <RiTrophyFill color="#ffab20" />
               </Icon>
             ) : null}
-            <Text color="pink.500">{score}</Text>
+            <Text color="pink.500">{numberWithCommas(score)}</Text>
           </Stack>
         </Stack>
       </Box>
