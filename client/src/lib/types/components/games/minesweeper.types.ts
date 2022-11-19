@@ -1,3 +1,5 @@
+import type { Coordinate } from "./games.common";
+
 export interface MinesweeperGameProps {
   rows: number;
   columns: number;
@@ -14,15 +16,10 @@ export enum MinesweeperGameStatus {
   LOS,
 }
 
-export interface MinesweeperCoordindate {
-  x: number;
-  y: number;
-}
-
 export interface MinesweeperCellProps {
   value: number;
   show: boolean;
-  coordinate: MinesweeperCoordindate;
-  unhide: (coordinate: MinesweeperCoordindate, value: number) => void;
+  coordinate: Coordinate;
+  unhide: (coordinate: Coordinate, value: number) => void;
   endGame: () => void;
 }
