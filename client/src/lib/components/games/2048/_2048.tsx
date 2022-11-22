@@ -5,17 +5,10 @@ import { useState } from "react";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
 import { saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
-import type { Coordinate } from "lib/types/components/games/games.common";
-import type {
-  MinesweeperGameProps,
-  MinesweeperCellData,
-} from "lib/types/components/games/minesweeper.types";
-
-import MinesweeperCell from "./minesweeperCell/MinesweeperCell";
 
 const GAME_ID = 1;
 
-const neighbours: Coordinate[] = [
+const neighbours: MinesweeperCoordindate[] = [
   { x: 1, y: -1 },
   { x: 1, y: 0 },
   { x: 1, y: 1 },
@@ -87,11 +80,7 @@ const createGame = (
   return game;
 };
 
-const Minesweeper: React.FC<MinesweeperGameProps> = ({
-  rows,
-  columns,
-  bombs,
-}) => {
+const _2048: React.FC<MinesweeperGameProps> = ({ rows, columns, bombs }) => {
   const [game, setGame] = useState(createGame(rows, columns, bombs));
   const [score, setScore] = useState(0);
   const [showGameMessage, setShowGameMessage] = useState(false);
@@ -149,7 +138,7 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
   };
 
   const unhideCellAndNeighbours = (
-    coordinate: Coordinate,
+    coordinate: MinesweeperCoordindate,
     showNeighbours: boolean
   ) => {
     game[coordinate.x][coordinate.y] = {
@@ -176,7 +165,7 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     updateGame();
   };
 
-  const unhideCell = (coordinate: Coordinate, value: number) => {
+  const unhideCell = (coordinate: MinesweeperCoordindate, value: number) => {
     unhideCellAndNeighbours(coordinate, value === 0);
     checkIfWon();
   };
@@ -210,7 +199,7 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
             {game.map((eachRow, rowIndex) =>
               eachRow.map((eachColumn, columnIndex) => {
                 const key = rowIndex * columns + columnIndex;
-                const coordinate: Coordinate = {
+                const coordinate: MinesweeperCoordindate = {
                   x: rowIndex,
                   y: columnIndex,
                 };
