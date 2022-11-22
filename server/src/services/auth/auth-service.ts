@@ -20,12 +20,11 @@ export const loginUser = async (SignINuser: ISignINUser) => {
       throw new Error("User Not found");
     }
 
-    const passwordIsValid = comparePassword(SignINuser.password,  user.password);
-
+    const passwordIsValid = await comparePassword(SignINuser.password, (await user).password);
     if (!passwordIsValid) {
       throw new Error("Invalid Password");
     }
-
+    else{
     const token = jwt.sign({ id: user.id }, authSecret.secret, {
       expiresIn: 86400,
     });
@@ -42,4 +41,5 @@ export const loginUser = async (SignINuser: ISignINUser) => {
       refreshToken: resfreshToken
     }
     return res;
+  }
 };

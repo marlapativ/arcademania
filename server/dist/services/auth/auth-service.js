@@ -33,25 +33,27 @@ const loginUser = (SignINuser) => __awaiter(void 0, void 0, void 0, function* ()
     if (!user) {
         throw new Error("User Not found");
     }
-    const passwordIsValid = (0, crypto_1.comparePassword)(SignINuser.password, user.password);
+    const passwordIsValid = yield (0, crypto_1.comparePassword)(SignINuser.password, (yield user).password);
+    logger_1.default.info({ passwordIsValid });
     if (!passwordIsValid) {
         throw new Error("Invalid Password");
     }
-    const token = jsonwebtoken_1.default.sign({ id: user.id }, auth_config_1.authSecret.secret, {
-        expiresIn: 86400,
-    });
-    const resfreshToken = jsonwebtoken_1.default.sign({ type: 'refresh' }, auth_config_1.authSecret.secret, {
-        expiresIn: '2h'
-    });
-    const res = {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        accessToken: token,
-        refreshToken: resfreshToken
-    };
-    logger_1.default.info(res);
-    return res;
+    else {
+        const token = jsonwebtoken_1.default.sign({ id: user.id }, auth_config_1.authSecret.secret, {
+            expiresIn: 86400,
+        });
+        const resfreshToken = jsonwebtoken_1.default.sign({ type: 'refresh' }, auth_config_1.authSecret.secret, {
+            expiresIn: '2h'
+        });
+        const res = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            accessToken: token,
+            refreshToken: resfreshToken
+        };
+        return res;
+    }
 });
 exports.loginUser = loginUser;
 //# sourceMappingURL=auth-service.js.map

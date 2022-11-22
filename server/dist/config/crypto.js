@@ -20,7 +20,7 @@ const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.hashPassword = hashPassword;
 const comparePassword = (userPassword, password) => __awaiter(void 0, void 0, void 0, function* () {
-    return bcryptjs_1.default.compare(userPassword, password);
+    return yield bcryptjs_1.default.compare(userPassword, password);
 });
 exports.comparePassword = comparePassword;
 //# sourceMappingURL=crypto.js.map

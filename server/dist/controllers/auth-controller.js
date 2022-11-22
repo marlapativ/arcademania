@@ -31,14 +31,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.createUser = void 0;
 const authService = __importStar(require("../services/auth/auth-service"));
 const http_utils_1 = require("../utils/http-utils");
-const logger_1 = __importDefault(require("../config/logger"));
 /**
  * It creates a user and returns the user object in the response
  * @param req - Http Request with <IUser> as body
@@ -64,7 +60,6 @@ exports.createUser = createUser;
 const loginUser = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userWithToken = yield authService.loginUser(req.body);
-        logger_1.default.info({ userWithToken });
         (0, http_utils_1.setResponse)(response, userWithToken);
     }
     catch (err) {
