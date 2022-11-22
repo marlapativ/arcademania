@@ -24,35 +24,34 @@ const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.createUser = createUser;
 const loginUser = (SignINuser) => __awaiter(void 0, void 0, void 0, function* () {
-    index_1.User.findOne({
-        username: SignINuser.username,
-    }).exec((err, user) => {
-        if (err) {
-            throw err;
+    const user = yield index_1.User.findOne({
+        raw: true,
+        where: {
+            username: SignINuser.username,
         }
-        logger_1.default.info({ user });
-        if (!user) {
-            err.message = "User Not found.";
-            throw err;
-        }
-        const passwordIsValid = (0, crypto_1.comparePassword)(SignINuser.password, user.password);
-        if (!passwordIsValid) {
-            err.message = "Invalid Password";
-            throw err;
-        }
-        const token = jsonwebtoken_1.default.sign({ id: user.id }, auth_config_1.authSecret.secret, {
-            expiresIn: 86400,
-        });
-        logger_1.default.info({ token });
-        const response = {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            accessToken: token,
-        };
-        logger_1.default.info(response);
-        return response;
     });
+    if (!user) {
+        throw new Error("User Not found");
+    }
+    const passwordIsValid = (0, crypto_1.comparePassword)(SignINuser.password, user.password);
+    if (!passwordIsValid) {
+        throw new Error("Invalid Password");
+    }
+    const token = jsonwebtoken_1.default.sign({ id: user.id }, auth_config_1.authSecret.secret, {
+        expiresIn: 86400,
+    });
+    const resfreshToken = jsonwebtoken_1.default.sign({ type: 'refresh' }, auth_config_1.authSecret.secret, {
+        expiresIn: '2h'
+    });
+    const res = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        accessToken: token,
+        refreshToken: resfreshToken
+    };
+    logger_1.default.info(res);
+    return res;
 });
 exports.loginUser = loginUser;
 //# sourceMappingURL=auth-service.js.map

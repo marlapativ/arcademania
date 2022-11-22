@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -20,43 +19,36 @@ import {
   Stack,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Formik, Field } from "formik";
+import React, { useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
 const SignupDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [input, setInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handlePassClick = () => setShowConfirmPassword(!showConfirmPassword);
-  let isError = false;
   let password = "";
 
   const createUser = (values: JSON) => {
     onClose();
   };
-  const showErrorMessage = (e: any) => {
-    setInput(e.target.value);
-    isError = input === "";
+
+  const setPassword = (value: string) => {
+    password = value;
   };
 
   const validatePassword = (value: string) => {
     let error;
-    if (!value) {
-      error = "Password is required";
-    } else if (value.length < 5) {
+    if (!value) error = "Password is required";
+    else if (value.length < 5)
       error = "Password must contain at least 6 characters";
-    }
     if (!error) {
       setPassword(value);
     }
     return error;
-  };
-
-  const setPassword = (value: string) => {
-    password = value;
   };
 
   const validateConfirmPassword = (value: string) => {
@@ -98,8 +90,8 @@ const SignupDrawer = () => {
       <Button
         variant="outline"
         display={{ base: "none", md: "inline-flex" }}
-        color={"white"}
-        bg={"blue.400"}
+        color="white"
+        bg="blue.400"
         _hover={{
           bg: "blue.300",
         }}
@@ -128,20 +120,16 @@ const SignupDrawer = () => {
                 createUser(JSON.parse(JSON.stringify(values)));
               }}
             >
-              {({ handleSubmit, errors, touched }) => (
+              {({ handleSubmit }) => (
                 <form id="signup-form" onSubmit={handleSubmit}>
                   <Stack spacing="24px">
                     <FormControl>
                       <Flex>
-                        <FormControl isInvalid={isError} mr={3}>
+                        <FormControl mr={3}>
                           <FormLabel htmlFor="firstName" pl={1}>
                             First Name
                           </FormLabel>
-                          <Input
-                            id="firstName"
-                            placeholder="First name"
-                            onChange={showErrorMessage}
-                          />
+                          <Input id="firstName" placeholder="First name" />
                         </FormControl>
                         <Field name="lastName" validate={validateLastName}>
                           {({ field, form }: any) => (
@@ -229,8 +217,9 @@ const SignupDrawer = () => {
                                 <InputLeftAddon
                                   backgroundColor="white"
                                   color="gray.500"
-                                  children={<Box as={MdVpnKey} />}
-                                />
+                                >
+                                  <Box as={MdVpnKey} />
+                                </InputLeftAddon>
                                 <Input
                                   {...field}
                                   pr="4.5rem"
@@ -275,8 +264,9 @@ const SignupDrawer = () => {
                                 <InputLeftAddon
                                   backgroundColor="white"
                                   color="gray.500"
-                                  children={<Box as={MdVpnKey} />}
-                                />
+                                >
+                                  <Box as={MdVpnKey} />
+                                </InputLeftAddon>
                                 <Input
                                   {...field}
                                   pr="4.5rem"

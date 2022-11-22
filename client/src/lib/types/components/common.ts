@@ -39,3 +39,7 @@ export type UseCallbackFunc<T> = {
   apply: () => void;
   data: T;
 };
+
+export type AuthInfo = {
+  token: string;
+};

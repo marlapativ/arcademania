@@ -11,36 +11,35 @@ export const createUser = async (user: IUser) => {
 };
 
 export const loginUser = async (SignINuser: ISignINUser) => {
-  User.findOne({
+  const user =  await User.findOne({
+    raw: true,
+    where: {
     username: SignINuser.username,
-  }).exec((err, user) => {
-    if (err) {
-      throw err;
-    }
+  }});
     if (!user) {
-      err.message = "User Not found.";
-      throw err;
+      throw new Error("User Not found");
     }
 
-    const passwordIsValid = comparePassword(SignINuser.password, user.password);
+    const passwordIsValid = comparePassword(SignINuser.password,  user.password);
 
     if (!passwordIsValid) {
-      err.message = "Invalid Password";
-      throw err;
+      throw new Error("Invalid Password");
     }
 
     const token = jwt.sign({ id: user.id }, authSecret.secret, {
       expiresIn: 86400,
     });
 
-    const response = {
+    const resfreshToken = jwt.sign({ type: 'refresh' }, authSecret.secret, {
+        expiresIn: '2h'
+      });
+
+    const res = {
       id: user.id,
       username: user.username,
       email: user.email,
       accessToken: token,
+      refreshToken: resfreshToken
     }
-    logger.info(response)
-
-    return response;
-  });
+    return res;
 };

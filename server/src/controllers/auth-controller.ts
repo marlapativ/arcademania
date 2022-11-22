@@ -28,8 +28,7 @@ export const createUser = async (req: CustomRequest<IUser>, response: CustomResp
  */
 export const loginUser = async (req: CustomRequest<ISignINUser>, response: CustomResponse) => {
     try {
-        const userWithToken = await authService.loginUser(req.body);
-        logger.info({userWithToken})
+        const userWithToken = await authService.loginUser(req.body)
         setResponse(response, userWithToken);
     } catch (err) {
         if(err.message === 'User Not found.')

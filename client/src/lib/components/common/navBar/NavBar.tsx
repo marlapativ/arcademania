@@ -1,5 +1,6 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { FiStar } from "react-icons/fi";
 import MenuItems from "./MenuItems";
 import {
   Box,
@@ -13,7 +14,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { FiStar } from "react-icons/fi";
+
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -21,24 +22,24 @@ const NavBar = () => {
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
-        minH={"60px"}
+        minH="60px"
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
-        borderStyle={"solid"}
+        borderStyle="solid"
         borderColor={useColorModeValue("gray.200", "gray.900")}
-        align={"center"}
+        align="center"
       >
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Link href={"/"}>
+          <Link href="/">
             <Image src="/images/logo.png" alt="Logo" width={32} height={24} />
           </Link>
-          <Link href={"/"}>
+          <Link href="/">
             <Text
-              size={"lg"}
+              size="lg"
               marginLeft="2"
               textAlign={useBreakpointValue({ base: "center", md: "left" })}
-              fontFamily={"heading"}
+              fontFamily="heading"
               color={useColorModeValue("gray.800", "white")}
             >
               ArcadeMania
@@ -49,8 +50,8 @@ const NavBar = () => {
         <HStack
           spacing={{ base: "0", md: "6" }}
           flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
+          justify="flex-end"
+          direction="row"
         >
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}

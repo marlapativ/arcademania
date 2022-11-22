@@ -1,9 +1,4 @@
-import {
-  ReactElement,
-  JSXElementConstructor,
-  ReactFragment,
-  ReactPortal,
-} from "react";
+import React from "react";
 
 const ResultsCard = (score: number | any) => {
   return (

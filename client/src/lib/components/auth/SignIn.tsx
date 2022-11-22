@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -18,23 +17,20 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Formik, Field } from "formik";
+import React, { useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
+
+import { getAccessToken } from "lib/services/auth-service";
 
 const SignInDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [input, setInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
-  let isError = false;
-
-  const login = (values: any) => {
+  const login = async (values: JSON) => {
+   const accessTokenObj = await getAccessToken(values);
     onClose();
-  };
-  const showErrorMessage = (e: any) => {
-    setInput(e.target.value);
-    isError = input === "";
   };
 
   return (
@@ -42,8 +38,8 @@ const SignInDrawer = () => {
       <Button
         variant="outline"
         display={{ base: "none", md: "inline-flex" }}
-        color={"white"}
-        bg={"blue.400"}
+        color="white"
+        bg="blue.400"
         _hover={{
           bg: "blue.300",
         }}
@@ -60,39 +56,39 @@ const SignInDrawer = () => {
           <DrawerBody>
             <Formik
               initialValues={{
-                email: "",
+                username: "",
                 password: "",
               }}
               onSubmit={(values) => {
-                login(values);
+                login(JSON.parse(JSON.stringify(values)));
               }}
             >
               {({ handleSubmit, errors, touched }) => (
                 <form onSubmit={handleSubmit}>
                   <VStack spacing={4} align="flex-start">
-                    <FormControl isInvalid={!!errors.email && touched.email}>
-                      <FormLabel htmlFor="email">Email Address</FormLabel>
+                    <FormControl isInvalid={!!errors.username && touched.username}>
+                      <FormLabel htmlFor="username">UserName</FormLabel>
                       <Field
                         as={Input}
-                        id="email"
-                        name="email"
-                        type="email"
+                        id="username"
+                        name="username"
+                        type="username"
                         variant="filled"
                         validate={(value: string) => {
                           let error;
                           if (!value) {
-                            error = "email is required";
+                            error = "username is required";
                           } else if (
                             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
                               value
                             )
                           ) {
-                            error = "Invalid email address";
+                            error = "Invalid username address";
                           }
                           return error;
                         }}
                       />
-                      <FormErrorMessage>{errors.email}</FormErrorMessage>
+                      <FormErrorMessage>{errors.username}</FormErrorMessage>
                     </FormControl>
                     <FormControl
                       isInvalid={!!errors.password && touched.password}
@@ -102,15 +98,16 @@ const SignInDrawer = () => {
                         <InputLeftAddon
                           backgroundColor="white"
                           color="gray.500"
-                          children={<Box as={MdVpnKey} />}
-                        />
+                        >
+                          <Box as={MdVpnKey} />
+                        </InputLeftAddon>
                         <Field
                           as={Input}
                           id="password"
                           name="password"
                           type={showPassword ? "text" : "password"}
                           variant="filled"
-                          validate={(value: string | any[]) => {
+                          validate={(value: string) => {
                             let error;
 
                             if (value.length < 5) {

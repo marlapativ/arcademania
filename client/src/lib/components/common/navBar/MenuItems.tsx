@@ -1,4 +1,3 @@
-import React, { ReactNode } from "react";
 import { AuthProps } from "../../../types/components/auth";
 import {
   Avatar,
@@ -16,17 +15,10 @@ import {
   Stack,
   useColorMode,
 } from "@chakra-ui/react";
+import React from "react";
 import { FiChevronDown } from "react-icons/fi";
-import SignupDrawer from "lib/components/auth/Signup";
 import SignInDrawer from "lib/components/auth/SignIn";
-
-const MenuItems: React.FC<AuthProps> = ({ isAuth }) => {
-  if (isAuth) {
-    return <LoggedInMenu />;
-  } else {
-    return <SignInMenu />;
-  }
-};
+import SignupDrawer from "lib/components/auth/Signup";
 
 const LoggedInMenu = () => {
   return (
@@ -71,19 +63,18 @@ const LoggedInMenu = () => {
 };
 
 const SignInMenu = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <HStack
       flex={{ base: 1, md: 0 }}
-      justify={"flex-end"}
-      direction={"row"}
+      justify="flex-end"
+      direction="row"
       spacing={4}
     >
       {
         <Stack
           flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
+          justify="flex-end"
+          direction="row"
           spacing={4}
         >
           <SignupDrawer></SignupDrawer>
@@ -92,6 +83,11 @@ const SignInMenu = () => {
       }
     </HStack>
   );
+};
+
+const MenuItems: React.FC<AuthProps> = ({ isAuth }) => {
+  if (isAuth) return <LoggedInMenu />;
+  else return <SignInMenu />;
 };
 
 export default MenuItems;
