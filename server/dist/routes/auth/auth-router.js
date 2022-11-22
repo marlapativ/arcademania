@@ -32,6 +32,7 @@ const authController = __importStar(require("../../controllers/auth-controller")
 const router = express_1.default.Router();
 // Singup Route
 router.route('/auth/signup').post(authController.createUser);
-;
+// Signin Route
+router.route('/auth/signin').post(authController.loginUser);
 exports.default = router;
 //# sourceMappingURL=auth-router.js.map

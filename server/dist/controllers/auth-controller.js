@@ -31,19 +31,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = void 0;
-const signupService = __importStar(require("../services/auth/signup-service"));
+exports.loginUser = exports.createUser = void 0;
+const authService = __importStar(require("../services/auth/auth-service"));
 const http_utils_1 = require("../utils/http-utils");
+const logger_1 = __importDefault(require("../config/logger"));
 /**
  * It creates a user and returns the user object in the response
- * @param request - Http Request with <IUser> as body
+ * @param req - Http Request with <IUser> as body
  * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
  * back to the client.
  */
-const createUser = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+const createUser = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield signupService.createUser(request.body);
+        const user = yield authService.createUser(req.body);
         (0, http_utils_1.setResponse)(response, user);
     }
     catch (err) {
@@ -51,4 +55,26 @@ const createUser = (request, response) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.createUser = createUser;
+/**
+ * It logsIn a user and returns the accesstoken in the response
+ * @param req - Http Request with <ISignINUser> as body
+ * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
+ * back to the client.
+ */
+const loginUser = (req, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userWithToken = yield authService.loginUser(req.body);
+        logger_1.default.info({ userWithToken });
+        (0, http_utils_1.setResponse)(response, userWithToken);
+    }
+    catch (err) {
+        if (err.message === 'User Not found.')
+            (0, http_utils_1.setError)(response, err, 404);
+        else if (err.message === 'Invalid Password')
+            (0, http_utils_1.setError)(response, err, 401);
+        else
+            (0, http_utils_1.setError)(response, err, 500);
+    }
+});
+exports.loginUser = loginUser;
 //# sourceMappingURL=auth-controller.js.map

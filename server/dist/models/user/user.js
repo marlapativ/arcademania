@@ -23,7 +23,11 @@ const schemaOptions = {
         updatedAt: 'lastModifiedDate'
     },
     toJSON: {
-        virtuals: true
+        virtuals: true,
+        transform(doc, ret) {
+            delete ret.password;
+            return ret;
+        }
     },
     toObject: {
         virtuals: true
@@ -47,6 +51,13 @@ const schema = new mongoose_1.default.Schema({
                 throw new Error('Invalid email.');
             }
         },
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
     },
     password: {
         type: String,

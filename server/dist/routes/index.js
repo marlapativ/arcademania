@@ -8,7 +8,7 @@ const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_json_1 = __importDefault(require("./swagger.json"));
 const routes = (app) => {
     // Signup Routes
-    app.use('/', auth_router_1.default);
+    app.use('/api/v1', auth_router_1.default);
     // Setting up swagger
     setupSwagger(app);
 };
