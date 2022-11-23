@@ -2,8 +2,11 @@ import { Box, Flex, Grid, useColorModeValue } from "@chakra-ui/react";
 import _, { repeat } from "lodash";
 import { useState } from "react";
 
+import {
+  getLeaderboard,
+  saveScore,
+} from "../../../services/leaderboard-service";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
-import { saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
 import type { Coordinate } from "lib/types/components/games/games.common";
 import type {
@@ -119,8 +122,10 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     );
   };
 
-  const saveGameScores = async (gameScore: number) => {
-    await saveScore(GAME_ID, getUser().id, gameScore);
+  const saveGameScores = (gameScore: number) => {
+    saveScore(GAME_ID, getUser().id, gameScore).then(() => {
+      getLeaderboard(GAME_ID).then((leaderboard) => dispatch());
+    });
   };
 
   const endGame = (didWin?: boolean) => {

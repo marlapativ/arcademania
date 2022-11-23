@@ -63,7 +63,6 @@ const getMockSaveScoreData = (
       score,
       userId,
     },
-    leaderboard: getMockLeaderboardData(gameId),
   };
 };
 

@@ -26,10 +26,6 @@ const LeaderboardElement: React.FC<LeaderboardItemContainerProps> = ({
         maxW="445px"
         maxH="88vh"
         w="full"
-        // bg={useColorModeValue(
-        //   "gray.300",
-        //   "repeating-linear-gradient(0deg, rgba(22,15,56,1) 0%, rgba(6,5,82,1) 20%, rgba(49,50,156,1) 40%, rgba(49,50,156,1) 60%, rgba(6,5,82,1) 80%, rgba(22,15,56,1) 100%);"
-        // )}
         bg={useColorModeValue("gray.300", "gray.800")}
         rounded="md"
         p={{ base: "1", sm: "1", md: "2" }}
