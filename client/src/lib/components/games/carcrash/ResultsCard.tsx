@@ -1,6 +1,7 @@
 import React from "react";
+import { score } from "lib/types/components/games/games.common";
 
-const ResultsCard = (score: number | any) => {
+const ResultsCard: React.FC<score> = ({ score }) => {
   return (
     <div id="result" className="resultCard">
       <h1>Game Over</h1>

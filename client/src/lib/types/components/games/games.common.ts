@@ -6,3 +6,7 @@ export interface Coordinate {
 export interface Flag {
   flag: boolean;
 }
+
+export interface score{
+  score: number;
+}

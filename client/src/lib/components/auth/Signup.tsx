@@ -24,6 +24,8 @@ import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
+import { createUser } from "lib/services/auth-service";
+
 const SignupDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +34,8 @@ const SignupDrawer = () => {
   const handlePassClick = () => setShowConfirmPassword(!showConfirmPassword);
   let password = "";
 
-  const createUser = (values: JSON) => {
+  const userSignUp = (values: JSON) => {
+    createUser(values);
     onClose();
   };
 
@@ -117,7 +120,7 @@ const SignupDrawer = () => {
                 confirmpassword: "",
               }}
               onSubmit={(values) => {
-                createUser(JSON.parse(JSON.stringify(values)));
+                userSignUp(JSON.parse(JSON.stringify(values)));
               }}
             >
               {({ handleSubmit }) => (

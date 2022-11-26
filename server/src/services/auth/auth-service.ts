@@ -3,7 +3,6 @@ import { User } from "../../models/index";
 import { comparePassword } from "../../config/crypto";
 import { authSecret } from "../../config/auth-config";
 import jwt from 'jsonwebtoken'
-import logger from "../../config/logger";
 
 export const createUser = async (user: IUser) => {
   const newUser = new User(user);
