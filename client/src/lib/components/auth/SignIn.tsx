@@ -23,14 +23,24 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
 import { getAccessToken } from "lib/services/auth-service";
+import ToastMessage from "../common/toastMessages/ToastMessage";
+import messages from "../common/toastMessages/Messages.json";
+import {signIn} from "next-auth/react";
 
 const SignInDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const login = async (values: JSON) => {
-   const accessTokenObj = await getAccessToken(values);
-    onClose();
+    signIn();
+    const accessTokenObj = await getAccessToken(values);
+    if (accessTokenObj.status === 200) {
+      <ToastMessage messageTitle = {messages.signinSuccessTitle} messageDesc = {messages.siginSuccessDesc}/>;
+      onClose();
+    } else {
+      <ToastMessage messageTitle = {messages.signinFailureTitle} messageDesc = {messages.signinFailureDesc}/>;
+      onClose();
+    }
   };
 
   return (
@@ -66,7 +76,9 @@ const SignInDrawer = () => {
               {({ handleSubmit, errors, touched }) => (
                 <form onSubmit={handleSubmit}>
                   <VStack spacing={4} align="flex-start">
-                    <FormControl isInvalid={!!errors.username && touched.username}>
+                    <FormControl
+                      isInvalid={!!errors.username && touched.username}
+                    >
                       <FormLabel htmlFor="username">UserName</FormLabel>
                       <Field
                         as={Input}

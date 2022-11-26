@@ -7,9 +7,11 @@ import defaultSEOConfig from "../../next-seo.config";
 import { Chakra } from "lib/components/common/Chakra";
 import Layout from "lib/layout";
 import "lib/styles/globals.scss";
+import { SessionProvider } from "next-auth/react"
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
   return (
+    <SessionProvider session={session}>
     <Chakra>
       <Head>
         <meta
@@ -22,6 +24,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <Component {...pageProps} />
       </Layout>
     </Chakra>
+    </SessionProvider>
   );
 };
 

@@ -17,4 +17,17 @@ export const getAccessToken = async (data : JSON) => {
       },
       body: JSON.stringify(data)
   });
-  }
+}
+
+export const createUser = async (data: JSON) => {
+    const newurl = url + `auth/signup`;
+    
+    return fetch(newurl, {
+      method: 'POST',
+      headers: {
+          'cache-control': 'no-cache',
+          'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+  });
+}

@@ -13,12 +13,12 @@ import {
   MenuItem,
   MenuList,
   Stack,
-  useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
-import SignInDrawer from "lib/components/auth/SignIn";
-import SignupDrawer from "lib/components/auth/Signup";
+import SignInDrawer from "../../auth/SignIn";
+import SignupDrawer from "../../auth/Signup";
+import { useSession, signOut } from "next-auth/react"
 
 const LoggedInMenu = () => {
   return (
@@ -55,7 +55,7 @@ const LoggedInMenu = () => {
           <MenuItem>Profile</MenuItem>
           <MenuItem>Favourites</MenuItem>
           <MenuDivider />
-          <MenuItem>Sign out</MenuItem>
+          <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
         </MenuList>
       </Menu>
     </Flex>
@@ -85,8 +85,9 @@ const SignInMenu = () => {
   );
 };
 
-const MenuItems: React.FC<AuthProps> = ({ isAuth }) => {
-  if (isAuth) return <LoggedInMenu />;
+const MenuItems: React.FC<AuthProps> = () => {
+  const { data: session } = useSession();
+  if (session) return <LoggedInMenu />;
   else return <SignInMenu />;
 };
 

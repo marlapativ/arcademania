@@ -43,3 +43,5 @@ jspm_packages
 .history
 
 .DS_Store
+
+server/dist/*

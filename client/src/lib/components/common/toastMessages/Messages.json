@@ -1,0 +1,6 @@
+{
+    "signinSuccessTitle": "Successfully loggedIn",
+    "siginSuccessDesc": "you got this, Good Luck!!",
+    "signinFailureTitle": "Login Failed",
+    "signinFailureDesc": "Unable to log you in, please try again."
+}
