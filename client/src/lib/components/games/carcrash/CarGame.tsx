@@ -4,27 +4,20 @@ import BlueCar from "./BlueCar";
 import ResultsCard from "./ResultsCard";
 import carstyles from "./styles/carCrash.module.scss";
 import Image from "next/image";
+import { carGameProps } from "lib/types/components/games/carGame.types";
 
-class CarGame extends React.Component<
-  {},
-  {
-    play: boolean;
-    gameOver: boolean;
-    result: number;
-    count: number;
-    score: number;
-    redCarLeft: number;
-  }
-> {
+class CarGame extends React.Component<{}, carGameProps> {
   constructor(props: any) {
     super(props);
     this.state = {
       play: false,
       gameOver: false,
-      result: 0,
       count: 0,
       score: 0,
       redCarLeft: 138,
+      blueCarLeft: 138,
+      blueCarTop: 5,
+      intervalId: setTimeout(() => {}, 1),
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.gameOver = this.gameOver.bind(this);
@@ -33,20 +26,29 @@ class CarGame extends React.Component<
   }
 
   componentDidMount() {
-    setInterval(this.gameOver, 10);
     document.onkeydown = this.onKeyDown;
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.onKeyDown, false);
+    clearInterval(this.state.intervalId);
+  }
+
   gameOver = () => {
-    const blueCar = document.getElementById("blueCar")?.getElementsByTagName('img')[0];
-    if (blueCar != null) {
-      const blueCartop = blueCar.getBoundingClientRect()["top"];
-      const blueCarleft = blueCar.getBoundingClientRect()["left"];
+    const blueCartopelem = document
+      .getElementById("blueCar")
+      ?.getElementsByTagName("img")[0]!;
+    if (blueCartopelem) {
+      const blueCartop = blueCartopelem.offsetTop;
+      const blueCarleft = this.state.blueCarLeft;
       const redCarleft = this.state.redCarLeft;
-      if (blueCarleft === redCarleft && blueCartop > 390 && blueCartop < 510) {
+      if (blueCarleft === redCarleft && blueCartop > 350 && blueCartop < 510) {
+        this.setState({ play: false });
         this.setState({ score: this.state.count });
         this.setState({ count: 0 });
         this.setState({ gameOver: true });
+        document.removeEventListener("keydown", this.onKeyDown, false);
+        clearInterval(this.state.intervalId);
       }
     }
   };
@@ -75,18 +77,39 @@ class CarGame extends React.Component<
   };
 
   startGame = () => {
+    this.setState({ gameOver: false });
     this.setState({ play: true });
-    setInterval(this.gameOver, 10);
+    this.setState({ intervalId: setInterval(this.gameOver, 1) });
+  };
+
+  setBlueCarLeft = (value: number) => {
+    this.setState({ blueCarLeft: value });
+  };
+  setBlueCarTop = (value: number) => {
+    this.setState({ blueCarTop: value });
+  };
+  setCount = (value: number) => {
+    this.setState({ count: value });
   };
 
   render() {
     const gameScore: number = this.state.score as number;
     let scoreCard, blueCar;
-    if (this.state.score !== 0) {
+    if (this.state.gameOver) {
       scoreCard = <ResultsCard score={gameScore} />;
+    } else {
+      scoreCard = <></>;
     }
     if (this.state.play) {
-      blueCar = <BlueCar />;
+      blueCar = (
+        <BlueCar
+          show={!this.state.gameOver}
+          blueCarLeft={this.state.blueCarLeft}
+          setBlueCarLeft={this.setBlueCarLeft}
+          count={this.state.count}
+          setCount={this.setCount}
+        />
+      );
     }
     return (
       <div>
@@ -97,11 +120,7 @@ class CarGame extends React.Component<
         >
           Start
         </button>
-        <div
-          id="game"
-          className={carstyles.game}
-          style={{ display: this.state.gameOver ? "none" : "block" }}
-        >
+        <div id="game" className={carstyles.game} style={{ display: "block" }}>
           {blueCar}
           <div id="redCar" className="redCar">
             <Image

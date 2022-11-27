@@ -1,38 +1,29 @@
-import React, { useTransition } from "react";
+import React from "react";
 import Image from "next/image";
 import blueCarStyles from "./styles/blueCar.module.scss";
+import { blueCar } from "lib/types/components/games/carGame.types";
+import { useEffect } from "react";
 
-class BlueCar extends React.Component<
-  {},
-  {
-    show: boolean;
-    blueCarLeft: number;
-  }
-> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      show: false,
-      blueCarLeft: 138,
-    };
-  }
-
-  onAnimationIteration = () => {
+const BlueCar: React.FC<blueCar> = ({
+  show,
+  blueCarLeft,
+  setBlueCarLeft,
+  count,
+  setCount,
+}) => {
+  const onAnimationIteration = () => {
     const carlefts = [138, 231, 324, 417];
     let random = Math.floor(Math.random() * carlefts.length);
-    this.setState({blueCarLeft: carlefts[random]});
+    setBlueCarLeft(carlefts[random]);
+    setCount(count + 1);
   };
 
-  componentDidMount(): void {
-    this.setState({ show: true });
-  }
-
-  render() {
+  if (show) {
     return (
       <div
         id="blueCar"
         className="blueCar"
-        onAnimationIteration={this.onAnimationIteration}
+        onAnimationIteration={onAnimationIteration}
       >
         <Image
           src="/images/blue.png"
@@ -40,11 +31,13 @@ class BlueCar extends React.Component<
           width={50}
           height={100}
           className={blueCarStyles.blueCar}
-          style={{ left: this.state.blueCarLeft }}
+          style={{ left: blueCarLeft }}
         />
       </div>
     );
+  } else {
+    return <></>;
   }
-}
+};
 
 export default BlueCar;
