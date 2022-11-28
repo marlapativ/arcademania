@@ -1,5 +1,5 @@
 import React from "react";
-import ModalComponent from "lib/components/common/modal/modal";
+import ModalComponent from "lib/components/common/modal/Modal";
 import { resultCardProps } from "lib/types/components/games/carGame.types";
 
 const ResultsCard: React.FC<resultCardProps> = ({ score, buttonAction }) => {
