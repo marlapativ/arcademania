@@ -1,3 +1,5 @@
+import snakeGameStyles from "./styles/snakeGame.module.scss"
+
 interface SnakeProps {
   snakeDots: number[][];
 }
@@ -10,7 +12,7 @@ export default function Snake(props: SnakeProps) {
           left: `${dot[0]}%`,
           top: `${dot[1]}%`,
         };
-        return <div className="snake-dot" key={index} style={styleDot}></div>;
+        return <div className={snakeGameStyles.snake} key={index} style={styleDot}></div>;
       })}
     </div>
   );

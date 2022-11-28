@@ -8,6 +8,8 @@ import { Container } from "@chakra-ui/react";
 import { carGameProps } from "lib/types/components/games/carGame.types";
 // import CarGameStartModal from "./carGameStartModal";
 import ModalComponent from "lib/components/common/modal/modal";
+import GameStatusMessage from "../gameMessage/GameStatusMessage";
+import AlertComponent from "lib/components/common/alert/alert";
 
 class CarGame extends React.Component<{}, carGameProps> {
   constructor(props: any) {
@@ -116,17 +118,19 @@ class CarGame extends React.Component<{}, carGameProps> {
     }
     return (
       <Container>
-        <ModalComponent
-        modalHeader={"start the Car Game"}
-        modalCotent={""}
-        actionButtonText={"Start Game"}
-        buttonAction={this.startGame}
-      />
+        {/* <GameStatusMessage show={true} playAgain={this.startGame} score={this.state.score} win={true} key={1} /> */}
+        
         <Container
           id="game"
           className={carstyles.game}
           style={{ display: "block" }}
         >
+          <ModalComponent
+        modalHeader={"start the Car Game"}
+        modalCotent={""}
+        actionButtonText={"Start Game"}
+        buttonAction={this.startGame}
+      />
           {blueCar}
           <Container id="redCar" className="redCar">
             <Image

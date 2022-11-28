@@ -1,3 +1,4 @@
+import snakeGameStyles from "./styles/snakeGame.module.scss"
 interface FoodProps {
   dot: number[];
 }
@@ -7,5 +8,5 @@ export default function Food(props: FoodProps) {
     left: `${props.dot[0]}%`,
     top: `${props.dot[1]}%`,
   };
-  return <div className="snake-food" style={styleFood}></div>;
+  return <div className={snakeGameStyles.food} style={styleFood}></div>;
 }

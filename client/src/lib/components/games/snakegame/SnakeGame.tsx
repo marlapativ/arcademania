@@ -2,12 +2,13 @@ import React from "react";
 import Food from "./Food";
 import Snake from "./Snake";
 import InfoScore from "./InfoScore";
+import snakeGameStyles from "./styles/snakeGame.module.scss"; 
 
 const getRandomCoords = () => {
   let min = 1;
   let max = 90;
-  let x = Math.floor((Math.random() * (max - min + 1) + min) / 2) * 2;
-  let y = Math.floor((Math.random() * (max - min + 1) + min) / 2) * 2;
+  let x = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 2;
+  let y = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 2;
   return [x, y];
 };
 
@@ -20,7 +21,7 @@ const initialState = {
   direction: "RIGHT",
   snakeDots: [
     [0, 0],
-    [2, 0],
+    [5, 0],
   ],
 };
 
@@ -65,16 +66,16 @@ class SnakeGame extends React.Component {
 
     switch (this.state.direction) {
       case "RIGHT":
-        head = [head[0] + 2, head[1]];
+        head = [head[0] + 5, head[1]];
         break;
       case "LEFT":
-        head = [head[0] - 2, head[1]];
+        head = [head[0] - 5, head[1]];
         break;
       case "DOWN":
-        head = [head[0], head[1] + 2];
+        head = [head[0], head[1] + 5];
         break;
       case "UP":
-        head = [head[0], head[1] - 2];
+        head = [head[0], head[1] - 5];
         break;
     }
     if (!this.state.pause && this.state.play) {
@@ -168,7 +169,7 @@ class SnakeGame extends React.Component {
         </div>
         {this.state.play ? (
           <div
-            className={`game-area ${
+            className={`${snakeGameStyles.gameArea} ${
               this.state.pause ? "bg-gray-500" : "bg-gray-200"
             } rounded-lg`}
           >

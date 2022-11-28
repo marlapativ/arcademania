@@ -1,10 +1,7 @@
+import { score } from "lib/types/components/games/games.common";
 import { useEffect, useState } from "react";
 
-interface InfoScoreProps {
-  score: number;
-}
-
-export default function InfoScore(props: InfoScoreProps) {
+export default function InfoScore(props: score) {
   const [bestScore, setBestScore] = useState<number>(0);
   useEffect(() => {
     if (props.score > bestScore) {
