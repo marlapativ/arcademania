@@ -5644,6 +5644,11 @@
     "workbox-webpack-plugin" "^6.5.4"
     "workbox-window" "^6.5.4"
 
+"next-redux-wrapper@^8.0.0":
+  "integrity" "sha512-zKRdpvDeqNXQr1j5DUWwsB2fz6XpHR32iy2qJGItTKLsbLB9GvtxDL9b4mFCfhDvnzy5dw97UqMjWDpFY8h0zA=="
+  "resolved" "https://registry.npmjs.org/next-redux-wrapper/-/next-redux-wrapper-8.0.0.tgz"
+  "version" "8.0.0"
+
 "next-seo@^5.8.0":
   "integrity" "sha512-V5W/JwqdoX6/0zG4S7m5g8zNajYffytWigkPo2hrbHhLD18yGFBU9607OPhvbI9zX3QjWQFMBSmlUY456xt9cA=="
   "resolved" "https://registry.npmjs.org/next-seo/-/next-seo-5.8.0.tgz"
@@ -5657,7 +5662,7 @@
     "@corex/deepmerge" "^4.0.29"
     "minimist" "^1.2.6"
 
-"next@*", "next@^13.0.1", "next@^8.1.1-canary.54 || >=9.0.0", "next@>=9.0.0":
+"next@*", "next@^13.0.1", "next@^8.1.1-canary.54 || >=9.0.0", "next@>=9", "next@>=9.0.0":
   "integrity" "sha512-ErCNBPIeZMKFn6hX+ZBSlqZVgJIeitEqhGTuQUNmYXJ07/A71DZ7AJI8eyHYUdBb686LUpV1/oBdTq9RpzRVPg=="
   "resolved" "https://registry.npmjs.org/next/-/next-13.0.1.tgz"
   "version" "13.0.1"
@@ -6203,7 +6208,7 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   "version" "18.2.0"
 
-"react-redux@^7.2.1 || ^8.0.2", "react-redux@^8.0.5":
+"react-redux@*", "react-redux@^7.2.1 || ^8.0.2", "react-redux@^8.0.5":
   "integrity" "sha512-Q2f6fCKxPFpkXt1qNRZdEDLlScsDWyrgSj0mliK59qU6W5gvBiKkdMEG2lJzhd1rCctf0hb6EtePPLZ2e0m1uw=="
   "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-8.0.5.tgz"
   "version" "8.0.5"
