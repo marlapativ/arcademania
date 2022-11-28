@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-
+import { AnyFunction } from "@chakra-ui/utils";
 import type { ReactChildrenProps } from "../globals";
 
 export interface GameInfoProps extends ReactChildrenProps {
@@ -38,4 +38,15 @@ export type UserInfo = UserId & {
 export type UseCallbackFunc<T> = {
   apply: () => void;
   data: T;
+};
+
+export type AuthInfo = {
+  token: string;
+};
+
+export type ModalDataProps = {
+  modalHeader: string;
+  modalCotent: any;
+  actionButtonText: string;
+  buttonAction: AnyFunction;
 };

@@ -41,6 +41,38 @@
                     }
                 }
             }
+        },
+        "/auth/signin": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "User Login",
+                "description": "login in an user in to the application",
+                "operationId": "User",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Login object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User logged In successfully"
+                    },
+                    "500": {
+                        "description": "User couldn't be loggedIn"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -51,6 +83,20 @@
                     "type": "string"
                 },
                 "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Login": {
+            "type": "object",
+            "properties": {
+                "username": {
                     "type": "string"
                 },
                 "password": {

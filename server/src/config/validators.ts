@@ -21,3 +21,4 @@ passwordValidatorSchema
     .has().digits(1)                                // Must have at least 2 digits
     .has().symbols()
     .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+

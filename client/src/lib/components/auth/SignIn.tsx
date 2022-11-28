@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -18,124 +17,140 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import {
-  FiEye,
-  FiEyeOff
-} from 'react-icons/fi';
 import { Formik, Field } from "formik";
+import React, { useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
+
+import { getAccessToken } from "lib/services/auth-service";
+import ToastMessage from "../common/toastMessages/ToastMessage";
+import messages from "../common/toastMessages/Messages.json";
+import {signIn} from "next-auth/react";
 
 const SignInDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [input, setInput] = useState('');
-  const [showPassword, setShowPassword] = useState(false)
-  const handleClick = () => setShowPassword(!showPassword)
-  let isError = false;
-
-  const login = (values: any) => {
-    onClose();
-  }
-  const showErrorMessage = (e:any) => {
-    setInput(e.target.value)
-    isError = input === ''
-  }
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClick = () => setShowPassword(!showPassword);
+  const login = async (values: JSON) => {
+    signIn();
+    const accessTokenObj = await getAccessToken(values);
+    if (accessTokenObj.status === 200) {
+      <ToastMessage messageTitle = {messages.signinSuccessTitle} messageDesc = {messages.siginSuccessDesc}/>;
+      onClose();
+    } else {
+      <ToastMessage messageTitle = {messages.signinFailureTitle} messageDesc = {messages.signinFailureDesc}/>;
+      onClose();
+    }
+  };
 
   return (
     <>
-      <Button variant='outline'
-        display={{ base: 'none', md: 'inline-flex' }} color={'white'} bg={'blue.400'}
+      <Button
+        variant="outline"
+        display={{ base: "none", md: "inline-flex" }}
+        color="white"
+        bg="blue.400"
         _hover={{
-          bg: 'blue.300',
+          bg: "blue.300",
         }}
         onClick={onOpen}
-        >
-       Sign In
+      >
+        Sign In
       </Button>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">
-            Login
-          </DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">Login</DrawerHeader>
 
           <DrawerBody>
-          <Formik
-          initialValues={{
-            email: "",
-            password: ""
-          }}
-          onSubmit={(values) => {
-            login(values);
-          }}
-        >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack spacing={4} align="flex-start">
-                <FormControl isInvalid={!!errors.email && touched.email}>
-                  <FormLabel htmlFor="email">Email Address</FormLabel>
-                  <Field
-                    as={Input}
-                    id="email"
-                    name="email"
-                    type="email"
-                    variant="filled"
-                    validate={(value: string | any[]) => {
-                        let error;
-                        if (value.length == 0 || (value && value.includes('@'))) {
-                          error = "Invalid email address";
-                        }
-                        return error;
-                      }}
-                  />
-                   <FormErrorMessage>{errors.email}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors.password && touched.password}>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <InputGroup size='md'>
-                <InputLeftAddon
-              backgroundColor="white"
-              color="gray.500"
-              children={<Box as={MdVpnKey} />}
-            />
-                   <Field
-                    as={Input}
-                    id="password"
-                    name="password"
-                    type={showPassword ? 'text' : 'password'}
-                    variant="filled"
-                    validate={(value: string | any[]) => {
-                      let error;
+            <Formik
+              initialValues={{
+                username: "",
+                password: "",
+              }}
+              onSubmit={(values) => {
+                login(JSON.parse(JSON.stringify(values)));
+              }}
+            >
+              {({ handleSubmit, errors, touched }) => (
+                <form onSubmit={handleSubmit}>
+                  <VStack spacing={4} align="flex-start">
+                    <FormControl
+                      isInvalid={!!errors.username && touched.username}
+                    >
+                      <FormLabel htmlFor="username">UserName</FormLabel>
+                      <Field
+                        as={Input}
+                        id="username"
+                        name="username"
+                        type="username"
+                        variant="filled"
+                        validate={(value: string) => {
+                          let error;
+                          if (!value) {
+                            error = "username is required";
+                          } else if (
+                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                              value
+                            )
+                          ) {
+                            error = "Invalid username address";
+                          }
+                          return error;
+                        }}
+                      />
+                      <FormErrorMessage>{errors.username}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl
+                      isInvalid={!!errors.password && touched.password}
+                    >
+                      <FormLabel htmlFor="password">Password</FormLabel>
+                      <InputGroup size="md">
+                        <InputLeftAddon
+                          backgroundColor="white"
+                          color="gray.500"
+                        >
+                          <Box as={MdVpnKey} />
+                        </InputLeftAddon>
+                        <Field
+                          as={Input}
+                          id="password"
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          variant="filled"
+                          validate={(value: string) => {
+                            let error;
 
-                      if (value.length < 5) {
-                        error = "Password must contain at least 6 characters";
-                      }
+                            if (value.length < 5) {
+                              error =
+                                "Password must contain at least 6 characters";
+                            }
 
-                      return error;
-                    }}
-                  />
-                  <InputRightElement width='4.5rem'>
-                    <Button h='1.75rem' size='sm' onClick={handleClick}>
-                      {showPassword ? <FiEyeOff/> : <FiEye/>}
+                            return error;
+                          }}
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {showPassword ? <FiEyeOff /> : <FiEye />}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+
+                      <FormErrorMessage>{errors.password}</FormErrorMessage>
+                    </FormControl>
+                    <Button type="submit" colorScheme="blue" width="full">
+                      Login
                     </Button>
-                  </InputRightElement>
-                </InputGroup>
-                 
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
-                </FormControl>
-                <Button type="submit" colorScheme="blue" width="full">
-                  Login
-                </Button>
-              </VStack>
-            </form>
-          )}
-        </Formik>
+                  </VStack>
+                </form>
+              )}
+            </Formik>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
   );
-
 };
 
 export default SignInDrawer;

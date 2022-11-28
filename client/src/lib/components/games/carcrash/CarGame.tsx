@@ -1,92 +1,149 @@
 import React from "react";
+
 import BlueCar from "./BlueCar";
-import RedCar from "./RedCar";
 import ResultsCard from "./ResultsCard";
-import carstyles from './styles/carCrash.module.scss';
+import carstyles from "./styles/carCrash.module.scss";
+import Image from "next/image";
+import { Container } from "@chakra-ui/react";
+import { carGameProps } from "lib/types/components/games/carGame.types";
+import ModalComponent from "lib/components/common/modal/Modal";
 
-const initialState = {
-    play: false,
-    gameOver: false,
-    direction: 'RIGHT',
-    result: 0,
-    count: 0,
-    score: 0
-}
+class CarGame extends React.Component<{}, carGameProps> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      play: false,
+      gameOver: false,
+      count: 0,
+      score: 0,
+      redCarLeft: 108,
+      blueCarLeft: 108,
+      blueCarTop: 5,
+      intervalId: setTimeout(() => {}, 1),
+    };
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.gameOver = this.gameOver.bind(this);
+    this.startGame = this.startGame.bind(this);
+    this.moveRedCar = this.moveRedCar.bind(this);
+  }
 
-class CarGame extends React.Component{
-    state = initialState;
-    
-    setGameOver = (status: boolean) => {
-        this.state.gameOver = status;
-    }
-    
-    componentDidMount(): void {
-        setInterval(this.gameOver, 10)
-        document.onkeydown = this.onKeyDown;
+  componentDidMount() {
+    document.onkeydown = this.onKeyDown;
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.onKeyDown, false);
+    clearInterval(this.state.intervalId);
   }
 
   gameOver = () => {
-    let blueCar = document.getElementById('blueCar');
-    let redCar = document.getElementById('redCar');
-    if(blueCar!=null && redCar !=null){
-        let blueCartop = blueCar.getBoundingClientRect()['top'];
-        let blueCarleft= blueCar.getBoundingClientRect()['left'];
-        let redCarleft= redCar.getBoundingClientRect()['left'];
-        if(blueCarleft === redCarleft && (blueCartop>340) && blueCartop<450){
-            this.state.score = this.state.count
-            this.state.count = 0;
-        }
+    const blueCartopelem = document
+      .getElementById("blueCar")
+      ?.getElementsByTagName("img")[0]!;
+    if (blueCartopelem) {
+      const blueCartop = blueCartopelem.offsetTop;
+      const blueCarleft = this.state.blueCarLeft;
+      const redCarleft = this.state.redCarLeft;
+      if (blueCarleft === redCarleft && blueCartop > 350 && blueCartop < 510) {
+        this.setState({ play: false });
+        this.setState({ score: this.state.count });
+        this.setState({ count: 0 });
+        this.setState({ gameOver: true });
+        document.removeEventListener("keydown", this.onKeyDown, false);
+        clearInterval(this.state.intervalId);
+      }
     }
-}
-    onKeyDown = (e: any) => {
-        switch (e.keyCode) {
-              case 38:
-                  this.setState({direction: 'UP'});
-                  break;
-              case 37:
-                  this.setState({direction: 'LEFT'});
-                  break;
-        }
-    }
+  };
 
-    animation = () => {
-        let random = (Math.floor(Math.random()*5)*93);
-        if(random == 0 || random == 1){
-            random = 93;
-        }
-        let blueCar = document.getElementById('blueCar');
-        if(blueCar!=null)
-            blueCar.style.left = random +'px';
-        this.state.count++;
-    } 
-
-    startGame = () => {
-        this.state.play = true;
-        let blueCar = document.getElementById('blueCar');
-        if(blueCar != null){
-            blueCar.addEventListener('animationiteration', this.animation);
-        }
-        setInterval(this.gameOver, 10);
+  moveRedCar = (direction: string) => {
+    if (direction === "RIGHT") {
+      if (this.state.redCarLeft < 378) {
+        this.setState({ redCarLeft: this.state.redCarLeft + 90 });
+      }
+    } else {
+      if (this.state.redCarLeft > 108) {
+        this.setState({ redCarLeft: this.state.redCarLeft - 90 });
+      }
     }
-    
+  };
 
-    render(){
-        return(
-        <div>
-            <button id="start" className={carstyles.startBtn} onClick={this.startGame}>Start</button>
-            <div id="game" className={carstyles.game} style={{display: this.state.gameOver?"none":"block"}}>
-                if({this.state.play}){
-                    <BlueCar/>
-                }
-                
-                <RedCar/>
-            </div>
-            if({this.state.score} != 0){
-                <ResultsCard score={this.state.score} />
-            }
-        </div>
-        )
+  onKeyDown = (e: any) => {
+    switch (e.keyCode) {
+      case 39:
+        this.moveRedCar("RIGHT");
+        break;
+      case 37:
+        this.moveRedCar("LEFT");
+        break;
     }
+  };
+
+  startGame = () => {
+    this.setState({ gameOver: false });
+    this.setState({ play: true });
+    this.setState({ intervalId: setInterval(this.gameOver, 1) });
+  };
+
+  setBlueCarLeft = (value: number) => {
+    this.setState({ blueCarLeft: value });
+  };
+  setBlueCarTop = (value: number) => {
+    this.setState({ blueCarTop: value });
+  };
+  setCount = (value: number) => {
+    this.setState({ count: value });
+  };
+
+  render() {
+    const gameScore: number = this.state.score as number;
+    let scoreCard, blueCar;
+    if (this.state.gameOver) {
+      scoreCard = <ResultsCard score={gameScore} buttonAction={this.startGame}/>;
+    } else {
+      scoreCard = <></>;
+    }
+    if (this.state.play) {
+      blueCar = (
+        <BlueCar
+          show={!this.state.gameOver}
+          blueCarLeft={this.state.blueCarLeft}
+          setBlueCarLeft={this.setBlueCarLeft}
+          count={this.state.count}
+          setCount={this.setCount}
+        />
+      );
+    }
+    return (
+      <Container>
+        {/* <GameStatusMessage show={true} playAgain={this.startGame} score={this.state.score} win={true} key={1} /> */}
+        
+        <Container
+          id="game"
+          className={carstyles.game}
+          style={{ display: "block" }}
+        >
+          <ModalComponent
+        modalHeader={"start the Car Game"}
+        modalCotent={""}
+        actionButtonText={"Start Game"}
+        buttonAction={this.startGame}
+      />
+          {blueCar}
+          <Container id="redCar" className="redCar">
+            <Image
+              src="/images/red.png"
+              alt="RedCar"
+              width={50}
+              height={100}
+              className={carstyles.redCar}
+              style={{ left: this.state.redCarLeft }}
+            />
+          </Container>
+        </Container>
+        {scoreCard}
+      </Container>
+    );
+  }
 }
 
 export default CarGame;

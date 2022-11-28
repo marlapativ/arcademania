@@ -1,13 +1,16 @@
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from "react";
+import React from "react";
+import ModalComponent from "lib/components/common/modal/modal";
+import { resultCardProps } from "lib/types/components/games/carGame.types";
 
-const ResultsCard = (score: number | any) => {
-    return (
-        <div id="result" className="resultCard">
-        <h1>Game Over</h1>
-        <p id="score" className="score">Your score is  {score}</p>
-        <button id="btn" className="restartBtn">restart</button>
-    </div>
-    );
-  };
-  
-  export default ResultsCard;
+const ResultsCard: React.FC<resultCardProps> = ({ score, buttonAction }) => {
+  return (
+    <ModalComponent
+    modalHeader={"Game Over"}
+    modalCotent={"Your score is "+score}
+    actionButtonText={"ReStart"}
+    buttonAction={buttonAction}
+  />
+  );
+};
+
+export default ResultsCard;
