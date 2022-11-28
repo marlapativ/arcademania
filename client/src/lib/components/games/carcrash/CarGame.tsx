@@ -6,10 +6,7 @@ import carstyles from "./styles/carCrash.module.scss";
 import Image from "next/image";
 import { Container } from "@chakra-ui/react";
 import { carGameProps } from "lib/types/components/games/carGame.types";
-// import CarGameStartModal from "./carGameStartModal";
-import ModalComponent from "lib/components/common/modal/modal";
-import GameStatusMessage from "../gameMessage/GameStatusMessage";
-import AlertComponent from "lib/components/common/alert/alert";
+import ModalComponent from "lib/components/common/modal/Modal";
 
 class CarGame extends React.Component<{}, carGameProps> {
   constructor(props: any) {
