@@ -1,25 +1,25 @@
-import { IUser, ISignINUser } from "../../types/models/user-types";
+import { IUser, ISignInUser } from "../../types/models/user.types";
 import { User } from "../../models/index";
 import { comparePassword } from "../../config/crypto";
 import { authSecret } from "../../config/auth-config";
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 export const createUser = async (user: IUser) => {
   const newUser = new User(user);
   return newUser.save();
 };
 
-export const loginUser = async (SignINuser: ISignINUser) => {
+export const loginUser = async (signInUser: ISignInUser) => {
   const user =  await User.findOne({
     raw: true,
     where: {
-    username: SignINuser.username,
+    username: signInUser.username,
   }});
     if (!user) {
       throw new Error("User Not found");
     }
 
-    const passwordIsValid = await comparePassword(SignINuser.password, (await user).password);
+    const passwordIsValid = await comparePassword(signInUser.password, (await user).password);
     if (!passwordIsValid) {
       throw new Error("Invalid Password");
     }

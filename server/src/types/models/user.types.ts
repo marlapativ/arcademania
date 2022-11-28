@@ -5,7 +5,7 @@ export interface IUser {
     password: string
 }
 
-export interface ISignINUser{
+export interface ISignInUser{
     username: string,
     password: string
 }
