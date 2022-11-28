@@ -4,16 +4,19 @@ import {
   Heading,
   Spinner,
   Stack,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import { getLeaderboard } from "lib/services/leaderboard-service";
+import { getLeaderboard as getLeaderboardService } from "lib/services/leaderboard-service";
+import {
+  getLeaderboard,
+  setGameLeaderboard,
+} from "lib/store/slices/leaderboardSlice";
+import { useDispatch, useSelector } from "lib/store/store";
 import type { GameInfoProps } from "lib/types/components/common";
-import type {
-  LeaderboardItemContainerProps,
-  LeaderboardItemData,
-} from "lib/types/components/leaderboard/leaderboard.types";
+import type { LeaderboardItemContainerProps } from "lib/types/components/leaderboard/leaderboard.types";
 
 import LeaderboardItemContainer from "./leaderboardItem/LeaderboardItem";
 
@@ -44,7 +47,11 @@ const LeaderboardElement: React.FC<LeaderboardItemContainerProps> = ({
           >
             Top Players
           </Heading>
-          <LeaderboardItemContainer users={users} />
+          {users && users.length > 0 ? (
+            <LeaderboardItemContainer users={users} />
+          ) : (
+            <Text>No Top Score</Text>
+          )}
         </Stack>
       </Box>
     </Center>
@@ -66,15 +73,21 @@ const Loader: React.FC = () => {
 };
 
 const Leaderboard: React.FC<GameInfoProps> = ({ id }) => {
-  const [leaderboard, setLeaderboard] = useState<LeaderboardItemData[]>([]);
+  const dispatch = useDispatch();
+  const leaderboard = useSelector(getLeaderboard)[id];
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getLeaderboard(id).then((data) => {
-      setLeaderboard(data);
-      setIsLoading(false);
-    });
-  }, [id]);
+    if (leaderboard == null) {
+      setIsLoading(true);
+      getLeaderboardService(id).then((data) => {
+        dispatch(setGameLeaderboard({ gameId: id, data }));
+        setIsLoading(false);
+      });
+    }
+    setIsLoading(false);
+  }, [dispatch, id, leaderboard]);
 
   return isLoading ? <Loader /> : <LeaderboardElement users={leaderboard} />;
 };
