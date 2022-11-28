@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
+import { Container } from "@chakra-ui/react";
 import blueCarStyles from "./styles/blueCar.module.scss";
 import { blueCar } from "lib/types/components/games/carGame.types";
-import { useEffect } from "react";
 
 const BlueCar: React.FC<blueCar> = ({
   show,
@@ -12,7 +12,7 @@ const BlueCar: React.FC<blueCar> = ({
   setCount,
 }) => {
   const onAnimationIteration = () => {
-    const carlefts = [138, 231, 324, 417];
+    const carlefts = [108, 198, 288, 378];
     let random = Math.floor(Math.random() * carlefts.length);
     setBlueCarLeft(carlefts[random]);
     setCount(count + 1);
@@ -20,7 +20,7 @@ const BlueCar: React.FC<blueCar> = ({
 
   if (show) {
     return (
-      <div
+      <Container
         id="blueCar"
         className="blueCar"
         onAnimationIteration={onAnimationIteration}
@@ -33,7 +33,7 @@ const BlueCar: React.FC<blueCar> = ({
           className={blueCarStyles.blueCar}
           style={{ left: blueCarLeft }}
         />
-      </div>
+      </Container>
     );
   } else {
     return <></>;

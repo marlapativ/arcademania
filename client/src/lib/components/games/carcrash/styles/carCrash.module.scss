@@ -9,7 +9,7 @@
 
 .game{
     height: 600px;
-    width: 600px;
+    width: 600px !important;
     border: 1px solid black;
     margin: 1rem auto;
     background-image: url("../../../../../../public/images/road.png");

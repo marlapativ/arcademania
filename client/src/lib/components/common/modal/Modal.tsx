@@ -13,19 +13,18 @@ import { ModalDataProps } from "lib/types/components/common";
 import React from "react";
 
 const ModalComponent: React.FC<ModalDataProps> = ({
-  isOpen,
-  onClose,
   modalHeader,
   modalCotent,
   actionButtonText,
   buttonAction,
 }) => {
+    const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const setActionButton = () => {
     buttonAction();
     onClose();
   }
   return (
-    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+    <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{modalHeader}</ModalHeader>

@@ -17,3 +17,8 @@ export interface carGameProps {
   blueCarTop: number;
   intervalId: ReturnType<typeof setTimeout>;
 }
+
+export interface resultCardProps{
+    score: number;
+    buttonAction: AnyFunction;
+}

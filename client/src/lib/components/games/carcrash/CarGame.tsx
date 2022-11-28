@@ -4,7 +4,10 @@ import BlueCar from "./BlueCar";
 import ResultsCard from "./ResultsCard";
 import carstyles from "./styles/carCrash.module.scss";
 import Image from "next/image";
+import { Container } from "@chakra-ui/react";
 import { carGameProps } from "lib/types/components/games/carGame.types";
+// import CarGameStartModal from "./carGameStartModal";
+import ModalComponent from "lib/components/common/modal/modal";
 
 class CarGame extends React.Component<{}, carGameProps> {
   constructor(props: any) {
@@ -14,8 +17,8 @@ class CarGame extends React.Component<{}, carGameProps> {
       gameOver: false,
       count: 0,
       score: 0,
-      redCarLeft: 138,
-      blueCarLeft: 138,
+      redCarLeft: 108,
+      blueCarLeft: 108,
       blueCarTop: 5,
       intervalId: setTimeout(() => {}, 1),
     };
@@ -55,12 +58,12 @@ class CarGame extends React.Component<{}, carGameProps> {
 
   moveRedCar = (direction: string) => {
     if (direction === "RIGHT") {
-      if (this.state.redCarLeft < 372) {
-        this.setState({ redCarLeft: this.state.redCarLeft + 93 });
+      if (this.state.redCarLeft < 378) {
+        this.setState({ redCarLeft: this.state.redCarLeft + 90 });
       }
     } else {
-      if (this.state.redCarLeft > 138) {
-        this.setState({ redCarLeft: this.state.redCarLeft - 93 });
+      if (this.state.redCarLeft > 108) {
+        this.setState({ redCarLeft: this.state.redCarLeft - 90 });
       }
     }
   };
@@ -96,7 +99,7 @@ class CarGame extends React.Component<{}, carGameProps> {
     const gameScore: number = this.state.score as number;
     let scoreCard, blueCar;
     if (this.state.gameOver) {
-      scoreCard = <ResultsCard score={gameScore} />;
+      scoreCard = <ResultsCard score={gameScore} buttonAction={this.startGame}/>;
     } else {
       scoreCard = <></>;
     }
@@ -112,17 +115,20 @@ class CarGame extends React.Component<{}, carGameProps> {
       );
     }
     return (
-      <div>
-        <button
-          id="start"
-          className={carstyles.startBtn}
-          onClick={this.startGame}
+      <Container>
+        <ModalComponent
+        modalHeader={"start the Car Game"}
+        modalCotent={""}
+        actionButtonText={"Start Game"}
+        buttonAction={this.startGame}
+      />
+        <Container
+          id="game"
+          className={carstyles.game}
+          style={{ display: "block" }}
         >
-          Start
-        </button>
-        <div id="game" className={carstyles.game} style={{ display: "block" }}>
           {blueCar}
-          <div id="redCar" className="redCar">
+          <Container id="redCar" className="redCar">
             <Image
               src="/images/red.png"
               alt="RedCar"
@@ -131,10 +137,10 @@ class CarGame extends React.Component<{}, carGameProps> {
               className={carstyles.redCar}
               style={{ left: this.state.redCarLeft }}
             />
-          </div>
-        </div>
+          </Container>
+        </Container>
         {scoreCard}
-      </div>
+      </Container>
     );
   }
 }

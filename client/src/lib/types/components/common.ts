@@ -45,8 +45,6 @@ export type AuthInfo = {
 };
 
 export type ModalDataProps = {
-  isOpen: boolean;
-  onClose: AnyFunction;
   modalHeader: string;
   modalCotent: any;
   actionButtonText: string;
