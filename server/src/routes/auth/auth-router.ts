@@ -4,7 +4,7 @@ import * as authController from "../../controllers/auth-controller";
 // Creating a new Router for Auth
 const router = express.Router();
 
-// Singup Route
+// Signup Route
 router.route('/auth/signup').post(authController.createUser);
 
 // Signin Route

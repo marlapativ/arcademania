@@ -4,6 +4,15 @@ import { Leaderboard } from "../../models/leaderboard/leaderboard";
 export const getLeaderboard = (
   gameId: number
 ): Promise<ILeaderboardGameData[]> => {
+  if(gameId === 0){
+    // TODO: Fill this
+    // 1. Need to sum all the scores by user
+    // 2. Sort by score and get the top 10.
+    // 3. Cast to response object. Refer below.
+    return Promise.resolve([]);
+  }
+
+
   const data = Leaderboard.aggregate<ILeaderboardGameData>([
     {
       $match: {
