@@ -1,3 +1,4 @@
+import { Leaderboard } from './leaderboard/leaderboard';
 import { User } from './user/user'
 
-export { User };
+export { User, Leaderboard };

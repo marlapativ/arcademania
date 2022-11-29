@@ -11,15 +11,13 @@ export const createUser = async (user: IUser) => {
 
 export const loginUser = async (signInUser: ISignInUser) => {
   const user =  await User.findOne({
-    raw: true,
-    where: {
-    username: signInUser.username,
-  }});
+    username: signInUser.username
+  });
     if (!user) {
       throw new Error("User Not found");
     }
 
-    const passwordIsValid = await comparePassword(signInUser.password, (await user).password);
+    const passwordIsValid = await user.comparePassword(signInUser.password);
     if (!passwordIsValid) {
       throw new Error("Invalid Password");
     }
@@ -28,7 +26,7 @@ export const loginUser = async (signInUser: ISignInUser) => {
       expiresIn: 86400,
     });
 
-    const resfreshToken = jwt.sign({ type: 'refresh' }, authSecret.secret, {
+    const refreshToken = jwt.sign({ type: 'refresh' }, authSecret.secret, {
         expiresIn: '2h'
       });
 
@@ -37,7 +35,7 @@ export const loginUser = async (signInUser: ISignInUser) => {
       username: user.username,
       email: user.email,
       accessToken: token,
-      refreshToken: resfreshToken
+      refreshToken
     }
     return res;
   }
