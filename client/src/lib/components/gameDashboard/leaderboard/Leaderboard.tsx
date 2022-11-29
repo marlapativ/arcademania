@@ -79,7 +79,7 @@ const Leaderboard: React.FC<GameInfoProps> = ({ id }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (leaderboard == null) {
+    if (leaderboard == null && !Number.isNaN(id)) {
       setIsLoading(true);
       getLeaderboardService(id).then((data) => {
         dispatch(setGameLeaderboard({ gameId: id, data }));

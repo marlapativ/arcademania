@@ -12,8 +12,9 @@ const raiseAlert = (err: Error) => {
 };
 
 export const getLeaderboard = async (id: number) => {
+  const url = `${API_URL}leaderboard/${id}`;
   return axios
-    .get<LeaderboardItemData[]>(`${API_URL}leaderboard/${id}`)
+    .get<LeaderboardItemData[]>(url)
     .then((response) => response.data)
     .catch((error) => {
       raiseAlert(error);
