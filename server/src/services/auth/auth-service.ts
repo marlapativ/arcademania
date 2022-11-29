@@ -1,25 +1,23 @@
-import { IUser, ISignINUser } from "../../types/models/user-types";
+import { IUser, ISignInUser } from "../../types/models/user.types";
 import { User } from "../../models/index";
 import { comparePassword } from "../../config/crypto";
 import { authSecret } from "../../config/auth-config";
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 export const createUser = async (user: IUser) => {
   const newUser = new User(user);
   return newUser.save();
 };
 
-export const loginUser = async (SignINuser: ISignINUser) => {
+export const loginUser = async (signInUser: ISignInUser) => {
   const user =  await User.findOne({
-    raw: true,
-    where: {
-    username: SignINuser.username,
-  }});
+    username: signInUser.username
+  });
     if (!user) {
       throw new Error("User Not found");
     }
 
-    const passwordIsValid = await comparePassword(SignINuser.password, (await user).password);
+    const passwordIsValid = await user.comparePassword(signInUser.password);
     if (!passwordIsValid) {
       throw new Error("Invalid Password");
     }
@@ -28,7 +26,7 @@ export const loginUser = async (SignINuser: ISignINUser) => {
       expiresIn: 86400,
     });
 
-    const resfreshToken = jwt.sign({ type: 'refresh' }, authSecret.secret, {
+    const refreshToken = jwt.sign({ type: 'refresh' }, authSecret.secret, {
         expiresIn: '2h'
       });
 
@@ -37,7 +35,7 @@ export const loginUser = async (SignINuser: ISignINUser) => {
       username: user.username,
       email: user.email,
       accessToken: token,
-      refreshToken: resfreshToken
+      refreshToken
     }
     return res;
   }

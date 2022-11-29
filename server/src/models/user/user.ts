@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IUser } from '../../types/models/user-types';
+import { IUser } from '../../types/models/user.types';
 import { hashPassword, comparePassword } from '../../config/crypto';
 import { isValidEmail, isValidPassword } from '../../config/validators';
 
