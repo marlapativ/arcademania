@@ -7,8 +7,8 @@ import snakeGameStyles from "./styles/snakeGame.module.scss";
 const getRandomCoords = () => {
   let min = 1;
   let max = 90;
-  let x = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 2;
-  let y = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 2;
+  let x = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 5;
+  let y = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 5;
   return [x, y];
 };
 
