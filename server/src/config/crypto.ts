@@ -8,5 +8,4 @@ export const hashPassword = (password: string) : Promise<string> => {
 
 export const comparePassword = (hashedPassword: string, password: string) : Promise<boolean> => {
     return bcrypt.compare(password, hashedPassword);
-    
 }

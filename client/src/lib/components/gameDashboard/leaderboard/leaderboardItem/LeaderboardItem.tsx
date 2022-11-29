@@ -16,7 +16,7 @@ import type {
 import { numberWithCommas } from "lib/utils/numberUtils";
 
 const LeaderboardItem: React.FC<LeaderboardItemData> = ({
-  id,
+  userId,
   icon,
   index,
   name,
@@ -42,7 +42,7 @@ const LeaderboardItem: React.FC<LeaderboardItemData> = ({
       >
         <Stack py={2} direction="row" justifyContent="space-between">
           <Stack direction="row" align="center">
-            <GameAvatar id={id} name={name} icon={icon} />
+            <GameAvatar userId={userId} name={name} icon={icon} />
             <Text fontWeight={600}>{name}</Text>
           </Stack>
           <Stack direction="row" spacing={2} fontSize="2xl" alignItems="center">
@@ -67,11 +67,11 @@ const LeaderboardItemContainer: React.FC<LeaderboardItemContainerProps> = ({
       {users.map((e: LeaderboardItemData, i: number) => (
         <LeaderboardItem
           icon={e.icon}
-          id={e.id}
+          userId={e.userId}
           index={i}
           name={e.name}
           score={e.score}
-          key={e.id}
+          key={e.userId}
         />
       ))}
     </>
