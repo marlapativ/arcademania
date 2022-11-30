@@ -10,7 +10,7 @@ import {
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 
-const Page404 = () => {
+const ErrorPage404 = () => {
   const { colorMode } = useColorMode();
 
   return (
@@ -49,4 +49,4 @@ const Page404 = () => {
   );
 };
 
-export default Page404;
+export default ErrorPage404;
