@@ -2,9 +2,14 @@ import { Box, Flex, Grid, useColorModeValue } from "@chakra-ui/react";
 import _, { repeat } from "lodash";
 import { useState } from "react";
 
+import {
+  getLeaderboard,
+  saveScore,
+} from "../../../services/leaderboard-service";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
-import { saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
+import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
+import { useDispatch } from "lib/store/store";
 import type { Coordinate } from "lib/types/components/games/games.common";
 import type {
   MinesweeperGameProps,
@@ -92,6 +97,7 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
   columns,
   bombs,
 }) => {
+  const dispatch = useDispatch();
   const [game, setGame] = useState(createGame(rows, columns, bombs));
   const [score, setScore] = useState(0);
   const [showGameMessage, setShowGameMessage] = useState(false);
@@ -119,8 +125,17 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     );
   };
 
-  const saveGameScores = async (gameScore: number) => {
-    await saveScore(GAME_ID, getUser().id, gameScore);
+  const saveGameScores = (gameScore: number) => {
+    saveScore(GAME_ID, getUser().id, gameScore).then(() => {
+      getLeaderboard(GAME_ID).then((leaderboard) =>
+        dispatch(
+          setGameLeaderboard({
+            gameId: GAME_ID,
+            data: leaderboard,
+          })
+        )
+      );
+    });
   };
 
   const endGame = (didWin?: boolean) => {

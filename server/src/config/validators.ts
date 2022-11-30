@@ -1,6 +1,10 @@
 import validator from 'validator';
 import passwordValidator from 'password-validator';
 
+export const isValid = (value: any) => {
+    return value !== null && value !== undefined;
+}
+
 export const isValidEmail = (email: string) => {
     if (validator.isEmail(email)) {
         return true;

@@ -28,7 +28,7 @@ export type GameInfoComponent = GameInfo & {
 };
 
 export type UserId = {
-  id: number;
+  userId: string;
 };
 
 export type UserInfo = UserId & {

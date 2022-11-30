@@ -18,5 +18,4 @@ export type LeaderboardItemContainerProps = {
 
 export type SaveScoreResponse = {
   score: ScoreData;
-  leaderboard: LeaderboardItemData[];
 };

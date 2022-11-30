@@ -1,6 +1,6 @@
 import { CustomResponse, CustomRequest } from '../types/config/express-types';
 import * as authService from '../services/auth/auth-service';
-import { ISignINUser, IUser } from '../types/models/user-types';
+import { ISignInUser, IUser } from '../types/models/user.types';
 import { setResponse, setError } from '../utils/http-utils';
 import { request } from 'express';
 import logger from '../config/logger';
@@ -26,7 +26,7 @@ export const createUser = async (req: CustomRequest<IUser>, response: CustomResp
  * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
  * back to the client.
  */
-export const loginUser = async (req: CustomRequest<ISignINUser>, response: CustomResponse) => {
+export const loginUser = async (req: CustomRequest<ISignInUser>, response: CustomResponse) => {
     try {
         const userWithToken = await authService.loginUser(req.body)
         setResponse(response, userWithToken);

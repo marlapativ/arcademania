@@ -13,7 +13,7 @@
         "/auth/signup": {
             "post": {
                 "tags": [
-                    "user"
+                    "User"
                 ],
                 "summary": "Create user",
                 "description": "Creates an user for logging in to the application",
@@ -45,7 +45,7 @@
         "/auth/signin": {
             "post": {
                 "tags": [
-                    "user"
+                    "User"
                 ],
                 "summary": "User Login",
                 "description": "login in an user in to the application",
@@ -70,6 +70,57 @@
                     },
                     "500": {
                         "description": "User couldn't be loggedIn"
+                    }
+                }
+            }
+        },
+        "/leaderboard": {
+            "get": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Get Global Leaderboard",
+                "description": "Gets the Global leaderboard data",
+                "operationId": "getGlobalLeaderboard",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Global Leaderboard Data"
+                    },
+                    "500": {
+                        "description": "Cannot get global leaderboard data"
+                    }
+                }
+            }
+        },
+        "/leaderboard/{id}": {
+            "get": {
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Get Game Specific Leaderboard",
+                "description": "Gets the leaderboard data for given game",
+                "operationId": "getLeaderboard",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Game Id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Game Leaderboard Data"
+                    },
+                    "500": {
+                        "description": "Cannot get game leaderboard data"
                     }
                 }
             }
