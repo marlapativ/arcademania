@@ -126,7 +126,7 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
   };
 
   const saveGameScores = (gameScore: number) => {
-    saveScore(GAME_ID, getUser().id, gameScore).then(() => {
+    saveScore(GAME_ID, getUser().userId, gameScore).then(() => {
       getLeaderboard(GAME_ID).then((leaderboard) =>
         dispatch(
           setGameLeaderboard({

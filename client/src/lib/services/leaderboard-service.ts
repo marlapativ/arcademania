@@ -25,7 +25,7 @@ export const getLeaderboard = async (id: number) => {
 
 export const saveScore = async (
   gameId: number,
-  userId: number,
+  userId: string,
   score: number
 ) => {
   return axios
