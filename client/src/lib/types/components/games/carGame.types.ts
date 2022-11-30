@@ -1,5 +1,6 @@
-import { AnyFunction } from "@chakra-ui/utils";
-export interface blueCar {
+import type { AnyFunction } from "@chakra-ui/utils";
+
+export interface BlueCar {
   show: boolean;
   blueCarLeft: number;
   setBlueCarLeft: AnyFunction;
@@ -7,18 +8,17 @@ export interface blueCar {
   setCount: AnyFunction;
 }
 
-export interface carGameProps {
+export interface CarGameProps {
   play: boolean;
   gameOver: boolean;
   count: number;
   score: number;
   redCarLeft: number;
   blueCarLeft: number;
-  blueCarTop: number;
   intervalId: ReturnType<typeof setTimeout>;
 }
 
-export interface resultCardProps{
-    score: number;
-    buttonAction: AnyFunction;
+export interface ResultCardProps {
+  score: number;
+  buttonAction: AnyFunction;
 }

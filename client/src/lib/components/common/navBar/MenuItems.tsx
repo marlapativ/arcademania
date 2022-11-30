@@ -1,4 +1,3 @@
-import { AuthProps } from "../../../types/components/auth";
 import {
   Avatar,
   Box,
@@ -14,23 +13,23 @@ import {
   MenuList,
   Stack,
 } from "@chakra-ui/react";
-import React from "react";
+import { useSession, signOut } from "next-auth/react";
+import type React from "react";
 import { FiChevronDown } from "react-icons/fi";
+
+import type { AuthProps } from "../../../types/components/auth";
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
-import { useSession, signOut } from "next-auth/react"
 
 const LoggedInMenu = () => {
   return (
-    <Flex alignItems={"center"}>
+    <Flex alignItems="center">
       <Menu>
         <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
           <HStack>
             <Avatar
-              size={"sm"}
-              src={
-                "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-              }
+              size="sm"
+              src="https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
             />
             <VStack
               display={{ base: "none", md: "flex" }}
@@ -70,17 +69,15 @@ const SignInMenu = () => {
       direction="row"
       spacing={4}
     >
-      {
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify="flex-end"
-          direction="row"
-          spacing={4}
-        >
-          <SignupDrawer></SignupDrawer>
-          <SignInDrawer></SignInDrawer>
-        </Stack>
-      }
+      <Stack
+        flex={{ base: 1, md: 0 }}
+        justify="flex-end"
+        direction="row"
+        spacing={4}
+      >
+        <SignupDrawer />
+        <SignInDrawer />
+      </Stack>
     </HStack>
   );
 };
@@ -88,7 +85,7 @@ const SignInMenu = () => {
 const MenuItems: React.FC<AuthProps> = () => {
   const { data: session } = useSession();
   if (session) return <LoggedInMenu />;
-  else return <SignInMenu />;
+  return <SignInMenu />;
 };
 
 export default MenuItems;

@@ -1,30 +1,33 @@
 import { useToast } from "@chakra-ui/react";
 import React from "react";
 
-class ToastMessage extends React.Component<
-  { messageTitle: string; messageDesc: string },
-  {}
-> {
-  constructor(props: any) {
-    super(props);
-    this.getToastMessage = this.getToastMessage.bind(this);
-  }
+const ToastMessage = (messageTitle: string, messageDesc: string) => {
+  const toast = useToast();
+  const toastIdRef = React.useRef() || "";
 
-  getToastMessage() {
-    const toast = useToast();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const close = () => {
+    if (toastIdRef.current) {
+      toast.close(toastIdRef.current);
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const closeAll = () => {
+    toast.closeAll();
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const addToast = () => {
     return toast({
-      title: this.props.messageTitle,
-      description: this.props.messageDesc,
+      title: messageTitle,
+      description: messageDesc,
       status: "success",
       position: "top",
       duration: 3000,
       isClosable: true,
     });
-  }
-
-  render() {
-    return this.getToastMessage();
-  }
-}
+  };
+};
 
 export default ToastMessage;

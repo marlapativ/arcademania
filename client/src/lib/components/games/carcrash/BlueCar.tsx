@@ -1,10 +1,12 @@
-import React from "react";
-import Image from "next/image";
 import { Container } from "@chakra-ui/react";
-import blueCarStyles from "./styles/blueCar.module.scss";
-import { blueCar } from "lib/types/components/games/carGame.types";
+import Image from "next/image";
+import type React from "react";
 
-const BlueCar: React.FC<blueCar> = ({
+import type { BlueCar } from "lib/types/components/games/carGame.types";
+
+import blueCarStyles from "./styles/blueCar.module.scss";
+
+const BlueCarComponent: React.FC<BlueCar> = ({
   show,
   blueCarLeft,
   setBlueCarLeft,
@@ -13,7 +15,7 @@ const BlueCar: React.FC<blueCar> = ({
 }) => {
   const onAnimationIteration = () => {
     const carlefts = [108, 198, 288, 378];
-    let random = Math.floor(Math.random() * carlefts.length);
+    const random = Math.floor(Math.random() * carlefts.length);
     setBlueCarLeft(carlefts[random]);
     setCount(count + 1);
   };
@@ -35,9 +37,8 @@ const BlueCar: React.FC<blueCar> = ({
         />
       </Container>
     );
-  } else {
-    return <></>;
   }
+  return <Container />;
 };
 
-export default BlueCar;
+export default BlueCarComponent;
