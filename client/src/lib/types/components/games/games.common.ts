@@ -7,6 +7,6 @@ export interface Flag {
   flag: boolean;
 }
 
-export interface score{
+export interface Score {
   score: number;
 }

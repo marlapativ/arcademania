@@ -1,9 +1,9 @@
 import type React from "react";
 
 import ModalComponent from "lib/components/common/modal/Modal";
-import type { resultCardProps } from "lib/types/components/games/carGame.types";
+import type { ResultCardProps } from "lib/types/components/games/carGame.types";
 
-const ResultsCard: React.FC<resultCardProps> = ({ score, buttonAction }) => {
+const ResultsCard: React.FC<ResultCardProps> = ({ score, buttonAction }) => {
   return (
     <ModalComponent
       modalHeader="Game Over"

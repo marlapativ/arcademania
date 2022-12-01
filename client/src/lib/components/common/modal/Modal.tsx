@@ -9,8 +9,9 @@ import {
   Modal,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ModalDataProps } from "lib/types/components/common";
-import React from "react";
+import type React from "react";
+
+import type { ModalDataProps } from "lib/types/components/common";
 
 const ModalComponent: React.FC<ModalDataProps> = ({
   modalHeader,
@@ -18,11 +19,11 @@ const ModalComponent: React.FC<ModalDataProps> = ({
   actionButtonText,
   buttonAction,
 }) => {
-    const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const setActionButton = () => {
     buttonAction();
     onClose();
-  }
+  };
   return (
     <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

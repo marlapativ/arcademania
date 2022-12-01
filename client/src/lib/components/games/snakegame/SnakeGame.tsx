@@ -1,20 +1,23 @@
+import { Button, Container } from "@chakra-ui/react";
 import React from "react";
+
+import type { SnakeGameProps } from "lib/types/components/games/snakeGame.types";
+
 import Food from "./Food";
 import Snake from "./Snake";
-import InfoScore from "./InfoScore";
-import snakeGameStyles from "./styles/snakeGame.module.scss"; 
+import snakeGameStyles from "./styles/snakeGame.module.scss";
 
 const getRandomCoords = () => {
-  let min = 1;
-  let max = 90;
-  let x = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 5;
-  let y = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 5;
+  const min = 1;
+  const max = 90;
+  const x = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 5;
+  const y = Math.floor((Math.random() * (max - min + 1) + min) / 5) * 5;
   return [x, y];
 };
 
 const initialState = {
   food: getRandomCoords(),
-  speed: 1000,
+  speed: 500,
   pause: false,
   play: false,
   gameOver: "",
@@ -25,19 +28,19 @@ const initialState = {
   ],
 };
 
-class SnakeGame extends React.Component {
-  state = initialState;
+class SnakeGame extends React.Component<unknown, SnakeGameProps> {
+  constructor(props: SnakeGameProps) {
+    super(props);
+    this.state = initialState;
+  }
 
-  componentDidMount(): void {
-    setInterval(this.moveSnake, this.state.speed);
+  componentDidMount() {
+    const { speed } = this.state;
+    setInterval(this.moveSnake, speed);
     document.onkeydown = this.onKeyDown;
   }
 
-  componentDidUpdate(
-    prevProps: Readonly<{}>,
-    prevState: Readonly<{}>,
-    snapshot?: any
-  ): void {
+  componentDidUpdate() {
     this.checkIfOutOfBorders();
     this.checkIfCollapsed();
     this.checkIfEat();
@@ -57,14 +60,17 @@ class SnakeGame extends React.Component {
       case 39:
         this.setState({ direction: "RIGHT" });
         break;
+      default:
+        break;
     }
   };
 
   moveSnake = () => {
-    let dots = [...this.state.snakeDots];
+    const { snakeDots } = this.state;
+    const dots = [...snakeDots];
     let head = dots[dots.length - 1];
-
-    switch (this.state.direction) {
+    const { direction } = this.state;
+    switch (direction) {
       case "RIGHT":
         head = [head[0] + 5, head[1]];
         break;
@@ -77,8 +83,12 @@ class SnakeGame extends React.Component {
       case "UP":
         head = [head[0], head[1] - 5];
         break;
+      default:
+        break;
     }
-    if (!this.state.pause && this.state.play) {
+    const { play } = this.state;
+    const { pause } = this.state;
+    if (!pause && play) {
       dots.push(head);
       dots.shift();
       this.setState({
@@ -87,102 +97,111 @@ class SnakeGame extends React.Component {
     }
   };
 
-  checkIfOutOfBorders() {
-    let head = this.state.snakeDots[this.state.snakeDots.length - 1];
+  checkIfOutOfBorders = () => {
+    const { snakeDots } = this.state;
+    const head = snakeDots[snakeDots.length - 1];
     if (head[0] >= 100 || head[1] >= 100 || head[0] < 0 || head[1] < 0) {
       this.onGameOver();
     }
-  }
+  };
 
-  checkIfCollapsed() {
-    let snake = [...this.state.snakeDots];
-    let head = snake[snake.length - 1];
+  checkIfCollapsed = () => {
+    const { snakeDots } = this.state;
+    const snake = [...snakeDots];
+    const head = snake[snake.length - 1];
     snake.pop();
     snake.forEach((dot) => {
-      if (head[0] == dot[0] && head[1] == dot[1]) {
+      if (head[0] === dot[0] && head[1] === dot[1]) {
         this.onGameOver();
       }
     });
-  }
+  };
 
-  checkIfEat() {
-    let head = this.state.snakeDots[this.state.snakeDots.length - 1];
-    let food = this.state.food;
-    if (head[0] == food[0] && head[1] == food[1]) {
+  checkIfEat = () => {
+    const { snakeDots } = this.state;
+    const head = snakeDots[snakeDots.length - 1];
+    const { food } = this.state;
+    if (head[0] === food[0] && head[1] === food[1]) {
       this.setState({
         food: getRandomCoords(),
       });
       this.enlargeSnake();
       this.increaseSpeed();
     }
-  }
+  };
 
-  enlargeSnake() {
-    let newSnake = [...this.state.snakeDots];
+  enlargeSnake = () => {
+    const { snakeDots } = this.state;
+    const newSnake = [...snakeDots];
     newSnake.unshift([]);
     this.setState({
       snakeDots: newSnake,
     });
-  }
+  };
 
-  increaseSpeed() {
-    if (this.state.speed > 10) {
+  increaseSpeed = () => {
+    const { speed } = this.state;
+    if (speed > 100) {
       this.setState({
-        speed: this.state.speed - 10,
+        speed: speed - 100,
       });
     }
-  }
+  };
 
-  onGameOver() {
+  onGameOver = () => {
     this.setState(initialState);
+    const { snakeDots } = this.state;
     this.setState({
-      gameOver: `Game Over! Your Score was ${this.state.snakeDots.length} Try Again`,
+      gameOver: `Game Over! Your Score was ${snakeDots.length} Try Again`,
     });
-  }
+  };
 
   render() {
+    const { play } = this.state;
+    const { snakeDots } = this.state;
+    const { food } = this.state;
+    const { pause } = this.state;
+    const { gameOver } = this.state;
+    let button;
+    if (play) {
+      button = (
+        <Button
+          onClick={() => {
+            this.setState({ pause: !pause });
+          }}
+        >
+          {pause ? "Return Game" : "Pause Game"}
+        </Button>
+      );
+    }
     return (
-      <div>
-        <div className="flex my-2 justify-center">
-          <button
-            className="rounded-md w-32 px-2 py-1 bg-slate-700 text-white"
+      <Container width={800}>
+        <Container className="flex my-2 justify-center">
+          <Button
             onClick={() => {
-              if (this.state.play) {
+              if (play) {
                 this.setState(initialState);
               } else this.setState({ play: true });
             }}
           >
-            {this.state.play ? "End Game" : "Play Game"}
-          </button>
-          {this.state.play ? (
-            <button
-              className="ml-2 rounded-md w-32 px-2 py-1 bg-slate-700 text-white"
-              onClick={() => {
-                this.setState({ pause: this.state.pause ? false : true });
-              }}
-            >
-              {this.state.pause ? "Return Game" : "Pause Game"}
-            </button>
+            {play ? "End Game" : "Play Game"}
+          </Button>
+          {button}
+        </Container>
+
+        <Container className={snakeGameStyles.gameArea}>
+          {play ? (
+            <>
+              <Snake SnakeCoordinates={snakeDots} />
+              <Food coordinates={food} />
+            </>
           ) : (
-            <></>
+            <Container className="text-white font-bold flex items-center">
+              {gameOver}
+            </Container>
           )}
-        </div>
-        {this.state.play ? (
-          <div
-            className={`${snakeGameStyles.gameArea} ${
-              this.state.pause ? "bg-gray-500" : "bg-gray-200"
-            } rounded-lg`}
-          >
-            <Snake snakeDots={this.state.snakeDots} />
-            <Food dot={this.state.food} />
-            <InfoScore score={this.state.snakeDots.length} />
-          </div>
-        ) : (
-          <div className="text-white font-bold flex items-center">
-            {this.state.gameOver}
-          </div>
-        )}
-      </div>
+        </Container>
+      </Container>
     );
   }
 }

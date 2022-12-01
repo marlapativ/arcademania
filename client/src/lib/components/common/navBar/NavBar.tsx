@@ -1,7 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
-import { FiStar } from "react-icons/fi";
-import MenuItems from "./MenuItems";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -13,7 +10,11 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import Image from "next/image";
+import Link from "next/link";
+import { FiStar } from "react-icons/fi";
+
+import MenuItems from "./MenuItems";
 
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();

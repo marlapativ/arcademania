@@ -47,7 +47,12 @@ export type AuthInfo = {
 
 export type ModalDataProps = {
   modalHeader: string;
-  modalCotent: any;
+  modalCotent: string;
   actionButtonText: string;
   buttonAction: AnyFunction;
+};
+
+export type ToastMessageProps = {
+  messageTitle: string;
+  messageDesc: string;
 };

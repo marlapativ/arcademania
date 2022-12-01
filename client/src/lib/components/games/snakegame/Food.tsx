@@ -1,12 +1,19 @@
-import snakeGameStyles from "./styles/snakeGame.module.scss"
-interface FoodProps {
-  dot: number[];
-}
+import Image from "next/image";
 
-export default function Food(props: FoodProps) {
+import type { FoodProps } from "lib/types/components/games/snakeGame.types";
+
+import snakeGameStyles from "./styles/snakeGame.module.scss";
+
+const Food: React.FC<FoodProps> = ({ coordinates }) => {
   const styleFood = {
-    left: `${props.dot[0]}%`,
-    top: `${props.dot[1]}%`,
+    left: `${coordinates[0]}%`,
+    top: `${coordinates[1]}%`,
   };
-  return <div className={snakeGameStyles.food} style={styleFood}></div>;
-}
+  return (
+    <div className={snakeGameStyles.food} style={styleFood}>
+      <Image layout="fill" src="/images/frog.png" alt="Food" />
+    </div>
+  );
+};
+
+export default Food;
