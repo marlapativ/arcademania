@@ -46,7 +46,7 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
     this.checkIfEat();
   }
 
-  onKeyDown = (e: any) => {
+  onKeyDown = (e: KeyboardEvent) => {
     switch (e.keyCode) {
       case 38:
         this.setState({ direction: "UP" });
