@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import { Container } from "@chakra-ui/react";
 import { useReducer } from "react";
 
@@ -27,7 +26,7 @@ const generateNewBoard = (
   return board.map((column, i) => {
     if (i === playedColumn) {
       const newColumn = [...column];
-      for (let index = newColumn.length - 1; index >= 0; index--) {
+      for (let index = newColumn.length - 1; index >= 0; index -= 1) {
         if (newColumn[index] === undefined) {
           newColumn[index] = currentPlayer;
           break;
@@ -39,26 +38,17 @@ const generateNewBoard = (
   });
 };
 
-const checkVertical = (gameBoard: Board, player: Player) => {
-  for (let j = 0; j < 7; j++) {
-    const column = gameBoard[j];
-    for (let i = 0; i < 3; i++) {
+const checkStraightLine = (gameBoard: Board, player: Player) => {
+  for (let i = 0; i < 7; i += 1) {
+    for (let j = 5; j >= 2; j -= 1) {
       if (
-        column[i] === player &&
-        column[i + 1] === player &&
-        column[i + 2] === player &&
-        column[i + 3] === player
+        gameBoard[i][j] === player &&
+        gameBoard[i][j - 1] === player &&
+        gameBoard[i][j - 2] === player &&
+        gameBoard[i][j - 3] === player
       ) {
         return true;
       }
-    }
-  }
-  return false;
-};
-
-const checkHorizontal = (gameBoard: Board, player: Player) => {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 7; j++) {
       if (
         gameBoard[i][j] === player &&
         gameBoard[i + 1][j] === player &&
@@ -72,9 +62,9 @@ const checkHorizontal = (gameBoard: Board, player: Player) => {
   return false;
 };
 
-const checkDiagonallyUp = (gameBoard: Board, player: Player) => {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 5; j > 2; j--) {
+const checkDiagonally = (gameBoard: Board, player: Player) => {
+  for (let i = 0; i < 4; i += 1) {
+    for (let j = 5; j > 2; j -= 1) {
       if (
         gameBoard[i][j] === player &&
         gameBoard[i + 1][j - 1] === player &&
@@ -84,13 +74,7 @@ const checkDiagonallyUp = (gameBoard: Board, player: Player) => {
         return true;
       }
     }
-  }
-  return false;
-};
-
-const checkDiagonallyDown = (gameBoard: Board, player: Player) => {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 3; j++) {
+    for (let j = 0; j < 3; j += 1) {
       if (
         gameBoard[i][j] === player &&
         gameBoard[i + 1][j + 1] === player &&
@@ -106,10 +90,8 @@ const checkDiagonallyDown = (gameBoard: Board, player: Player) => {
 
 const isWinner = (board: Board, player: Player) => {
   let result = false;
-  result = checkVertical(board, player);
-  result = checkHorizontal(board, player);
-  result = checkDiagonallyUp(board, player);
-  result = checkDiagonallyDown(board, player);
+  result = checkStraightLine(board, player);
+  if (!result) result = checkDiagonally(board, player);
   return result;
 };
 
@@ -121,40 +103,49 @@ const initState = (player: Player): State => {
   };
 };
 const play = (state: State, action: Action): State => {
-  if (action.type === "turn") {
-    const column = state.board[action.payload];
-    if (!column.some((cell) => cell === undefined)) {
-      return state;
-    }
-    const newBoard = generateNewBoard(
-      state.board,
-      action.payload,
-      state.currentPlayer
-    );
-    const currentPlayerWins = isWinner(newBoard, state.currentPlayer);
-    if (currentPlayerWins) {
+  switch (action.type) {
+    case "turn": {
+      const column = state.board[action.payload];
+      if (!column.some((cell) => cell === undefined)) {
+        return state;
+      }
+      const newBoard = generateNewBoard(
+        state.board,
+        action.payload,
+        state.currentPlayer
+      );
+      const currentPlayerWins = isWinner(newBoard, state.currentPlayer);
+      if (currentPlayerWins) {
+        return {
+          ...state,
+          winner: state.currentPlayer,
+          board: newBoard,
+        };
+      }
       return {
         ...state,
-        winner: state.currentPlayer,
+        currentPlayer: state.currentPlayer === "red" ? "yellow" : "red",
         board: newBoard,
       };
     }
-    return {
-      ...state,
-      currentPlayer: state.currentPlayer === "red" ? "yellow" : "red",
-      board: newBoard,
-    };
+    case "reset":
+      return initState(action.payload);
+    default:
+      throw new Error();
   }
-  return state;
 };
 
 const Connect4 = () => {
   const [state, dispatch] = useReducer(play, "red", initState);
 
+  const resetGame = (player: Player) => {
+    dispatch({ type: "reset", payload: player });
+  };
+
   return (
     <Container className={connect4Styles.App}>
       {state.winner && (
-        <WinnerModal winner={state.winner} clickFunction={initState} />
+        <WinnerModal winner={state.winner} clickFunction={resetGame} />
       )}
       <Container className={connect4Styles.Turn}>
         <Container className={connect4Styles.TurnText}>Player turn:</Container>
