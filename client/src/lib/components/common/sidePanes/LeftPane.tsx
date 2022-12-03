@@ -8,9 +8,7 @@ const LeftPane = () => {
   const [navSize, changeNavSize] = useState("small");
   const [isOpen, setOpenState] = useState(false);
   return (
-    <aside
-      className={navSize === "small" ? "asideLeftPane" : "asideLeftPaneFixed"}
-    >
+    <aside className="asideLeftPane">
       <Flex
         pos="sticky"
         margin-top="2.5"
