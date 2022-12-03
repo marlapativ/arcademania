@@ -19,9 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
     <Box margin="0 auto" transition="0.5s ease-out">
       <Box>
         <Header />
-        <aside className="asideLeftPane">
-          <LeftPane />
-        </aside>
+        <LeftPane />
         <Box as="main">{children}</Box>
         <Footer />
       </Box>
