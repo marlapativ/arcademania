@@ -6,6 +6,11 @@ export type _2048TileData = {
   value: number;
 };
 
+export type SwipedGridData = {
+  swipedScore: number;
+  swipedGrid: number[][];
+};
+
 export enum Direction {
   LEFT,
   RIGHT,

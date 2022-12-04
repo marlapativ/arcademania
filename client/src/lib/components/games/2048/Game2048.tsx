@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable no-bitwise */
-/* eslint-disable no-continue */
-/* eslint-disable react/no-array-index-key */
+/* eslint-disable sonarjs/prefer-single-boolean-return */
+
 import { Box, Flex, Grid, useColorModeValue } from "@chakra-ui/react";
 import { repeat } from "lodash";
 import { useEffect, useState } from "react";
 
-import { Direction } from "../../../types/components/games/2048.types";
 import type {
   Game2048Props,
-  _2048TileData,
+  SwipedGridData,
 } from "../../../types/components/games/2048.types";
-import type { Coordinate } from "../../../types/components/games/games.common";
+import type {
+  Coordinate,
+  UnaryFunction,
+} from "../../../types/components/games/games.common";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
@@ -19,44 +19,47 @@ import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import { useDispatch } from "lib/store/store";
 
 import Cell2048 from "./Cell2048/Cell2048";
+import {
+  isExist,
+  swipeDown,
+  swipeLeft,
+  swipeRight,
+  swipeUp,
+} from "./utils/swipeUtils";
 
 const GAME_ID = 4;
 
 const getRandomValue = (): number => {
-  return Math.random() > 0.5 ? 2 : 4;
+  return Math.random() > 0.2 ? 2 : 4;
 };
 
 const setRandomElement = (
-  game: _2048TileData[][],
+  game: number[][],
   rows: number,
   columns: number
 ): void => {
   const emptyCells: Coordinate[] = [];
   for (let r = 0; r < rows; r += 1) {
     for (let c = 0; c < columns; c += 1) {
-      if (game[r][c].value === 0) {
+      if (game[r][c] === 0) {
         emptyCells.push({ x: r, y: c });
       }
     }
   }
 
+  if (emptyCells.length === 0) return;
+
   const randomIndex = Math.floor(Math.random() * emptyCells.length);
   const { x, y } = emptyCells[randomIndex];
-  game[x][y].value = getRandomValue();
+  game[x][y] = getRandomValue();
 };
 
-const createGame = (rows: number, columns: number): _2048TileData[][] => {
-  const game: _2048TileData[][] = new Array(rows);
+const createGame = (rows: number, columns: number): number[][] => {
+  const game: number[][] = new Array(rows);
   for (let i = 0; i < rows; i += 1) {
     game[i] = new Array(columns);
     for (let j = 0; j < columns; j += 1) {
-      game[i][j] = {
-        value: 0,
-        coordinate: {
-          x: i,
-          y: j,
-        },
-      };
+      game[i][j] = 0;
     }
   }
   setRandomElement(game, rows, columns);
@@ -72,10 +75,10 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   const [win, setWin] = useState(false);
 
   const KEY_DIRECTION_MAP = new Map([
-    ["ArrowLeft", 0],
-    ["ArrowUp", 1],
-    ["ArrowRight", 2],
-    ["ArrowDown", 3],
+    ["ArrowLeft", swipeLeft],
+    ["ArrowUp", swipeUp],
+    ["ArrowRight", swipeRight],
+    ["ArrowDown", swipeDown],
   ]);
 
   const playAgain = () => {
@@ -99,78 +102,70 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   };
 
   const endGame = (didWin?: boolean) => {
-    setScore(0);
     setWin(didWin ?? false);
     setShowGameMessage(true);
     saveGameScores(score);
   };
 
-  // const addScore = (newScore: number) => {
-  //   setScore(score + newScore);
-  // };
+  const addScore = (newScore: number) => {
+    setScore(score + newScore);
+  };
 
-  const rotateLeft = (matrix: _2048TileData[][]) => {
-    const res: _2048TileData[][] = [];
-    for (let r = 0; r < rows; r += 1) {
-      res.push([]);
-      for (let c = 0; c < columns; c += 1) {
-        res[r][c] = matrix[c][columns - r - 1];
+  const cloneGame = () => {
+    return structuredClone(game);
+  };
+
+  const checkGameOver = (swipedGrid: number[][]) => {
+    const currentData = structuredClone(swipedGrid);
+    if (
+      JSON.stringify(currentData) !==
+      JSON.stringify(swipeLeft(cloneGame()).swipedGrid)
+    ) {
+      return false;
+    }
+    if (
+      JSON.stringify(currentData) !==
+      JSON.stringify(swipeRight(cloneGame()).swipedGrid)
+    ) {
+      return false;
+    }
+    if (
+      JSON.stringify(currentData) !==
+      JSON.stringify(swipeUp(cloneGame()).swipedGrid)
+    ) {
+      return false;
+    }
+    if (
+      JSON.stringify(currentData) !==
+      JSON.stringify(swipeDown(cloneGame()).swipedGrid)
+    ) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const swipe = (
+    swipeFunc: UnaryFunction<number[][], SwipedGridData> | undefined
+  ) => {
+    if (swipeFunc === undefined || showGameMessage) return;
+
+    const oldData = structuredClone(game);
+    const { swipedGrid, swipedScore } = swipeFunc(game);
+    addScore(swipedScore);
+
+    if (JSON.stringify(oldData) !== JSON.stringify(swipedGrid)) {
+      if (isExist(swipedGrid, 2048)) {
+        endGame(true);
+      } else {
+        setRandomElement(swipedGrid, rows, columns);
       }
     }
-    return res;
-  };
-
-  const addTile = (value = 0) => {
-    const res: _2048TileData = {
-      value,
-      coordinate: {
-        x: 0,
-        y: 0,
-      },
-    };
-    // this.tiles.push(res);
-    return res;
-  };
-
-  const moveLeft = () => {
-    let hasChanged = false;
-    for (let row = 0; row < rows; row += 1) {
-      const currentRow = game[row].filter((tile) => tile.value !== 0);
-      const resultRow = [];
-      for (let target = 0; target < rows; target += 1) {
-        let targetTile = currentRow.length ? currentRow.shift()! : addTile();
-        if (currentRow.length > 0 && currentRow[0].value === targetTile.value) {
-          targetTile = addTile(targetTile.value);
-          const { value } = currentRow.shift() || { value: 0 };
-          targetTile.value += value;
-        }
-        resultRow[target] = targetTile;
-        if (targetTile.value === 2048) {
-          endGame(true);
-        }
-        hasChanged = hasChanged || targetTile.value !== game[row][target].value;
-      }
-      game[row] = resultRow;
-    }
-    return hasChanged;
-  };
-
-  const swipe = (direction: number | undefined) => {
-    if (!direction) return;
-
-    let clone = structuredClone(game);
-    for (let i = 0; i < direction; i += 1) {
-      clone = rotateLeft(clone);
-    }
-    const hasChanged = moveLeft();
-    for (let i = direction; i < 4; i += 1) {
-      clone = rotateLeft(clone);
-    }
-    if (hasChanged) {
-      setRandomElement(clone, rows, columns);
+    if (!isExist(oldData, 0) && checkGameOver(swipedGrid)) {
+      endGame(false);
     }
 
-    setGame(clone);
+    setGame(swipedGrid);
   };
 
   const handleKeyPress = ({ key }: KeyboardEvent) => {
@@ -218,18 +213,14 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
             borderRadius="4px"
           >
             {game.map((eachRow, rowIndex) =>
-              eachRow.map((column, columnIndex) => {
+              eachRow.map((value, columnIndex) => {
                 const key = rowIndex * columns + columnIndex;
                 const coordinate: Coordinate = {
                   x: rowIndex,
                   y: columnIndex,
                 };
                 return (
-                  <Cell2048
-                    value={column.value}
-                    key={key}
-                    coordinate={coordinate}
-                  />
+                  <Cell2048 value={value} key={key} coordinate={coordinate} />
                 );
               })
             )}
