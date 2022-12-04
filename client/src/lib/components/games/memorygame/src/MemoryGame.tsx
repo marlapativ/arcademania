@@ -1,4 +1,12 @@
 import React from 'react';
+import Card from './components/Card/Card';
+// Setup
+import { createBoard } from './setup';
+import { shuffleArray } from './utils';
+// Types
+import { CardType } from './setup';
+// Styles
+import { Grid } from './App.styles';
 
 const MemoryGame = () => {
   const [cards, setCards] = React.useState<CardType[]>(shuffleArray(createBoard()));
@@ -25,6 +33,33 @@ const MemoryGame = () => {
       return;
     }
 
-    
+    // If it's a match
+    if (clickedCard.matchingCardId === currentClickedCard.id) {
+      setMatchedPairs(prev => prev + 1);
+      setCards(prev =>
+        prev.map(card =>
+          card.id === clickedCard.id || card.id === currentClickedCard.id ? { ...card, clickable: false } : card
+        )
+      );
+      setClickedCard(undefined);
+      return;
+    }
+
+    // If it's not a matched pair, wait one second and flip them back
+    setTimeout(() => {
+      setCards(prev =>
+        prev.map(card =>
+          card.id === clickedCard.id || card.id === currentClickedCard.id
+            ? { ...card, flipped: false, clickable: true }
+            : card
+        )
+      );
+    }, 1000);
+
+    setClickedCard(undefined);
+  };
+
+  
+};
 
 export default MemoryGame;
