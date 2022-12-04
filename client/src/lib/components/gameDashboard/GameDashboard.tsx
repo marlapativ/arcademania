@@ -36,7 +36,7 @@ const games: GameInfoCollection = {
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
   return (
-    <Box p={2} width={{ lg: "calc(100% - 75px)" }} float={{ lg: "right" }}>
+    <Box p={2}>
       <Grid
         templateAreas={`"main leaderboard"
                   "footer leaderboard"`}
