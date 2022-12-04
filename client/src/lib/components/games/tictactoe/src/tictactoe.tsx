@@ -59,4 +59,22 @@ const TicTacToe: React.FC = () => {
         status = "Nobody won :(";
     }
 
+    return (
+        <div className="game">
+            {showPlayerSelection && <div className="players">
+                <button onClick={() => {
+                    setXIsNext(true);
+                    setShowPlayerSelection(false);
+                }}>Player X</button>
+                <button onClick={() => {
+                    setXIsNext(false);
+                    setShowPlayerSelection(false);
+                }}>Player O</button>
+            </div>}
+            <div className="game-board">
+                <Board
+                    squares={current.squares}
+                    onClick={i => handleClick(i)}
+                />
+            </div>
 export default TicTacToe;
