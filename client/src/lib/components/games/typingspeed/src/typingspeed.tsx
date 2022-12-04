@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Component } from 'react'
 
+
 interface State {
   typeTest: string
   words: Array<string>
@@ -21,7 +22,7 @@ class TypingSpeed extends Component {
     wordsPerMinute: null
   } 
 
-componentDidMount() {
+  componentDidMount() {
     this.setState({words: this.state.typeTest.split(' ')})
   }
 
@@ -54,4 +55,22 @@ componentDidMount() {
                     (): void => this.checkFinished())
     }
   }
+
+
+  render() {
+    return (
+      <div className='App'>
+        <h1>{this.state.wordsPerMinute ? `${this.state.wordsPerMinute} WPM`
+                                       : 'Test Your Typing Speed, Scrub!'}</h1>
+        <h1>{this.state.correctCount}</h1>
+        <h3>Type the following:</h3>
+        <h6>{this.state.words.map(word => word === this.state.words[0] ? 
+              <em className='current-word'>{word} </em> : word + ' ')}</h6>
+        <input value={this.state.enteredText} 
+               onChange={this.onWordChange}/>
+      </div>
+    )
+  }
+}
+
 export default TypingSpeed
