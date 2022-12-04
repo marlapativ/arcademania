@@ -1,43 +1,11 @@
 import { Box, Grid, GridItem, Show } from "@chakra-ui/react";
 
-import type {
-  GameInfoCollection,
-  GameInfoProps,
-} from "../../types/components/common";
-import { Minesweeper, SnakeGame, CarGame, Connect4 } from "../games";
-import Game2048 from "../games/2048/Game2048";
+import type { GameInfoProps } from "../../types/components/common";
+import games from "../games";
 
 import GameBody from "./gameBody/GameBody";
 import GameFooter from "./gameFooter/GameFooter";
 import Leaderboard from "./leaderboard/Leaderboard";
-
-const games: GameInfoCollection = {
-  1: {
-    id: 1,
-    name: "Minesweeper",
-    component: <Minesweeper rows={10} columns={10} bombs={10} />,
-  },
-  2: {
-    id: 2,
-    name: "Snake Game",
-    component: <SnakeGame />,
-  },
-  3: {
-    id: 3,
-    name: "Car Game",
-    component: <CarGame />,
-  },
-  4: {
-    id: 4,
-    name: "Connect4",
-    component: <Connect4 />,
-  },
-  5: {
-    id: 4,
-    name: "2048",
-    component: <Game2048 rows={4} columns={4} />,
-  },
-};
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
