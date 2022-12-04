@@ -1,3 +1,7 @@
+import { useState } from "react";
+import Board from "./board";
+import { calculateWinner } from "./helper";
+import { History } from "./types";
 
 const TicTacToe: React.FC = () => {
     const initialHistory: History[] = [
