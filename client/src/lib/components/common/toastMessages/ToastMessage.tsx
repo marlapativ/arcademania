@@ -18,16 +18,14 @@ const ToastMessage = (messageTitle: string, messageDesc: string) => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const addToast = () => {
-    return toast({
-      title: messageTitle,
-      description: messageDesc,
-      status: "success",
-      position: "top",
-      duration: 3000,
-      isClosable: true,
-    });
-  };
+  return toast({
+    title: messageTitle,
+    description: messageDesc,
+    status: "success",
+    position: "top",
+    duration: 3000,
+    isClosable: true,
+  });
 };
 
 export default ToastMessage;

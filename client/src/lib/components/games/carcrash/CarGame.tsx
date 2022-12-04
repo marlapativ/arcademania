@@ -69,7 +69,7 @@ class CarGame extends React.Component<unknown, CarGameProps> {
     }
   };
 
-  onKeyDown = (e: any) => {
+  onKeyDown = (e: KeyboardEvent) => {
     switch (e.keyCode) {
       case 39:
         this.moveRedCar("RIGHT");

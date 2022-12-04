@@ -4,7 +4,7 @@ import type {
   GameInfoCollection,
   GameInfoProps,
 } from "../../types/components/common";
-import { Minesweeper, SnakeGame, CarGame } from "../games";
+import { Minesweeper, SnakeGame, CarGame, Connect4 } from "../games";
 
 import GameBody from "./gameBody/GameBody";
 import GameFooter from "./gameFooter/GameFooter";
@@ -26,12 +26,17 @@ const games: GameInfoCollection = {
     name: "Car Game",
     component: <CarGame />,
   },
+  4: {
+    id: 4,
+    name: "Connect4",
+    component: <Connect4 />,
+  },
 };
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
   return (
-    <Box p={2} width={{ lg: "calc(100% - 75px)" }} float={{ lg: "right" }}>
+    <Box p={2}>
       <Grid
         templateAreas={`"main leaderboard"
                   "footer leaderboard"`}
