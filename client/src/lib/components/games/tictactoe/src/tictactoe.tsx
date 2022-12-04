@@ -35,5 +35,28 @@ const TicTacToe: React.FC = () => {
         setXIsNext((step % 2) === 0);
     }
 
+    const current = history[stepNumber];
+    const winner = calculateWinner(current.squares);
+    let isStepLeft = true;
+    const moves = history.map((step, move) => {
+        isStepLeft = step.squares.some(square => square === null);
+        const desc = move ?
+            'Go to move #' + move :
+            'Go to game start';
+        return (
+            <li key={move}>
+                <button onClick={() => jumpTo(move)}>{desc}</button>
+            </li>
+        );
+    });
+
+    let status;
+    if (winner) {
+        status = "Winner: " + winner;
+    } else if (isStepLeft) {
+        status = "Next player: " + (xIsNext ? "X" : "O");
+    } else {
+        status = "Nobody won :(";
+    }
 
 export default TicTacToe;
