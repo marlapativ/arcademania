@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Show } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
 import LeftPane from "../components/common/sidePanes/LeftPane";
@@ -19,7 +19,9 @@ const Layout = ({ children }: LayoutProps) => {
     <Box margin="0 auto" transition="0.5s ease-out">
       <Box>
         <Header />
-        <LeftPane />
+        <Show above="md">
+          <LeftPane />
+        </Show>
         <Box as="main">{children}</Box>
         <Footer />
       </Box>
