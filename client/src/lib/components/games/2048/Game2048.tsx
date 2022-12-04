@@ -1,174 +1,193 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable no-bitwise */
+/* eslint-disable no-continue */
+/* eslint-disable react/no-array-index-key */
 import { Box, Flex, Grid, useColorModeValue } from "@chakra-ui/react";
-import _, { repeat } from "lodash";
-import { useState } from "react";
+import { repeat } from "lodash";
+import { useEffect, useState } from "react";
 
+import { Direction } from "../../../types/components/games/2048.types";
+import type {
+  Game2048Props,
+  _2048TileData,
+} from "../../../types/components/games/2048.types";
+import type { Coordinate } from "../../../types/components/games/games.common";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
-import { saveScore } from "lib/services/leaderboard-service";
+import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
+import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
+import { useDispatch } from "lib/store/store";
 
-const GAME_ID = 1;
+import Cell2048 from "./Cell2048/Cell2048";
 
-const neighbours: MinesweeperCoordindate[] = [
-  { x: 1, y: -1 },
-  { x: 1, y: 0 },
-  { x: 1, y: 1 },
-  { x: -1, y: -1 },
-  { x: -1, y: 0 },
-  { x: -1, y: 1 },
-  { x: 0, y: 1 },
-  { x: 0, y: -1 },
-];
+const GAME_ID = 4;
 
-const setBombsRandomly = (
-  game: MinesweeperCellData[][],
-  bombs: number
-): void => {
-  const rows = game.length;
-  const columns = game[0].length;
-  const max = rows * columns;
-  const numbers = new Set();
-  while (bombs > 0) {
-    const index = _.random(max - 1, false);
-    if (!numbers.has(index)) {
-      const row = Math.floor(index / columns);
-      const col = index % columns;
-      game[row][col] = {
-        visible: false,
-        value: -1,
-      };
-      bombs -= 1;
-      numbers.add(index);
-    }
-  }
+const getRandomValue = (): number => {
+  return Math.random() > 0.5 ? 2 : 4;
 };
 
-const createGame = (
+const setRandomElement = (
+  game: _2048TileData[][],
   rows: number,
-  columns: number,
-  bombs: number
-): MinesweeperCellData[][] => {
-  const game: MinesweeperCellData[][] = new Array(rows);
+  columns: number
+): void => {
+  const emptyCells: Coordinate[] = [];
+  for (let r = 0; r < rows; r += 1) {
+    for (let c = 0; c < columns; c += 1) {
+      if (game[r][c].value === 0) {
+        emptyCells.push({ x: r, y: c });
+      }
+    }
+  }
+
+  const randomIndex = Math.floor(Math.random() * emptyCells.length);
+  const { x, y } = emptyCells[randomIndex];
+  game[x][y].value = getRandomValue();
+};
+
+const createGame = (rows: number, columns: number): _2048TileData[][] => {
+  const game: _2048TileData[][] = new Array(rows);
   for (let i = 0; i < rows; i += 1) {
     game[i] = new Array(columns);
     for (let j = 0; j < columns; j += 1) {
       game[i][j] = {
-        visible: true,
         value: 0,
+        coordinate: {
+          x: i,
+          y: j,
+        },
       };
     }
   }
-
-  setBombsRandomly(game, bombs);
-
-  game.forEach((row, rowIndex) =>
-    row.forEach((cell, colIndex) => {
-      if (cell.value === -1) return;
-      let bombsCount = 0;
-      neighbours.forEach(({ x, y }) => {
-        const r = x + rowIndex;
-        const c = y + colIndex;
-        if (r in game && c in game[r] && game[r][c].value === -1) {
-          bombsCount += 1;
-        }
-      });
-      game[rowIndex][colIndex] = {
-        visible: false,
-        value: bombsCount,
-      };
-    })
-  );
+  setRandomElement(game, rows, columns);
+  setRandomElement(game, rows, columns);
   return game;
 };
 
-const _2048: React.FC<MinesweeperGameProps> = ({ rows, columns, bombs }) => {
-  const [game, setGame] = useState(createGame(rows, columns, bombs));
+const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
+  const dispatch = useDispatch();
+  const [game, setGame] = useState(createGame(rows, columns));
   const [score, setScore] = useState(0);
   const [showGameMessage, setShowGameMessage] = useState(false);
   const [win, setWin] = useState(false);
 
-  const updateGame = () => {
-    setGame(_.cloneDeep(game));
-  };
-
-  const showAll = () => {
-    game.forEach((row) =>
-      row.forEach((column) => {
-        column.visible = true;
-      })
-    );
-    updateGame();
-  };
-
-  const countVisible = () => {
-    return game.reduce(
-      (prev, row) =>
-        prev +
-        row.reduce((colPrev, column) => colPrev + (column.visible ? 1 : 0), 0),
-      0
-    );
-  };
-
-  const saveGameScores = async (gameScore: number) => {
-    await saveScore(GAME_ID, getUser().id, gameScore);
-  };
-
-  const endGame = (didWin?: boolean) => {
-    const gameScore = countVisible() + (didWin ? bombs : 0);
-    setScore(gameScore);
-    setWin(didWin ?? false);
-    showAll();
-    setShowGameMessage(true);
-    saveGameScores(gameScore);
-  };
-
-  const checkIfWon = () => {
-    const maxVisibleCells = rows * columns - bombs;
-    const visibleCells = countVisible();
-
-    if (visibleCells === maxVisibleCells) {
-      endGame(true);
-    }
-  };
+  const KEY_DIRECTION_MAP = new Map([
+    ["ArrowLeft", 0],
+    ["ArrowUp", 1],
+    ["ArrowRight", 2],
+    ["ArrowDown", 3],
+  ]);
 
   const playAgain = () => {
-    setGame(createGame(rows, columns, bombs));
     setScore(0);
     setShowGameMessage(false);
     setWin(false);
+    setGame(createGame(rows, columns));
   };
 
-  const unhideCellAndNeighbours = (
-    coordinate: MinesweeperCoordindate,
-    showNeighbours: boolean
-  ) => {
-    game[coordinate.x][coordinate.y] = {
-      value: game[coordinate.x][coordinate.y].value,
-      visible: true,
-    };
+  const saveGameScores = (gameScore: number) => {
+    saveScore(GAME_ID, getUser().userId, gameScore).then(() => {
+      getLeaderboard(GAME_ID).then((leaderboard) =>
+        dispatch(
+          setGameLeaderboard({
+            gameId: GAME_ID,
+            data: leaderboard,
+          })
+        )
+      );
+    });
+  };
 
-    if (showNeighbours) {
-      neighbours.forEach((i) => {
-        const r = i.x + coordinate.x;
-        const c = i.y + coordinate.y;
-        if (r in game && c in game[r] && !game[r][c].visible) {
-          const neighbourValue = game[r][c].value;
-          game[r][c] = {
-            visible: true,
-            value: neighbourValue,
-          };
-          if (neighbourValue === 0) {
-            unhideCellAndNeighbours({ x: r, y: c }, true);
-          }
-        }
-      });
+  const endGame = (didWin?: boolean) => {
+    setScore(0);
+    setWin(didWin ?? false);
+    setShowGameMessage(true);
+    saveGameScores(score);
+  };
+
+  // const addScore = (newScore: number) => {
+  //   setScore(score + newScore);
+  // };
+
+  const rotateLeft = (matrix: _2048TileData[][]) => {
+    const res: _2048TileData[][] = [];
+    for (let r = 0; r < rows; r += 1) {
+      res.push([]);
+      for (let c = 0; c < columns; c += 1) {
+        res[r][c] = matrix[c][columns - r - 1];
+      }
     }
-    updateGame();
+    return res;
   };
 
-  const unhideCell = (coordinate: MinesweeperCoordindate, value: number) => {
-    unhideCellAndNeighbours(coordinate, value === 0);
-    checkIfWon();
+  const addTile = (value = 0) => {
+    const res: _2048TileData = {
+      value,
+      coordinate: {
+        x: 0,
+        y: 0,
+      },
+    };
+    // this.tiles.push(res);
+    return res;
   };
+
+  const moveLeft = () => {
+    let hasChanged = false;
+    for (let row = 0; row < rows; row += 1) {
+      const currentRow = game[row].filter((tile) => tile.value !== 0);
+      const resultRow = [];
+      for (let target = 0; target < rows; target += 1) {
+        let targetTile = currentRow.length ? currentRow.shift()! : addTile();
+        if (currentRow.length > 0 && currentRow[0].value === targetTile.value) {
+          targetTile = addTile(targetTile.value);
+          const { value } = currentRow.shift() || { value: 0 };
+          targetTile.value += value;
+        }
+        resultRow[target] = targetTile;
+        if (targetTile.value === 2048) {
+          endGame(true);
+        }
+        hasChanged = hasChanged || targetTile.value !== game[row][target].value;
+      }
+      game[row] = resultRow;
+    }
+    return hasChanged;
+  };
+
+  const swipe = (direction: number | undefined) => {
+    if (!direction) return;
+
+    let clone = structuredClone(game);
+    for (let i = 0; i < direction; i += 1) {
+      clone = rotateLeft(clone);
+    }
+    const hasChanged = moveLeft();
+    for (let i = direction; i < 4; i += 1) {
+      clone = rotateLeft(clone);
+    }
+    if (hasChanged) {
+      setRandomElement(clone, rows, columns);
+    }
+
+    setGame(clone);
+  };
+
+  const handleKeyPress = ({ key }: KeyboardEvent) => {
+    if (!KEY_DIRECTION_MAP.has(key)) {
+      return;
+    }
+
+    swipe(KEY_DIRECTION_MAP.get(key));
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  });
 
   return (
     <Flex>
@@ -187,31 +206,29 @@ const _2048: React.FC<MinesweeperGameProps> = ({ rows, columns, bombs }) => {
             playAgain={playAgain}
             score={score}
           />
-
           <Grid
             gridTemplateRows={repeat("1fr ", rows)}
             gridTemplateColumns={repeat("1fr ", columns)}
-            m={2}
             filter="var(--chakra-backdrop-blur)"
             backdropBlur={showGameMessage ? "sm" : undefined}
             transition="450ms filter linear"
+            bg="#bcac9f"
+            gap="2"
+            p="2"
+            borderRadius="4px"
           >
             {game.map((eachRow, rowIndex) =>
-              eachRow.map((eachColumn, columnIndex) => {
+              eachRow.map((column, columnIndex) => {
                 const key = rowIndex * columns + columnIndex;
-                const coordinate: MinesweeperCoordindate = {
+                const coordinate: Coordinate = {
                   x: rowIndex,
                   y: columnIndex,
                 };
-                const data = game[rowIndex][columnIndex];
                 return (
-                  <MinesweeperCell
+                  <Cell2048
+                    value={column.value}
                     key={key}
                     coordinate={coordinate}
-                    unhide={unhideCell}
-                    endGame={endGame}
-                    show={data.visible}
-                    value={data.value}
                   />
                 );
               })
@@ -223,4 +240,4 @@ const _2048: React.FC<MinesweeperGameProps> = ({ rows, columns, bombs }) => {
   );
 };
 
-export default Minesweeper;
+export default Game2048;

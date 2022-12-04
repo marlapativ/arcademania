@@ -5,6 +5,7 @@ import type {
   GameInfoProps,
 } from "../../types/components/common";
 import { Minesweeper, SnakeGame, CarGame, Connect4 } from "../games";
+import Game2048 from "../games/2048/Game2048";
 
 import GameBody from "./gameBody/GameBody";
 import GameFooter from "./gameFooter/GameFooter";
@@ -31,6 +32,11 @@ const games: GameInfoCollection = {
     name: "Connect4",
     component: <Connect4 />,
   },
+  5: {
+    id: 4,
+    name: "2048",
+    component: <Game2048 rows={4} columns={4} />,
+  },
 };
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
@@ -52,10 +58,10 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem px={1} area="main">
+        <GridItem pl={2} area="main">
           <GameBody>{game?.component}</GameBody>
         </GridItem>
-        <GridItem px={1} area="footer">
+        <GridItem pl={2} area="footer">
           <GameFooter id={game?.id} name={game?.name} />
         </GridItem>
         <Show above="md">

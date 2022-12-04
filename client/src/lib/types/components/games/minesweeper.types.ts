@@ -1,8 +1,6 @@
-import type { Coordinate } from "./games.common";
+import type { Coordinate, Matrix } from "./games.common";
 
-export interface MinesweeperGameProps {
-  rows: number;
-  columns: number;
+export interface MinesweeperGameProps extends Matrix {
   bombs: number;
 }
 
