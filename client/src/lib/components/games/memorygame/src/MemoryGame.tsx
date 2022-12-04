@@ -59,7 +59,15 @@ const MemoryGame = () => {
     setClickedCard(undefined);
   };
 
-  
+  return (
+    <div>
+      <Grid>
+        {cards.map(card => (
+          <Card key={card.id} card={card} callback={handleCardClick} />
+        ))}
+      </Grid>
+    </div>
+  );
 };
 
 export default MemoryGame;
