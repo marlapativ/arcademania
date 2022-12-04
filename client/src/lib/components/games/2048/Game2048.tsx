@@ -1,6 +1,13 @@
 /* eslint-disable sonarjs/prefer-single-boolean-return */
 
-import { Box, Flex, Grid, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  useColorModeValue,
+  Stack,
+  VStack,
+} from "@chakra-ui/react";
 import { repeat } from "lodash";
 import { useEffect, useState } from "react";
 
@@ -13,6 +20,7 @@ import type {
   UnaryFunction,
 } from "../../../types/components/games/games.common";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
+import GameScore from "../gameScore/gameScore";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
@@ -174,49 +182,58 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   });
 
   return (
-    <Flex>
-      <Box
-        bg={useColorModeValue("gray.100", "white")}
-        color="white"
-        borderRadius="lg"
-        rounded="xl"
-        boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
-        m={{ sm: 2, md: 8, lg: 2 }}
-      >
-        <div style={{ position: "relative" }}>
-          <GameStatusMessage
-            show={showGameMessage}
-            win={win}
-            playAgain={playAgain}
-            score={score}
-          />
-          <Grid
-            gridTemplateRows={repeat("1fr ", rows)}
-            gridTemplateColumns={repeat("1fr ", columns)}
-            filter="var(--chakra-backdrop-blur)"
-            backdropBlur={showGameMessage ? "sm" : undefined}
-            transition="450ms filter linear"
-            bg="#bcac9f"
-            gap="2"
-            p="2"
-            borderRadius="4px"
+    <Stack>
+      <VStack>
+        <GameScore score={score} show={!showGameMessage} />
+        <Flex>
+          <Box
+            bg={useColorModeValue("white", "gray.800")}
+            color="white"
+            borderRadius="lg"
+            rounded="xl"
+            boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
+            m={{ sm: 2, md: 8, lg: 2 }}
           >
-            {game.map((eachRow, rowIndex) =>
-              eachRow.map((value, columnIndex) => {
-                const key = rowIndex * columns + columnIndex;
-                const coordinate: Coordinate = {
-                  x: rowIndex,
-                  y: columnIndex,
-                };
-                return (
-                  <Cell2048 value={value} key={key} coordinate={coordinate} />
-                );
-              })
-            )}
-          </Grid>
-        </div>
-      </Box>
-    </Flex>
+            <Box style={{ position: "relative" }}>
+              <GameStatusMessage
+                show={showGameMessage}
+                win={win}
+                playAgain={playAgain}
+                score={score}
+              />
+              <Grid
+                gridTemplateRows={repeat("1fr ", rows)}
+                gridTemplateColumns={repeat("1fr ", columns)}
+                filter="var(--chakra-backdrop-blur)"
+                backdropBlur={showGameMessage ? "sm" : undefined}
+                transition="450ms filter linear"
+                bg="#bcac9f"
+                gap="2"
+                p="2"
+                borderRadius="4px"
+              >
+                {game.map((eachRow, rowIndex) =>
+                  eachRow.map((value, columnIndex) => {
+                    const key = rowIndex * columns + columnIndex;
+                    const coordinate: Coordinate = {
+                      x: rowIndex,
+                      y: columnIndex,
+                    };
+                    return (
+                      <Cell2048
+                        value={value}
+                        key={key}
+                        coordinate={coordinate}
+                      />
+                    );
+                  })
+                )}
+              </Grid>
+            </Box>
+          </Box>
+        </Flex>
+      </VStack>
+    </Stack>
   );
 };
 

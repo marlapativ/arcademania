@@ -1,4 +1,11 @@
-import { Box, Flex, Grid, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  useColorModeValue,
+  Stack,
+  VStack,
+} from "@chakra-ui/react";
 import _, { repeat } from "lodash";
 import { useState } from "react";
 
@@ -7,6 +14,7 @@ import {
   saveScore,
 } from "../../../services/leaderboard-service";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
+import GameScore from "../gameScore/gameScore";
 import { getUser } from "lib/services/user-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import { useDispatch } from "lib/store/store";
@@ -193,59 +201,65 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
 
   const unhideCell = (coordinate: Coordinate, value: number) => {
     unhideCellAndNeighbours(coordinate, value === 0);
+    setScore(countVisible());
     checkIfWon();
   };
 
   return (
-    <Flex>
-      <Box
-        bg={useColorModeValue("gray.100", "white")}
-        color="white"
-        borderRadius="lg"
-        rounded="xl"
-        boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
-        m={{ sm: 2, md: 8, lg: 2 }}
-      >
-        <div style={{ position: "relative" }}>
-          <GameStatusMessage
-            show={showGameMessage}
-            win={win}
-            playAgain={playAgain}
-            score={score}
-          />
-
-          <Grid
-            gridTemplateRows={repeat("1fr ", rows)}
-            gridTemplateColumns={repeat("1fr ", columns)}
-            m={2}
-            filter="var(--chakra-backdrop-blur)"
-            backdropBlur={showGameMessage ? "sm" : undefined}
-            transition="450ms filter linear"
+    <Stack>
+      <VStack>
+        <GameScore score={score} show={!showGameMessage} />
+        <Flex>
+          <Box
+            bg={useColorModeValue("white", "gray.800")}
+            color="white"
+            borderRadius="lg"
+            rounded="xl"
+            boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
+            m={{ sm: 2, md: 8, lg: 2 }}
           >
-            {game.map((eachRow, rowIndex) =>
-              eachRow.map((eachColumn, columnIndex) => {
-                const key = rowIndex * columns + columnIndex;
-                const coordinate: Coordinate = {
-                  x: rowIndex,
-                  y: columnIndex,
-                };
-                const data = game[rowIndex][columnIndex];
-                return (
-                  <MinesweeperCell
-                    key={key}
-                    coordinate={coordinate}
-                    unhide={unhideCell}
-                    endGame={endGame}
-                    show={data.visible}
-                    value={data.value}
-                  />
-                );
-              })
-            )}
-          </Grid>
-        </div>
-      </Box>
-    </Flex>
+            <Box style={{ position: "relative" }}>
+              <GameStatusMessage
+                show={showGameMessage}
+                win={win}
+                playAgain={playAgain}
+                score={score}
+              />
+
+              <Grid
+                gridTemplateRows={repeat("1fr ", rows)}
+                gridTemplateColumns={repeat("1fr ", columns)}
+                m={2}
+                filter="var(--chakra-backdrop-blur)"
+                backdropBlur={showGameMessage ? "sm" : undefined}
+                transition="450ms filter linear"
+              >
+                {game.map((eachRow, rowIndex) =>
+                  eachRow.map((eachColumn, columnIndex) => {
+                    const key = rowIndex * columns + columnIndex;
+                    const coordinate: Coordinate = {
+                      x: rowIndex,
+                      y: columnIndex,
+                    };
+                    const data = game[rowIndex][columnIndex];
+                    return (
+                      <MinesweeperCell
+                        key={key}
+                        coordinate={coordinate}
+                        unhide={unhideCell}
+                        endGame={endGame}
+                        show={data.visible}
+                        value={data.value}
+                      />
+                    );
+                  })
+                )}
+              </Grid>
+            </Box>
+          </Box>
+        </Flex>
+      </VStack>
+    </Stack>
   );
 };
 
