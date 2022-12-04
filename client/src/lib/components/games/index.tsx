@@ -3,5 +3,6 @@ import Connect4 from "./connect4/Connect4";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/src/tictactoe";
+import TypingSpeed from "./typingspeed/src/typingspeed";
 
-export { Minesweeper, SnakeGame, CarGame, Connect4, TicTacToe };
+export { Minesweeper, SnakeGame, CarGame, Connect4, TicTacToe, TypingSpeed };
