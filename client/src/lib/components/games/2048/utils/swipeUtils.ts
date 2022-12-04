@@ -15,33 +15,33 @@ export const isExist = (game: number[][], element: number): boolean => {
 export const swipeLeft: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
-  const newArray: number[][] = structuredClone(data);
+  const clonedData: number[][] = structuredClone(data);
   let score = 0;
 
-  for (let i = 0; i < 4; i += 1) {
-    const b = newArray[i];
+  for (let i = 0; i < clonedData.length; i += 1) {
+    const currentRow = clonedData[i];
     let slow = 0;
     let fast = 1;
 
-    while (slow < 4) {
-      if (fast === 4) {
+    while (slow < clonedData.length) {
+      if (fast === clonedData.length) {
         fast = slow + 1;
         slow += 1;
         continue;
       }
-      if (b[slow] === 0 && b[fast] === 0) {
+      if (currentRow[slow] === 0 && currentRow[fast] === 0) {
         fast += 1;
-      } else if (b[slow] === 0 && b[fast] !== 0) {
-        b[slow] = b[fast];
-        b[fast] = 0;
+      } else if (currentRow[slow] === 0 && currentRow[fast] !== 0) {
+        currentRow[slow] = currentRow[fast];
+        currentRow[fast] = 0;
         fast += 1;
-      } else if (b[slow] !== 0 && b[fast] === 0) {
+      } else if (currentRow[slow] !== 0 && currentRow[fast] === 0) {
         fast += 1;
-      } else if (b[slow] !== 0 && b[fast] !== 0) {
-        if (b[slow] === b[fast]) {
-          b[slow] += b[fast];
-          score += b[slow];
-          b[fast] = 0;
+      } else if (currentRow[slow] !== 0 && currentRow[fast] !== 0) {
+        if (currentRow[slow] === currentRow[fast]) {
+          currentRow[slow] += currentRow[fast];
+          score += currentRow[slow];
+          currentRow[fast] = 0;
           fast = slow + 1;
           slow += 1;
         } else {
@@ -54,7 +54,7 @@ export const swipeLeft: UnaryFunction<number[][], SwipedGridData> = (
 
   return {
     swipedScore: score,
-    swipedGrid: newArray,
+    swipedGrid: clonedData,
   };
 };
 
@@ -62,11 +62,11 @@ export const swipeRight: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
   let score = 0;
-  const newArray = structuredClone(data);
+  const clonedData = structuredClone(data);
 
-  for (let i = 3; i >= 0; i -= 1) {
-    const b = newArray[i];
-    let slow = b.length - 1;
+  for (let i = clonedData.length - 1; i >= 0; i -= 1) {
+    const currentRow = clonedData[i];
+    let slow = currentRow.length - 1;
     let fast = slow - 1;
 
     while (slow > 0) {
@@ -75,19 +75,19 @@ export const swipeRight: UnaryFunction<number[][], SwipedGridData> = (
         slow -= 1;
         continue;
       }
-      if (b[slow] === 0 && b[fast] === 0) {
+      if (currentRow[slow] === 0 && currentRow[fast] === 0) {
         fast -= 1;
-      } else if (b[slow] === 0 && b[fast] !== 0) {
-        b[slow] = b[fast];
-        b[fast] = 0;
+      } else if (currentRow[slow] === 0 && currentRow[fast] !== 0) {
+        currentRow[slow] = currentRow[fast];
+        currentRow[fast] = 0;
         fast -= 1;
-      } else if (b[slow] !== 0 && b[fast] === 0) {
+      } else if (currentRow[slow] !== 0 && currentRow[fast] === 0) {
         fast -= 1;
-      } else if (b[slow] !== 0 && b[fast] !== 0) {
-        if (b[slow] === b[fast]) {
-          b[slow] += b[fast];
-          score += b[slow];
-          b[fast] = 0;
+      } else if (currentRow[slow] !== 0 && currentRow[fast] !== 0) {
+        if (currentRow[slow] === currentRow[fast]) {
+          currentRow[slow] += currentRow[fast];
+          score += currentRow[slow];
+          currentRow[fast] = 0;
           fast = slow - 1;
           slow -= 1;
         } else {
@@ -100,36 +100,36 @@ export const swipeRight: UnaryFunction<number[][], SwipedGridData> = (
 
   return {
     swipedScore: score,
-    swipedGrid: newArray,
+    swipedGrid: clonedData,
   };
 };
 export const swipeUp: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
-  const b = [...data];
+  const clonedData = [...data];
   let score = 0;
-  for (let i = 0; i < 4; i += 1) {
+  for (let i = 0; i < clonedData.length; i += 1) {
     let slow = 0;
     let fast = 1;
-    while (slow < 4) {
-      if (fast === 4) {
+    while (slow < clonedData.length) {
+      if (fast === clonedData.length) {
         fast = slow + 1;
         slow += 1;
         continue;
       }
-      if (b[slow][i] === 0 && b[fast][i] === 0) {
+      if (clonedData[slow][i] === 0 && clonedData[fast][i] === 0) {
         fast += 1;
-      } else if (b[slow][i] === 0 && b[fast][i] !== 0) {
-        b[slow][i] = b[fast][i];
-        b[fast][i] = 0;
+      } else if (clonedData[slow][i] === 0 && clonedData[fast][i] !== 0) {
+        clonedData[slow][i] = clonedData[fast][i];
+        clonedData[fast][i] = 0;
         fast += 1;
-      } else if (b[slow][i] !== 0 && b[fast][i] === 0) {
+      } else if (clonedData[slow][i] !== 0 && clonedData[fast][i] === 0) {
         fast += 1;
-      } else if (b[slow][i] !== 0 && b[fast][i] !== 0) {
-        if (b[slow][i] === b[fast][i]) {
-          b[slow][i] += b[fast][i];
-          score += b[slow][i];
-          b[fast][i] = 0;
+      } else if (clonedData[slow][i] !== 0 && clonedData[fast][i] !== 0) {
+        if (clonedData[slow][i] === clonedData[fast][i]) {
+          clonedData[slow][i] += clonedData[fast][i];
+          score += clonedData[slow][i];
+          clonedData[fast][i] = 0;
           fast = slow + 1;
           slow += 1;
         } else {
@@ -142,17 +142,17 @@ export const swipeUp: UnaryFunction<number[][], SwipedGridData> = (
 
   return {
     swipedScore: score,
-    swipedGrid: b,
+    swipedGrid: clonedData,
   };
 };
 export const swipeDown: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
   let score = 0;
-  const b = [...data];
+  const clonedData = [...data];
 
-  for (let i = 3; i >= 0; i -= 1) {
-    let slow = b.length - 1;
+  for (let i = clonedData.length - 1; i >= 0; i -= 1) {
+    let slow = clonedData.length - 1;
     let fast = slow - 1;
     while (slow > 0) {
       if (fast === -1) {
@@ -160,19 +160,19 @@ export const swipeDown: UnaryFunction<number[][], SwipedGridData> = (
         slow -= 1;
         continue;
       }
-      if (b[slow][i] === 0 && b[fast][i] === 0) {
+      if (clonedData[slow][i] === 0 && clonedData[fast][i] === 0) {
         fast -= 1;
-      } else if (b[slow][i] === 0 && b[fast][i] !== 0) {
-        b[slow][i] = b[fast][i];
-        b[fast][i] = 0;
+      } else if (clonedData[slow][i] === 0 && clonedData[fast][i] !== 0) {
+        clonedData[slow][i] = clonedData[fast][i];
+        clonedData[fast][i] = 0;
         fast -= 1;
-      } else if (b[slow][i] !== 0 && b[fast][i] === 0) {
+      } else if (clonedData[slow][i] !== 0 && clonedData[fast][i] === 0) {
         fast -= 1;
-      } else if (b[slow][i] !== 0 && b[fast][i] !== 0) {
-        if (b[slow][i] === b[fast][i]) {
-          b[slow][i] += b[fast][i];
-          score += b[slow][i];
-          b[fast][i] = 0;
+      } else if (clonedData[slow][i] !== 0 && clonedData[fast][i] !== 0) {
+        if (clonedData[slow][i] === clonedData[fast][i]) {
+          clonedData[slow][i] += clonedData[fast][i];
+          score += clonedData[slow][i];
+          clonedData[fast][i] = 0;
           fast = slow - 1;
           slow -= 1;
         } else {
@@ -185,6 +185,6 @@ export const swipeDown: UnaryFunction<number[][], SwipedGridData> = (
 
   return {
     swipedScore: score,
-    swipedGrid: b,
+    swipedGrid: clonedData,
   };
 };

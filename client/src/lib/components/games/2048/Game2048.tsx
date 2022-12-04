@@ -116,29 +116,18 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   };
 
   const checkGameOver = (swipedGrid: number[][]) => {
-    const currentData = structuredClone(swipedGrid);
-    if (
-      JSON.stringify(currentData) !==
-      JSON.stringify(swipeLeft(cloneGame()).swipedGrid)
-    ) {
+    const currentData = JSON.stringify(structuredClone(swipedGrid));
+
+    if (currentData !== JSON.stringify(swipeLeft(cloneGame()).swipedGrid)) {
       return false;
     }
-    if (
-      JSON.stringify(currentData) !==
-      JSON.stringify(swipeRight(cloneGame()).swipedGrid)
-    ) {
+    if (currentData !== JSON.stringify(swipeRight(cloneGame()).swipedGrid)) {
       return false;
     }
-    if (
-      JSON.stringify(currentData) !==
-      JSON.stringify(swipeUp(cloneGame()).swipedGrid)
-    ) {
+    if (currentData !== JSON.stringify(swipeUp(cloneGame()).swipedGrid)) {
       return false;
     }
-    if (
-      JSON.stringify(currentData) !==
-      JSON.stringify(swipeDown(cloneGame()).swipedGrid)
-    ) {
+    if (currentData !== JSON.stringify(swipeDown(cloneGame()).swipedGrid)) {
       return false;
     }
 
