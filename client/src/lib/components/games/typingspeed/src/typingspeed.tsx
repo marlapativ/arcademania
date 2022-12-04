@@ -1,5 +1,5 @@
 import React, { ChangeEvent, Component } from 'react'
-
+import "./type.module.scss"
 
 interface State {
   typeTest: string
