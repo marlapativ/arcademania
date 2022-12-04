@@ -77,4 +77,18 @@ const TicTacToe: React.FC = () => {
                     onClick={i => handleClick(i)}
                 />
             </div>
+            <div className="game-info">
+                <div>{status}</div>
+                {(winner || !isStepLeft) && <button onClick={() => {
+                    jumpTo(0);
+                    setHistory(initialHistory);
+                    setShowPlayerSelection(true);
+                }}>Start new game</button>}
+                <ol>{moves}</ol>
+            </div>
+        </div>
+    );
+
+}
+
 export default TicTacToe;
