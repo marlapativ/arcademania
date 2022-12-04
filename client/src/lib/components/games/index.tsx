@@ -2,5 +2,6 @@ import CarGame from "./carcrash/CarGame";
 import Connect4 from "./connect4/Connect4";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
+import TicTacToe from "./tictactoe/src/tictactoe";
 
-export { Minesweeper, SnakeGame, CarGame, Connect4 };
+export { Minesweeper, SnakeGame, CarGame, Connect4, TicTacToe };
