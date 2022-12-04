@@ -31,6 +31,11 @@ const games: GameInfoCollection = {
     name: "Connect4",
     component: <Connect4 />,
   },
+  5: {
+    id: 5,
+    name: "Tic Tac Toe",
+    component: <TicTacToe />,
+  },
 };
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
