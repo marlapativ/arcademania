@@ -16,6 +16,8 @@ import {
   InputRightElement,
   useDisclosure,
   VStack,
+  Link,
+  Center,
 } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
 import React, { useState } from "react";
@@ -144,6 +146,21 @@ const SignInDrawer = () => {
                 </form>
               )}
             </Formik>
+            <Center m={3}>or</Center>
+            <Center>
+              <Button
+                bg="blue.500"
+                color="white"
+                _hover={{ background: "blue.600" }}
+              >
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  href="http://localhost:8080/api/auth/googleSignIn"
+                >
+                  Signin With Google
+                </Link>
+              </Button>
+            </Center>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

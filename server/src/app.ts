@@ -4,6 +4,7 @@ import routes from './routes/index';
 import mongoose from 'mongoose'
 import logger from './config/logger';
 import passport from 'passport';
+import session from 'express-session';
 
 /*
  * Port to host the server
@@ -28,6 +29,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(cors());
+app.use(session({ secret: 'SECRET' }));
 app.use(passport.initialize());
 app.use(passport.session());
 

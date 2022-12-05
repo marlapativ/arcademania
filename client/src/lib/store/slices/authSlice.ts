@@ -27,7 +27,7 @@ export const authSlice = createSlice({
 });
 
 // A small helper of user state for `useSelector` function.
-export const getLeaderboard = (state: { auth: AuthState }) => state.auth;
+export const getAuthState = (state: { auth: AuthState }) => state.auth;
 
 // Exports all actions
 export const { setAccessToken } = authSlice.actions;
