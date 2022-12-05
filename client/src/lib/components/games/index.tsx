@@ -11,6 +11,9 @@ const games: GameInfoCollection = {
     id: 1,
     name: "Minesweeper",
     component: <Minesweeper rows={10} columns={10} bombs={10} />,
+    image: "images/Minesweeper.png",
+    description:
+      "Classic implementation of the Minesweeper game in Javascript with features like flagging the cell.",
   },
   2: {
     id: 2,
@@ -28,7 +31,7 @@ const games: GameInfoCollection = {
     component: <Connect4 />,
   },
   5: {
-    id: 4,
+    id: 5,
     name: "2048",
     component: <Game2048 rows={4} columns={4} />,
   },

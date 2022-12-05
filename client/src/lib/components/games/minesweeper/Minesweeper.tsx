@@ -14,7 +14,7 @@ import {
   saveScore,
 } from "../../../services/leaderboard-service";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
-import GameScore from "../gameScore/gameScore";
+import GameScore from "../gameScore/GameScore";
 import { getUser } from "lib/services/user-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import { useDispatch } from "lib/store/store";

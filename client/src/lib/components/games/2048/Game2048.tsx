@@ -20,13 +20,13 @@ import type {
   UnaryFunction,
 } from "../../../types/components/games/games.common";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
-import GameScore from "../gameScore/gameScore";
+import GameScore from "../gameScore/GameScore";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import { useDispatch } from "lib/store/store";
 
-import Cell2048 from "./Cell2048/Cell2048";
+import Cell2048 from "./cell2048/Cell2048";
 import {
   isExist,
   swipeDown,
