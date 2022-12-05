@@ -8,9 +8,8 @@ const Footer = () => {
           href="http://localhost:3000/"
           isExternal
           rel="noopener noreferrer"
-        >
-          http://localhost:3000/
-        </Link>
+        />
+        © 2022 ArcadeMania
       </Text>
     </Flex>
   );

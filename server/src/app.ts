@@ -25,7 +25,7 @@ app.use(cors());
 routes(app);
 
 // Database Connection
-mongoose.connect('mongodb+srv://abhi:abhi@cluster0.pxa5l.mongodb.net/tododb?retryWrites=true&w=majority', (err) => {
+mongoose.connect('mongodb://localhost:27017/Users', (err) => {
     if (err) {
         logger.error(`Unable to connect to MongoDB database: ${err}`);
     }
