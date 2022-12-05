@@ -1,6 +1,6 @@
 import { Divider, Flex, IconButton } from "@chakra-ui/react";
 import { useState } from "react";
-import { FiMenu, FiHome, FiClock, FiStar, FiPhone } from "react-icons/fi";
+import { FiMenu, FiHome, FiClock, FiStar } from "react-icons/fi";
 
 import NavItem from "./NavItem";
 
@@ -61,15 +61,6 @@ const LeftPane = () => {
             icon={FiStar}
             active={isOpen}
           />
-          <Divider display={navSize === "small" ? "none" : "flex"} />
-          <Flex mt={4} alignItems="center">
-            <NavItem
-              navSize={navSize}
-              title="ContactUS"
-              icon={FiPhone}
-              active={isOpen}
-            />
-          </Flex>
         </Flex>
       </Flex>
     </aside>
