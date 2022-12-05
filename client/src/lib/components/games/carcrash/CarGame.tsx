@@ -128,11 +128,7 @@ class CarGame extends React.Component<unknown, CarGameProps> {
       <Container>
         {/* <GameStatusMessage show={true} playAgain={this.startGame} score={this.state.score} win={true} key={1} /> */}
 
-        <Container
-          id="game"
-          className={carstyles.game}
-          style={{ display: "block" }}
-        >
+        <Container id="game" className={carstyles.game}>
           <ModalComponent
             modalHeader="start the Car Game"
             modalCotent=""

@@ -1,6 +1,5 @@
 import { IUser, ISignInUser } from "../../types/models/user.types";
 import { User } from "../../models/index";
-import { comparePassword } from "../../config/crypto";
 import { authSecret } from "../../config/auth-config";
 import jwt from 'jsonwebtoken';
 
@@ -8,6 +7,14 @@ export const createUser = async (user: IUser) => {
   const newUser = new User(user);
   return newUser.save();
 };
+
+export const updateUser = async (id:number, user: IUser) => {
+  return User.findByIdAndUpdate(id, user) 
+}
+
+export const getUser = async (id:number, user: IUser) => {
+  return User.findByIdAndUpdate(id, user) 
+}
 
 export const loginUser = async (signInUser: ISignInUser) => {
   const user =  await User.findOne({

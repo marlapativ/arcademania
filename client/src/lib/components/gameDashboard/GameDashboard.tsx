@@ -5,6 +5,7 @@ import games from "../games";
 
 import GameBody from "./gameBody/GameBody";
 import GameFooter from "./gameFooter/GameFooter";
+import GameHeader from "./gameHeader/GameHeader";
 import Leaderboard from "./leaderboard/Leaderboard";
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
@@ -26,7 +27,8 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem pl={2} area="main">
+        <GridItem px={1} area="main">
+          <GameHeader helpContent={game?.helpContent} isFavourite />
           <GameBody>{game?.component}</GameBody>
         </GridItem>
         <GridItem pl={2} area="footer">

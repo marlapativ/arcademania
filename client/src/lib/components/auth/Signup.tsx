@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
@@ -25,6 +26,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
 import { createUser } from "lib/services/auth-service";
+import type { SignUpUserType } from "lib/types/components/auth.types";
 
 const SignupDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,8 +36,14 @@ const SignupDrawer = () => {
   const handlePassClick = () => setShowConfirmPassword(!showConfirmPassword);
   let password = "";
 
-  const userSignUp = (values: JSON) => {
-    createUser(values);
+  const userSignUp = (values: SignUpUserType) => {
+    const jsonValues = {
+      name: values.firstName + values.lastName,
+      email: values.email,
+      username: values.username,
+      password: values.password,
+    };
+    createUser(JSON.parse(JSON.stringify(jsonValues)));
     onClose();
   };
 
@@ -128,12 +136,20 @@ const SignupDrawer = () => {
                   <Stack spacing="24px">
                     <FormControl>
                       <Flex>
-                        <FormControl mr={3}>
-                          <FormLabel htmlFor="firstName" pl={1}>
-                            First Name
-                          </FormLabel>
-                          <Input id="firstName" placeholder="First name" />
-                        </FormControl>
+                        <Field name="firstName">
+                          {({ field }: any) => (
+                            <FormControl mr={3}>
+                              <FormLabel htmlFor="firstName" pl={1}>
+                                First Name
+                              </FormLabel>
+                              <Input
+                                {...field}
+                                id="firstName"
+                                placeholder="First name"
+                              />
+                            </FormControl>
+                          )}
+                        </Field>
                         <Field name="lastName" validate={validateLastName}>
                           {({ field, form }: any) => (
                             <FormControl
