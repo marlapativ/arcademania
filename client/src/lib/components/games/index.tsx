@@ -18,22 +18,26 @@ const games: GameInfoCollection = {
     altImage: "images/2048.png",
     description:
       "Slide the numbered tiles on a grid to combine them to create a tile with the number 2048 to win the game!",
+    helpContent: "",
   },
   2: {
     id: 2,
     name: "Snake Game",
     component: <SnakeGame />,
+    helpContent: "",
   },
   3: {
     id: 3,
     name: "Car Game",
     component: <CarGame />,
     altImage: "images/race-car.gif",
+    helpContent: "",
   },
   4: {
     id: 4,
     name: "Connect4",
     component: <Connect4 />,
+    helpContent: "",
   },
   5: {
     id: 5,
@@ -43,22 +47,26 @@ const games: GameInfoCollection = {
     altImage: "images/Minesweeper.png",
     description:
       "Classic implementation of the Minesweeper game in Javascript with flag the cell feature.",
+    helpContent: "",
   },
   6: {
     id: 6,
     name: "Tic Tac Toe",
     component: <TicTacToe />,
+    helpContent: "",
   },
   7: {
     id: 7,
     name: "Typing Speed",
     component: <TypingSpeed />,
+    helpContent: "",
   },
-  8: {
-    id: 8,
-    name: "Memory Game",
-    component: <MemoryGame />,
-  },
+  // 8: {
+  //   id: 8,
+  //   name: "Memory Game",
+  //   component: <MemoryGame />,
+  //   helpContent: "",
+  // },
 };
 
 export default games;
