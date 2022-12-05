@@ -1,10 +1,6 @@
-import { Button, Container } from "@chakra-ui/react";
+import { Button, Center, Container } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch } from "react-redux";
 
-import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
-import { getUser } from "lib/services/user-service";
-import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import type { SnakeGameProps } from "lib/types/components/games/snakeGame.types";
 
 import Food from "./Food";
@@ -70,10 +66,9 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
   };
 
   moveSnake = () => {
-    const { snakeDots } = this.state;
+    const { snakeDots, direction, play, pause } = this.state;
     const dots = [...snakeDots];
     let head = dots[dots.length - 1];
-    const { direction } = this.state;
     switch (direction) {
       case "RIGHT":
         head = [head[0] + 5, head[1]];
@@ -90,8 +85,6 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
       default:
         break;
     }
-    const { play } = this.state;
-    const { pause } = this.state;
     if (!pause && play) {
       dots.push(head);
       dots.shift();
@@ -122,9 +115,8 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
   };
 
   checkIfEat = () => {
-    const { snakeDots } = this.state;
+    const { snakeDots, food } = this.state;
     const head = snakeDots[snakeDots.length - 1];
-    const { food } = this.state;
     if (head[0] === food[0] && head[1] === food[1]) {
       this.setState({
         food: getRandomCoords(),
@@ -158,22 +150,6 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
     this.setState({
       gameOver: `Game Over! Your Score was ${snakeDots.length} Try Again`,
     });
-    this.saveGameScores(snakeDots.length);
-  };
-
-  // eslint-disable-next-line class-methods-use-this
-  saveGameScores = (gameScore: number) => {
-    const dispatch = useDispatch();
-    saveScore(2, getUser().userId, gameScore).then(() => {
-      getLeaderboard(2).then((leaderboard) =>
-        dispatch(
-          setGameLeaderboard({
-            gameId: 2,
-            data: leaderboard,
-          })
-        )
-      );
-    });
   };
 
   render() {
@@ -182,6 +158,9 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
     if (play) {
       button = (
         <Button
+          bg="blue.400"
+          color="white"
+          ml={3}
           onClick={() => {
             this.setState({ pause: !pause });
           }}
@@ -192,17 +171,21 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
     }
     return (
       <Container width={800}>
-        <Container className="flex my-2 justify-center">
-          <Button
-            onClick={() => {
-              if (play) {
-                this.setState(initialState);
-              } else this.setState({ play: true });
-            }}
-          >
-            {play ? "End Game" : "Play Game"}
-          </Button>
-          {button}
+        <Container mt={2} className="flex my-2 justify-center">
+          <Center>
+            <Button
+              bg="blue.400"
+              color="white"
+              onClick={() => {
+                if (play) {
+                  this.setState(initialState);
+                } else this.setState({ play: true });
+              }}
+            >
+              {play ? "End Game" : "Play Game"}
+            </Button>
+            {button}
+          </Center>
         </Container>
 
         <Container className={snakeGameStyles.gameArea}>

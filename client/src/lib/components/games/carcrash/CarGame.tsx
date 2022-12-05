@@ -1,8 +1,7 @@
-import { Container } from "@chakra-ui/react";
+import { Button, Center, Container } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
 
-import ModalComponent from "lib/components/common/modal/Modal";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
@@ -137,15 +136,12 @@ class CarGame extends React.Component<unknown, CarGameProps> {
     }
     return (
       <Container>
-        {/* <GameStatusMessage show={true} playAgain={this.startGame} score={this.state.score} win={true} key={1} /> */}
-
+        <Center>
+          <Button mt={2} bg="blue.400" color="white" onClick={this.startGame}>
+            Play Game
+          </Button>
+        </Center>
         <Container id="game" h="600px" className={carstyles.game}>
-          <ModalComponent
-            modalHeader="start the Car Game"
-            modalCotent=""
-            actionButtonText="Start Game"
-            buttonAction={this.startGame}
-          />
           {blueCar}
           <Container id="redCar" className="redCar">
             <Image
