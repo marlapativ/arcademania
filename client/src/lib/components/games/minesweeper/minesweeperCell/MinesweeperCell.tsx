@@ -1,4 +1,4 @@
-import { GridItem, IconButton, Center } from "@chakra-ui/react";
+import { GridItem, IconButton, Center, useColorModeValue } from '@chakra-ui/react';
 import { useState, useEffect } from "react";
 import { BsFillFlagFill } from "react-icons/bs";
 
@@ -73,7 +73,7 @@ const MinesweeperCell: React.FC<MinesweeperCellProps> = ({
           cursor="auto"
           fontSize="sm"
         >
-          <Center color="red">{isHidden || (value > 0 && value)}</Center>
+          <Center color={useColorModeValue("gray.900", "white")}>{isHidden || (value > 0 && value)}</Center>
         </IconButton>
       )}
     </GridItem>
