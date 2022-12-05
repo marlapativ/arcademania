@@ -7,6 +7,10 @@ export interface GameInfoProps extends ReactChildrenProps {
   id: number;
 }
 
+export type GameInfoComponentProps = ReactChildrenProps & {
+  game: GameInfoComponent;
+};
+
 export interface NavItemProps extends ReactChildrenProps {
   navSize: string;
   title: string;
@@ -21,6 +25,8 @@ export type GameInfoCollection = {
 export type GameInfo = {
   id: number;
   name: string;
+  image?: string;
+  description?: string;
 };
 
 export type GameInfoComponent = GameInfo & {
