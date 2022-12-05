@@ -47,8 +47,8 @@ const games: GameInfoCollection = {
     id: 4,
     name: "Connect4",
     component: <Connect4 />,
-    image: "images/carGame.png",
-    altImage: "images/race-car.gif",
+    image: "images/Connect4.png",
+    altImage: "images/Connect4.png",
     description:
       "This is a multi player game, click on the row to insert respective disks into the columns, connect any 4 dots and win the game",
     helpContent:
