@@ -17,9 +17,9 @@ import { useSession, signOut } from "next-auth/react";
 import type React from "react";
 import { FiChevronDown } from "react-icons/fi";
 
-import type { AuthProps } from "../../../types/components/auth";
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
+import type { AuthProps } from "lib/types/components/auth.types";
 
 const LoggedInMenu = () => {
   return (

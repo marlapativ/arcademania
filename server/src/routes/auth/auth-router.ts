@@ -8,7 +8,10 @@ const router = express.Router();
 router.route('/auth/signup').post(authController.createUser);
 
 // Signin Route
-router.route('/auth/signin').post(authController.loginUser)
+router.route('/auth/signin').post(authController.loginUser);
+
+// UpdateProfile Route
+router.route('/auth/updateProfile').post(authController.updateProfile)
 
 
 export default router;

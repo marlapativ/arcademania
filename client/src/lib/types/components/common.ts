@@ -14,6 +14,11 @@ export interface NavItemProps extends ReactChildrenProps {
   active: boolean;
 }
 
+export interface GameHeaderProps extends ReactChildrenProps {
+  helpContent: string;
+  isFavourite: boolean;
+}
+
 export type GameInfoCollection = {
   [id: number]: GameInfoComponent;
 };
@@ -23,9 +28,14 @@ export type GameInfo = {
   name: string;
 };
 
-export type GameInfoComponent = GameInfo & {
-  component: React.ReactNode;
+export type GameHelp = {
+  helpContent: string;
 };
+
+export type GameInfoComponent = GameInfo &
+  GameHelp & {
+    component: React.ReactNode;
+  };
 
 export type UserId = {
   userId: string;
@@ -50,6 +60,12 @@ export type ModalDataProps = {
   modalCotent: string;
   actionButtonText: string;
   buttonAction: AnyFunction;
+};
+
+export type PopOverProps = {
+  popOverHeader: string;
+  popOverCotent: string;
+  triggerButtonText: string;
 };
 
 export type ToastMessageProps = {

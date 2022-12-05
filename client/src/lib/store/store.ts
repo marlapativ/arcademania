@@ -6,11 +6,13 @@ import {
   useSelector as useSelectorBase,
 } from "react-redux";
 
+import { authSliceReducer } from "./slices/authSlice";
 import { leaderboardSliceReducer } from "./slices/leaderboardSlice";
 
 const store = configureStore({
   reducer: {
     leaderboard: leaderboardSliceReducer,
+    auth: authSliceReducer,
   },
 });
 
