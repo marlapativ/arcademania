@@ -4,7 +4,7 @@ import type {
   GameInfoCollection,
   GameInfoProps,
 } from "../../types/components/common";
-import { Minesweeper, SnakeGame, CarGame, Connect4, TicTacToe, TypingSpeed } from "../games";
+import { Minesweeper, SnakeGame, CarGame, Connect4, TicTacToe, TypingSpeed, MemoryGame } from "../games";
 
 import GameBody from "./gameBody/GameBody";
 import GameFooter from "./gameFooter/GameFooter";
@@ -40,6 +40,11 @@ const games: GameInfoCollection = {
     id: 6,
     name: "Typing Speed",
     component: <TypingSpeed />,
+  },
+  7: {
+    id: 7,
+    name: "Memory Game",
+    component: <MemoryGame />,
   },
 };
 
