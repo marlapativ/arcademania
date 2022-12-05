@@ -1,3 +1,4 @@
+import type { PlacementWithLogical } from "@chakra-ui/react";
 import type { AnyFunction } from "@chakra-ui/utils";
 import type { IconType } from "react-icons";
 
@@ -5,6 +6,13 @@ import type { ReactChildrenProps } from "../globals";
 
 export interface GameInfoProps extends ReactChildrenProps {
   id: number;
+}
+
+export interface SliderGameProps {
+  id: number;
+  maxH: number | string;
+  maxW: number | string;
+  popoverPlacement: PlacementWithLogical;
 }
 
 export type GameInfoComponentProps = ReactChildrenProps & {
@@ -26,6 +34,7 @@ export type GameInfo = {
   id: number;
   name: string;
   image?: string;
+  altImage?: string;
   description?: string;
 };
 
