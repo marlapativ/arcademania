@@ -71,9 +71,9 @@ export const loginUser = async (req: CustomRequest<ISignInUser>, response: Custo
  * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
  * back to the client.
  */
-export const getUser = async(req: Request, response: CustomResponse) => {
+export const getUser = async(req: CustomRequest<IUser>, response: CustomResponse) => {
     try {
-        const token = req.headers.get('accessToken');
+        const token = req.headers.authorization
         const user = authService.getUser(token);
         setResponse(response, user);
     } catch (err) {

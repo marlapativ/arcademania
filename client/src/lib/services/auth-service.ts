@@ -3,10 +3,10 @@ const url = "http://localhost:8080/api/v1";
 const defaultContentType = "application/json";
 
 /**
- * This function is used to get all todos
+ * This function is used to signin the user
  * @returns array of todos
  */
-export const getAccessToken = async (data: JSON) => {
+export const signIn = async (data: JSON) => {
   const newurl = `${url}/auth/signin`;
 
   return fetch(newurl, {
@@ -42,5 +42,30 @@ export const updateUser = async (userId: number, data: JSON) => {
       "content-type": defaultContentType,
     },
     body: JSON.stringify(data),
+  });
+};
+
+export const getUser = async (token: string) => {
+  const newurl = `${url}/auth/getUser`;
+
+  return fetch(newurl, {
+    method: "GET",
+    headers: {
+      "cache-control": "no-cache",
+      "content-type": defaultContentType,
+      accessToken: token,
+    },
+  });
+};
+
+export const signOut = async (token: string) => {
+  const newurl = `${url}/auth/`;
+  return fetch(newurl, {
+    method: "GET",
+    headers: {
+      "cache-control": "no-cache",
+      "content-type": defaultContentType,
+      accessToken: token,
+    },
   });
 };

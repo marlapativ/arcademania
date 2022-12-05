@@ -13,15 +13,17 @@ import {
   MenuList,
   Stack,
 } from "@chakra-ui/react";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import type React from "react";
 import { FiChevronDown } from "react-icons/fi";
 
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
+import { signOut } from "lib/services/auth-service";
 import type { AuthProps } from "lib/types/components/auth.types";
 
 const LoggedInMenu = () => {
+  const token = "";
   return (
     <Flex alignItems="center">
       <Menu>
@@ -54,7 +56,7 @@ const LoggedInMenu = () => {
           <MenuItem>Profile</MenuItem>
           <MenuItem>Favourites</MenuItem>
           <MenuDivider />
-          <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
+          <MenuItem onClick={() => signOut(token)}>Sign out</MenuItem>
         </MenuList>
       </Menu>
     </Flex>

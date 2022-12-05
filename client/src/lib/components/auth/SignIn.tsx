@@ -24,14 +24,14 @@ import { MdVpnKey } from "react-icons/md";
 
 // import messages from "../common/toastMessages/Messages.json";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
-import { getAccessToken } from "lib/services/auth-service";
+import { signIn } from "lib/services/auth-service";
 
 const SignInDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const login = async (values: JSON) => {
-    const accessTokenObj = await getAccessToken(values);
+    const accessTokenObj = await signIn(values);
     if (accessTokenObj.status === 200) {
       // <ToastMessage
       //   messageTitle={messages.signinSuccessTitle}
