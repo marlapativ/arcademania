@@ -1,6 +1,10 @@
 import { Button, Center, Container } from "@chakra-ui/react";
 import React from "react";
+import type { DispatchProp } from "react-redux";
+import { connect } from "react-redux";
 
+import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
+import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import type { SnakeGameProps } from "lib/types/components/games/snakeGame.types";
 
 import Food from "./Food";
@@ -28,8 +32,8 @@ const initialState = {
   ],
 };
 
-class SnakeGame extends React.Component<unknown, SnakeGameProps> {
-  constructor(props: SnakeGameProps) {
+class SnakeGame extends React.Component<DispatchProp, SnakeGameProps> {
+  constructor(props: DispatchProp) {
     super(props);
     this.state = initialState;
   }
@@ -114,6 +118,20 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
     });
   };
 
+  saveGameScores = (gameScore: number) => {
+    saveScore(2, gameScore).then(() => {
+      getLeaderboard(2).then((leaderboard) => {
+        const { dispatch } = this.props;
+        dispatch(
+          setGameLeaderboard({
+            gameId: 3,
+            data: leaderboard,
+          })
+        );
+      });
+    });
+  };
+
   checkIfEat = () => {
     const { snakeDots, food } = this.state;
     const head = snakeDots[snakeDots.length - 1];
@@ -150,6 +168,7 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
     this.setState({
       gameOver: `Game Over! Your Score was ${snakeDots.length} Try Again`,
     });
+    this.saveGameScores(snakeDots.length);
   };
 
   render() {
@@ -205,4 +224,4 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
   }
 }
 
-export default SnakeGame;
+export default connect()(SnakeGame);

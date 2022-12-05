@@ -1,18 +1,19 @@
 import { Button, Center, Container } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
+import type { DispatchProp } from "react-redux";
+import { connect } from "react-redux";
 
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
-import { useDispatch } from "lib/store/store";
 import type { CarGameProps } from "lib/types/components/games/carGame.types";
 
 import BlueCar from "./BlueCar";
 import ResultsCard from "./ResultsCard";
 import carstyles from "./styles/carCrash.module.scss";
 
-class CarGame extends React.Component<unknown, CarGameProps> {
-  constructor(props: CarGameProps) {
+class CarGame extends React.Component<DispatchProp, CarGameProps> {
+  constructor(props: DispatchProp) {
     super(props);
     this.state = {
       play: false,
@@ -45,29 +46,27 @@ class CarGame extends React.Component<unknown, CarGameProps> {
       ?.getElementsByTagName("img")[0];
     if (blueCartopelem) {
       const blueCartop = blueCartopelem.offsetTop;
-      const { blueCarLeft, redCarLeft, count, score } = this.state;
+      const { blueCarLeft, redCarLeft, count, score, intervalId } = this.state;
       if (blueCarLeft === redCarLeft && blueCartop > 350 && blueCartop < 510) {
-        this.setState({ play: false, score: count, count: 0, gameOver: false });
-        const { intervalId } = this.state;
-        document.removeEventListener("keydown", this.onKeyDown, false);
         clearInterval({ intervalId } as unknown as number);
+        this.setState({ play: false, score: count, count: 0, gameOver: false });
+        document.removeEventListener("keydown", this.onKeyDown, false);
         this.saveGameScores(score);
       }
     }
   };
 
-  // eslint-disable-next-line class-methods-use-this
   saveGameScores = (gameScore: number) => {
-    const dispatch = useDispatch();
     saveScore(3, gameScore).then(() => {
-      getLeaderboard(3).then((leaderboard) =>
+      getLeaderboard(3).then((leaderboard) => {
+        const { dispatch } = this.props;
         dispatch(
           setGameLeaderboard({
             gameId: 3,
             data: leaderboard,
           })
-        )
-      );
+        );
+      });
     });
   };
 
@@ -159,4 +158,4 @@ class CarGame extends React.Component<unknown, CarGameProps> {
   }
 }
 
-export default CarGame;
+export default connect()(CarGame);
