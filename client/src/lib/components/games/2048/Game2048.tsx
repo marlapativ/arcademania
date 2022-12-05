@@ -1,226 +1,241 @@
-import { Box, Flex, Grid, useColorModeValue } from "@chakra-ui/react";
-import _, { repeat } from "lodash";
-import { useState } from "react";
+/* eslint-disable sonarjs/prefer-single-boolean-return */
 
+import {
+  Box,
+  Flex,
+  Grid,
+  useColorModeValue,
+  Stack,
+  VStack,
+} from "@chakra-ui/react";
+import { repeat } from "lodash";
+import { useEffect, useState } from "react";
+
+import type {
+  Game2048Props,
+  SwipedGridData,
+} from "../../../types/components/games/2048.types";
+import type {
+  Coordinate,
+  UnaryFunction,
+} from "../../../types/components/games/games.common";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
-import { saveScore } from "lib/services/leaderboard-service";
+import GameScore from "../gameScore/GameScore";
+import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { getUser } from "lib/services/user-service";
+import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
+import { useDispatch } from "lib/store/store";
 
-const GAME_ID = 1;
+import Cell2048 from "./cell2048/Cell2048";
+import {
+  isExist,
+  swipeDown,
+  swipeLeft,
+  swipeRight,
+  swipeUp,
+} from "./utils/swipeUtils";
 
-const neighbours: MinesweeperCoordindate[] = [
-  { x: 1, y: -1 },
-  { x: 1, y: 0 },
-  { x: 1, y: 1 },
-  { x: -1, y: -1 },
-  { x: -1, y: 0 },
-  { x: -1, y: 1 },
-  { x: 0, y: 1 },
-  { x: 0, y: -1 },
-];
+const GAME_ID = 4;
 
-const setBombsRandomly = (
-  game: MinesweeperCellData[][],
-  bombs: number
-): void => {
-  const rows = game.length;
-  const columns = game[0].length;
-  const max = rows * columns;
-  const numbers = new Set();
-  while (bombs > 0) {
-    const index = _.random(max - 1, false);
-    if (!numbers.has(index)) {
-      const row = Math.floor(index / columns);
-      const col = index % columns;
-      game[row][col] = {
-        visible: false,
-        value: -1,
-      };
-      bombs -= 1;
-      numbers.add(index);
-    }
-  }
+const getRandomValue = (): number => {
+  return Math.random() > 0.2 ? 2 : 4;
 };
 
-const createGame = (
+const setRandomElement = (
+  game: number[][],
   rows: number,
-  columns: number,
-  bombs: number
-): MinesweeperCellData[][] => {
-  const game: MinesweeperCellData[][] = new Array(rows);
+  columns: number
+): void => {
+  const emptyCells: Coordinate[] = [];
+  for (let r = 0; r < rows; r += 1) {
+    for (let c = 0; c < columns; c += 1) {
+      if (game[r][c] === 0) {
+        emptyCells.push({ x: r, y: c });
+      }
+    }
+  }
+
+  if (emptyCells.length === 0) return;
+
+  const randomIndex = Math.floor(Math.random() * emptyCells.length);
+  const { x, y } = emptyCells[randomIndex];
+  game[x][y] = getRandomValue();
+};
+
+const createGame = (rows: number, columns: number): number[][] => {
+  const game: number[][] = new Array(rows);
   for (let i = 0; i < rows; i += 1) {
     game[i] = new Array(columns);
     for (let j = 0; j < columns; j += 1) {
-      game[i][j] = {
-        visible: true,
-        value: 0,
-      };
+      game[i][j] = 0;
     }
   }
-
-  setBombsRandomly(game, bombs);
-
-  game.forEach((row, rowIndex) =>
-    row.forEach((cell, colIndex) => {
-      if (cell.value === -1) return;
-      let bombsCount = 0;
-      neighbours.forEach(({ x, y }) => {
-        const r = x + rowIndex;
-        const c = y + colIndex;
-        if (r in game && c in game[r] && game[r][c].value === -1) {
-          bombsCount += 1;
-        }
-      });
-      game[rowIndex][colIndex] = {
-        visible: false,
-        value: bombsCount,
-      };
-    })
-  );
+  setRandomElement(game, rows, columns);
+  setRandomElement(game, rows, columns);
   return game;
 };
 
-const _2048: React.FC<MinesweeperGameProps> = ({ rows, columns, bombs }) => {
-  const [game, setGame] = useState(createGame(rows, columns, bombs));
+const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
+  const dispatch = useDispatch();
+  const [game, setGame] = useState(createGame(rows, columns));
   const [score, setScore] = useState(0);
   const [showGameMessage, setShowGameMessage] = useState(false);
   const [win, setWin] = useState(false);
 
-  const updateGame = () => {
-    setGame(_.cloneDeep(game));
-  };
-
-  const showAll = () => {
-    game.forEach((row) =>
-      row.forEach((column) => {
-        column.visible = true;
-      })
-    );
-    updateGame();
-  };
-
-  const countVisible = () => {
-    return game.reduce(
-      (prev, row) =>
-        prev +
-        row.reduce((colPrev, column) => colPrev + (column.visible ? 1 : 0), 0),
-      0
-    );
-  };
-
-  const saveGameScores = async (gameScore: number) => {
-    await saveScore(GAME_ID, getUser().id, gameScore);
-  };
-
-  const endGame = (didWin?: boolean) => {
-    const gameScore = countVisible() + (didWin ? bombs : 0);
-    setScore(gameScore);
-    setWin(didWin ?? false);
-    showAll();
-    setShowGameMessage(true);
-    saveGameScores(gameScore);
-  };
-
-  const checkIfWon = () => {
-    const maxVisibleCells = rows * columns - bombs;
-    const visibleCells = countVisible();
-
-    if (visibleCells === maxVisibleCells) {
-      endGame(true);
-    }
-  };
+  const KEY_DIRECTION_MAP = new Map([
+    ["ArrowLeft", swipeLeft],
+    ["ArrowUp", swipeUp],
+    ["ArrowRight", swipeRight],
+    ["ArrowDown", swipeDown],
+  ]);
 
   const playAgain = () => {
-    setGame(createGame(rows, columns, bombs));
     setScore(0);
     setShowGameMessage(false);
     setWin(false);
+    setGame(createGame(rows, columns));
   };
 
-  const unhideCellAndNeighbours = (
-    coordinate: MinesweeperCoordindate,
-    showNeighbours: boolean
-  ) => {
-    game[coordinate.x][coordinate.y] = {
-      value: game[coordinate.x][coordinate.y].value,
-      visible: true,
-    };
+  const saveGameScores = (gameScore: number) => {
+    saveScore(GAME_ID, getUser().userId, gameScore).then(() => {
+      getLeaderboard(GAME_ID).then((leaderboard) =>
+        dispatch(
+          setGameLeaderboard({
+            gameId: GAME_ID,
+            data: leaderboard,
+          })
+        )
+      );
+    });
+  };
 
-    if (showNeighbours) {
-      neighbours.forEach((i) => {
-        const r = i.x + coordinate.x;
-        const c = i.y + coordinate.y;
-        if (r in game && c in game[r] && !game[r][c].visible) {
-          const neighbourValue = game[r][c].value;
-          game[r][c] = {
-            visible: true,
-            value: neighbourValue,
-          };
-          if (neighbourValue === 0) {
-            unhideCellAndNeighbours({ x: r, y: c }, true);
-          }
-        }
-      });
+  const endGame = (didWin?: boolean) => {
+    setWin(didWin ?? false);
+    setShowGameMessage(true);
+    saveGameScores(score);
+  };
+
+  const addScore = (newScore: number) => {
+    setScore(score + newScore);
+  };
+
+  const cloneGame = () => {
+    return structuredClone(game);
+  };
+
+  const checkGameOver = (swipedGrid: number[][]) => {
+    const currentData = JSON.stringify(structuredClone(swipedGrid));
+
+    if (currentData !== JSON.stringify(swipeLeft(cloneGame()).swipedGrid)) {
+      return false;
     }
-    updateGame();
+    if (currentData !== JSON.stringify(swipeRight(cloneGame()).swipedGrid)) {
+      return false;
+    }
+    if (currentData !== JSON.stringify(swipeUp(cloneGame()).swipedGrid)) {
+      return false;
+    }
+    if (currentData !== JSON.stringify(swipeDown(cloneGame()).swipedGrid)) {
+      return false;
+    }
+
+    return true;
   };
 
-  const unhideCell = (coordinate: MinesweeperCoordindate, value: number) => {
-    unhideCellAndNeighbours(coordinate, value === 0);
-    checkIfWon();
+  const swipe = (
+    swipeFunc: UnaryFunction<number[][], SwipedGridData> | undefined
+  ) => {
+    if (swipeFunc === undefined || showGameMessage) return;
+
+    const oldData = structuredClone(game);
+    const { swipedGrid, swipedScore } = swipeFunc(game);
+    addScore(swipedScore);
+
+    if (JSON.stringify(oldData) !== JSON.stringify(swipedGrid)) {
+      if (isExist(swipedGrid, 2048)) {
+        endGame(true);
+      } else {
+        setRandomElement(swipedGrid, rows, columns);
+      }
+    }
+    if (!isExist(oldData, 0) && checkGameOver(swipedGrid)) {
+      endGame(false);
+    }
+
+    setGame(swipedGrid);
   };
+
+  const handleKeyPress = ({ key }: KeyboardEvent) => {
+    if (!KEY_DIRECTION_MAP.has(key)) {
+      return;
+    }
+
+    swipe(KEY_DIRECTION_MAP.get(key));
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  });
 
   return (
-    <Flex>
-      <Box
-        bg={useColorModeValue("gray.100", "white")}
-        color="white"
-        borderRadius="lg"
-        rounded="xl"
-        boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
-        m={{ sm: 2, md: 8, lg: 2 }}
-      >
-        <div style={{ position: "relative" }}>
-          <GameStatusMessage
-            show={showGameMessage}
-            win={win}
-            playAgain={playAgain}
-            score={score}
-          />
-
-          <Grid
-            gridTemplateRows={repeat("1fr ", rows)}
-            gridTemplateColumns={repeat("1fr ", columns)}
-            m={2}
-            filter="var(--chakra-backdrop-blur)"
-            backdropBlur={showGameMessage ? "sm" : undefined}
-            transition="450ms filter linear"
+    <Stack>
+      <VStack>
+        <GameScore score={score} show={!showGameMessage} />
+        <Flex mt={0}>
+          <Box
+            bg={useColorModeValue("white", "gray.800")}
+            color="white"
+            borderRadius="lg"
+            rounded="xl"
+            boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
+            mx={2}
+            mb={2}
           >
-            {game.map((eachRow, rowIndex) =>
-              eachRow.map((eachColumn, columnIndex) => {
-                const key = rowIndex * columns + columnIndex;
-                const coordinate: MinesweeperCoordindate = {
-                  x: rowIndex,
-                  y: columnIndex,
-                };
-                const data = game[rowIndex][columnIndex];
-                return (
-                  <MinesweeperCell
-                    key={key}
-                    coordinate={coordinate}
-                    unhide={unhideCell}
-                    endGame={endGame}
-                    show={data.visible}
-                    value={data.value}
-                  />
-                );
-              })
-            )}
-          </Grid>
-        </div>
-      </Box>
-    </Flex>
+            <Box pos="relative">
+              <GameStatusMessage
+                show={showGameMessage}
+                win={win}
+                playAgain={playAgain}
+                score={score}
+              />
+              <Grid
+                gridTemplateRows={repeat("1fr ", rows)}
+                gridTemplateColumns={repeat("1fr ", columns)}
+                filter="var(--chakra-backdrop-blur)"
+                backdropBlur={showGameMessage ? "sm" : undefined}
+                transition="450ms filter linear"
+                bg="#bcac9f"
+                gap="2"
+                p="2"
+                borderRadius="4px"
+              >
+                {game.map((eachRow, rowIndex) =>
+                  eachRow.map((value, columnIndex) => {
+                    const key = rowIndex * columns + columnIndex;
+                    const coordinate: Coordinate = {
+                      x: rowIndex,
+                      y: columnIndex,
+                    };
+                    return (
+                      <Cell2048
+                        value={value}
+                        key={key}
+                        coordinate={coordinate}
+                      />
+                    );
+                  })
+                )}
+              </Grid>
+            </Box>
+          </Box>
+        </Flex>
+      </VStack>
+    </Stack>
   );
 };
 
-export default Minesweeper;
+export default Game2048;

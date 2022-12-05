@@ -10,6 +10,7 @@ import Layout from "lib/layout";
 import { wrapper } from "lib/store/store";
 
 import "lib/styles/globals.scss";
+import "swiper/css/bundle";
 
 const MyApp = ({
   Component,

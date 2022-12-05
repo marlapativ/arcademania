@@ -1,68 +1,12 @@
 import { Box, Grid, GridItem, Show } from "@chakra-ui/react";
 
-import type {
-  GameInfoCollection,
-  GameInfoProps,
-} from "../../types/components/common";
-import {
-  Minesweeper,
-  SnakeGame,
-  CarGame,
-  Connect4,
-  TicTacToe,
-  TypingSpeed,
-  MemoryGame,
-} from "../games";
+import type { GameInfoProps } from "../../types/components/common";
+import games from "../games";
 
 import GameBody from "./gameBody/GameBody";
 import GameFooter from "./gameFooter/GameFooter";
 import GameHeader from "./gameHeader/GameHeader";
 import Leaderboard from "./leaderboard/Leaderboard";
-
-const games: GameInfoCollection = {
-  1: {
-    id: 1,
-    name: "Minesweeper",
-    component: <Minesweeper rows={10} columns={10} bombs={10} />,
-    helpContent: "",
-  },
-  2: {
-    id: 2,
-    name: "Snake Game",
-    component: <SnakeGame />,
-    helpContent: "",
-  },
-  3: {
-    id: 3,
-    name: "Car Game",
-    component: <CarGame />,
-    helpContent: "",
-  },
-  4: {
-    id: 4,
-    name: "Connect4",
-    component: <Connect4 />,
-    helpContent: "",
-  },
-  5: {
-    id: 5,
-    name: "Tic Tac Toe",
-    component: <TicTacToe />,
-    helpContent: "",
-  },
-  6: {
-    id: 6,
-    name: "Typing Speed",
-    component: <TypingSpeed />,
-    helpContent: "",
-  },
-  7: {
-    id: 7,
-    name: "Memory Game",
-    component: <MemoryGame />,
-    helpContent: "",
-  },
-};
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
@@ -87,7 +31,7 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
           <GameHeader helpContent={game?.helpContent} isFavourite />
           <GameBody>{game?.component}</GameBody>
         </GridItem>
-        <GridItem px={1} area="footer">
+        <GridItem pl={2} area="footer">
           <GameFooter id={game?.id} name={game?.name} />
         </GridItem>
         <Show above="md">

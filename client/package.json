@@ -38,7 +38,8 @@
     "react-icons": "^4.6.0",
     "react-redux": "^8.0.5",
     "redux-thunk": "^2.4.2",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "swiper": "^8.4.5"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.1.0",

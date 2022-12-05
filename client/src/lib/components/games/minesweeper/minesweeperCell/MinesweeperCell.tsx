@@ -1,4 +1,4 @@
-import { GridItem, IconButton, Center } from "@chakra-ui/react";
+import { GridItem, IconButton, Center, useColorModeValue } from '@chakra-ui/react';
 import { useState, useEffect } from "react";
 import { BsFillFlagFill } from "react-icons/bs";
 
@@ -17,10 +17,7 @@ const FlaggedCell: React.FC<Flag> = ({ flag }) => {
       colorScheme="teal"
       cursor="auto"
       size={{ base: "sm", sm: "sm", md: "md", lg: "md" }}
-      style={{
-        paddingInlineStart: "var(--chakra-space-2)",
-        paddingInlineEnd: "var(--chakra-space-2)",
-      }}
+      className="pad-x-2-override"
     />
   ) : (
     <IconButton
@@ -74,9 +71,9 @@ const MinesweeperCell: React.FC<MinesweeperCellProps> = ({
           aria-label="Button"
           size={{ base: "sm", sm: "sm", md: "md", lg: "md" }}
           cursor="auto"
-          fontSize={{ base: "sm", sm: "sm", md: "sm", lg: "sm" }}
+          fontSize="sm"
         >
-          <Center color="red">{isHidden || (value > 0 && value)}</Center>
+          <Center color={useColorModeValue("gray.900", "white")}>{isHidden || (value > 0 && value)}</Center>
         </IconButton>
       )}
     </GridItem>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   Box,
   Center,
@@ -50,7 +51,11 @@ const LeaderboardElement: React.FC<LeaderboardItemContainerProps> = ({
           {users && users.length > 0 ? (
             <LeaderboardItemContainer users={users} />
           ) : (
-            <Text>No Top Score</Text>
+            <Center>
+              <Text color={useColorModeValue("blue.900", "white")}>
+                No Top Score
+              </Text>
+            </Center>
           )}
         </Stack>
       </Box>
