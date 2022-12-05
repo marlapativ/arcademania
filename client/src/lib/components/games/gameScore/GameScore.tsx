@@ -8,7 +8,7 @@ const GameScore: React.FC<ScoreProps> = ({ score, show }) => {
   return (
     <Stack
       bg={useColorModeValue("white", "gray.800")}
-      m={0}
+      mt={2}
       rounded="xl"
       width="full"
     >

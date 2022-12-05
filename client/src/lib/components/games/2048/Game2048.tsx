@@ -185,14 +185,15 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
     <Stack>
       <VStack>
         <GameScore score={score} show={!showGameMessage} />
-        <Flex>
+        <Flex mt={0}>
           <Box
             bg={useColorModeValue("white", "gray.800")}
             color="white"
             borderRadius="lg"
             rounded="xl"
             boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
-            m={{ sm: 2, md: 8, lg: 2 }}
+            mx={2}
+            mb={2}
           >
             <Box pos="relative">
               <GameStatusMessage
