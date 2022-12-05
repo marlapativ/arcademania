@@ -34,7 +34,7 @@ const SliderGame: React.FC<SliderGameProps> = ({
     <Popover trigger="hover" placement={popoverPlacement}>
       <PopoverTrigger>
         <Center borderRadius="xl">
-          <Image maxH={maxH} w={maxW} alt={game.name} src={game.altImage} />
+          <Image h={maxH} w={maxW} alt={game.name} src={game.altImage} />
         </Center>
       </PopoverTrigger>
       <PopoverContent>
@@ -79,13 +79,13 @@ const DashboardSlider: React.FC = () => {
       </Flex>
       <Grid my={2} h="38vh" w="80vw" templateColumns="repeat(4, 1fr)" gap={4}>
         <GridItem colSpan={1}>
-          <SliderGame id={1} maxH="38vh" maxW="full" popoverPlacement="right" />
+          <SliderGame id={1} maxH="37vh" maxW="full" popoverPlacement="right" />
         </GridItem>
         <GridItem colSpan={2}>
-          <SliderGame id={3} maxH="38vh" maxW="full" popoverPlacement="top" />
+          <SliderGame id={3} maxH="37vh" maxW="full" popoverPlacement="top" />
         </GridItem>
         <GridItem colSpan={1}>
-          <SliderGame id={5} maxH="38vh" maxW="full" popoverPlacement="left" />
+          <SliderGame id={5} maxH="37vh" maxW="full" popoverPlacement="left" />
         </GridItem>
       </Grid>
     </Box>
