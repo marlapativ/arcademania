@@ -57,6 +57,13 @@ const schema = new mongoose.Schema<IUser>({
                 throw new Error('Password must be on length 8 and contain at least one uppercase, one lowercase, one special character and one number');
             }
         }
+    },
+    accesstoken: {
+        type: String,
+        trim: true,
+    },
+    token: {
+        type: [String]
     }
 }, schemaOptions);
 
