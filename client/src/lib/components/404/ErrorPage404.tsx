@@ -3,7 +3,6 @@ import {
   Button,
   Heading,
   Text,
-  Link as ChakraLink,
   useColorMode,
   Flex,
 } from "@chakra-ui/react";
@@ -16,15 +15,6 @@ const ErrorPage404 = () => {
   return (
     <Flex minHeight="70vh" direction="column" justifyContent="center">
       <NextSeo title="404 Not Found" />
-      <Text textAlign="center" fontSize="xs" color="gray">
-        <ChakraLink
-          href="https://stories.freepik.com/web"
-          isExternal
-          rel="noopener noreferrer"
-        >
-          Illustration by Freepik Stories
-        </ChakraLink>
-      </Text>
 
       <Box marginY={4}>
         <Heading textAlign="center" size="lg">
@@ -39,7 +29,7 @@ const ErrorPage404 = () => {
             as={Link}
             href="/"
             backgroundColor={colorMode === "light" ? "gray.300" : "teal.500"}
-            size="sm"
+            size="lg"
           >
             Let&apos;s Head Back
           </Button>

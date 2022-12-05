@@ -57,13 +57,6 @@ const NavBar = () => {
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
-
-          <IconButton
-            size="lg"
-            variant="ghost"
-            aria-label="open menu"
-            icon={<FiStar />}
-          />
           <MenuItems isAuth={false} />
         </HStack>
       </Flex>
