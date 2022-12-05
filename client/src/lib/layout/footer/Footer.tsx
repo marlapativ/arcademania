@@ -1,10 +1,7 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 const Footer = () => {
-  return (
-    <Flex as="footer" width="full" justifyContent="center">
-    </Flex>
-  );
+  return <Flex as="footer" width="full" justifyContent="center" />;
 };
 
 export default Footer;
