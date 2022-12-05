@@ -16,13 +16,12 @@ const GameHeader: React.FC<GameHeaderProps> = ({
       <IconButton
         ml={5}
         mr={5}
-        mb={2}
         size="lg"
         aria-label="Add to Favourites"
         icon={isFavourite ? <FiStar /> : <FaStar />}
         float="right"
       />
-      <Container float="right" ml={5} width="10%" mb={2} mt={1}>
+      <Container float="right" ml={5} width="10%" mt={1}>
         <PopOver
           popOverHeader="Help"
           popOverCotent={helpContent}

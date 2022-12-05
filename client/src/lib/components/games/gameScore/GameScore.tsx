@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Heading, Stack, VStack, useColorModeValue } from "@chakra-ui/react";
+import { Heading, Stack, VStack, useColorModeValue, HStack,Text } from "@chakra-ui/react";
 
 import type { ScoreProps } from "lib/types/components/games/games.common";
 
@@ -12,7 +12,7 @@ const GameScore: React.FC<ScoreProps> = ({ score, show }) => {
       rounded="xl"
       width="full"
     >
-      <VStack
+      <HStack
         m={1}
         p={1}
         bg="green.400"
@@ -21,7 +21,9 @@ const GameScore: React.FC<ScoreProps> = ({ score, show }) => {
         boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
       >
         <Heading size="md">Score: {score}</Heading>
-      </VStack>
+        <Text>Header</Text>
+      </HStack>
+
     </Stack>
   );
 };

@@ -13,7 +13,9 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   return (
     <Box p={2}>
       <Grid
-        templateAreas={`"main leaderboard"
+        templateAreas={`
+                  "header leaderboard"
+                  "main leaderboard"
                   "footer leaderboard"`}
         gridTemplateRows={{
           base: "1fr",
@@ -27,15 +29,17 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem px={1} area="main">
+        <GridItem pl={2} area="header">
           <GameHeader helpContent={game?.helpContent} isFavourite />
+        </GridItem>
+        <GridItem pl={2} area="main">
           <GameBody>{game?.component}</GameBody>
         </GridItem>
         <GridItem pl={2} area="footer">
           <GameFooter id={game?.id} name={game?.name} />
         </GridItem>
         <Show above="md">
-          <GridItem px={1} area="leaderboard">
+          <GridItem pl={1} area="leaderboard">
             <Leaderboard id={id} />
           </GridItem>
         </Show>
