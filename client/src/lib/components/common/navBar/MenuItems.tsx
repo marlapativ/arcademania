@@ -14,6 +14,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import type React from "react";
 import { FiChevronDown } from "react-icons/fi";
 
@@ -53,7 +54,9 @@ const LoggedInMenu = () => {
           bg={useColorModeValue("white", "gray.900")}
           borderColor={useColorModeValue("gray.200", "gray.700")}
         >
-          <MenuItem>Profile</MenuItem>
+          <MenuItem>
+            <Link href="profile/myProfile">Profile</Link>
+          </MenuItem>
           <MenuItem>Favourites</MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut(token)}>Sign out</MenuItem>

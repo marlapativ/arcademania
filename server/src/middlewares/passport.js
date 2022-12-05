@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 passport.use('google', new GoogleStratergy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/api/auth/googleSignIn"
+    callbackURL: "http://localhost:3000.com/auth/google/callback"
 }, async(accessToken, refreshToken, profile, done) => {
     try{
         const obj = await User.findOne({email: profile.email});

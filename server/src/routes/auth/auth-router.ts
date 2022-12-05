@@ -1,4 +1,5 @@
 import express from 'express';
+import passport from 'passport';
 import * as authController from "../../controllers/auth-controller";
 
 // Creating a new Router for Auth
@@ -23,7 +24,9 @@ router.get("/auth/logout", (req, res, next) => {
 })
 
 // Google Signin Route
-router.route('/auth/googleSignIn').post(authController.loginUserWithGoogle);
+router.get('/auth/google', async (req, res) => {
+    passport.authenticate('google', {scope:['email', 'profile']})(req, res);
+});
 
 
 // getUser Route

@@ -51,7 +51,14 @@ const MyProfile = () => {
   };
 
   const getUserDetails = (): FormValues => {
-    return JSON.parse("{'firstname': 'abc'}");
+    return {
+      firstname: "abc",
+      lastname: "",
+      email: "",
+      username: "",
+      password: "",
+      confirmpassword: "",
+    };
   };
 
   const validatePassword = (value: string) => {

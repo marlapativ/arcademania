@@ -90,12 +90,6 @@ const SignInDrawer = () => {
                           let error;
                           if (!value) {
                             error = "username is required";
-                          } else if (
-                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                              value
-                            )
-                          ) {
-                            error = "Invalid username address";
                           }
                           return error;
                         }}
@@ -155,7 +149,7 @@ const SignInDrawer = () => {
               >
                 <Link
                   _hover={{ textDecoration: "none" }}
-                  href="http://localhost:8080/api/auth/googleSignIn"
+                  href="http://localhost:8080/api/v1/auth/google"
                 >
                   Signin With Google
                 </Link>
