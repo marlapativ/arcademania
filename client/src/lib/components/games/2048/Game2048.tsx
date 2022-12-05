@@ -22,7 +22,6 @@ import type {
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
 import GameScore from "../gameScore/GameScore";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
-import { getUser } from "lib/services/user-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import { useDispatch } from "lib/store/store";
 
@@ -97,7 +96,7 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   };
 
   const saveGameScores = (gameScore: number) => {
-    saveScore(GAME_ID, getUser().userId, gameScore).then(() => {
+    saveScore(GAME_ID, gameScore).then(() => {
       getLeaderboard(GAME_ID).then((leaderboard) =>
         dispatch(
           setGameLeaderboard({

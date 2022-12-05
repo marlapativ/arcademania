@@ -24,17 +24,26 @@ import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
+import { setAxiosAuthHeader } from "lib/config/axios.config";
+import { signIn } from "lib/services/auth-service";
+import { setAccessToken } from "lib/store/slices/authSlice";
+import { useDispatch } from "lib/store/store";
 // import messages from "../common/toastMessages/Messages.json";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
-import { signIn } from "lib/services/auth-service";
 
 const SignInDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const login = async (values: JSON) => {
     const accessTokenObj = await signIn(values);
     if (accessTokenObj.status === 200) {
+      const body = await accessTokenObj.json();
+      if (body.accessToken !== null) {
+        dispatch(setAccessToken({ token: body.accessToken }));
+        setAxiosAuthHeader(body.accessToken);
+      }
       // <ToastMessage
       //   messageTitle={messages.signinSuccessTitle}
       //   messageDesc={messages.siginSuccessDesc}
@@ -91,6 +100,13 @@ const SignInDrawer = () => {
                           if (!value) {
                             error = "username is required";
                           }
+                          // else if (
+                          //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                          //     value
+                          //   )
+                          // ) {
+                          //   error = "Invalid username address";
+                          // }
                           return error;
                         }}
                       />

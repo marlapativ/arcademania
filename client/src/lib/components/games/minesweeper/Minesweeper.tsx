@@ -15,7 +15,6 @@ import {
 } from "../../../services/leaderboard-service";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
 import GameScore from "../gameScore/GameScore";
-import { getUser } from "lib/services/user-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import { useDispatch } from "lib/store/store";
 import type { Coordinate } from "lib/types/components/games/games.common";
@@ -134,7 +133,7 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
   };
 
   const saveGameScores = (gameScore: number) => {
-    saveScore(GAME_ID, getUser().userId, gameScore).then(() => {
+    saveScore(GAME_ID, gameScore).then(() => {
       getLeaderboard(GAME_ID).then((leaderboard) =>
         dispatch(
           setGameLeaderboard({

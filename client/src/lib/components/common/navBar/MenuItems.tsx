@@ -13,7 +13,6 @@ import {
   MenuList,
   Stack,
 } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import type React from "react";
 import { FiChevronDown } from "react-icons/fi";
@@ -21,6 +20,8 @@ import { FiChevronDown } from "react-icons/fi";
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
 import { signOut } from "lib/services/auth-service";
+import { getAuthState } from "lib/store/slices/authSlice";
+import { useSelector } from "lib/store/store";
 import type { AuthProps } from "lib/types/components/auth.types";
 
 const LoggedInMenu = () => {
@@ -88,8 +89,8 @@ const SignInMenu = () => {
 };
 
 const MenuItems: React.FC<AuthProps> = () => {
-  const { data: session } = useSession();
-  if (session) return <LoggedInMenu />;
+  const { token } = useSelector(getAuthState);
+  if (token && token !== "") return <LoggedInMenu />;
   return <SignInMenu />;
 };
 

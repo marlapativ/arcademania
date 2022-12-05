@@ -9,14 +9,25 @@ import {
 import { FaStar } from "react-icons/fa";
 import { FiStar } from "react-icons/fi";
 
+import type {
+  GameHeaderProps,
+  GameInfoComponent,
+} from "../../../types/components/common";
 import PopOver from "lib/components/common/popover/PopOver";
-import type { GameHeaderProps } from "lib/types/components/common";
+import { setFavourite } from "lib/store/slices/favouritesSlice";
+import { useDispatch } from "lib/store/store";
 
 const GameHeader: React.FC<GameHeaderProps> = ({
   gameInfo,
   helpContent,
   isFavourite,
 }) => {
+  const dispatch = useDispatch();
+  const addFavourite = (game: GameInfoComponent) => {
+    if (!game) return;
+    dispatch(setFavourite(game));
+  };
+
   return (
     <Stack px={2} w="full" rounded="xl">
       <HStack justifyContent="space-between">
@@ -32,12 +43,15 @@ const GameHeader: React.FC<GameHeaderProps> = ({
             />
           </Container>
           <IconButton
-            ml={5}
-            mr={5}
+            mx={5}
             size="lg"
+            title="Add to Favourites"
             aria-label="Add to Favourites"
             icon={isFavourite ? <FiStar /> : <FaStar />}
             float="right"
+            onClick={() => {
+              addFavourite(gameInfo);
+            }}
           />
         </HStack>
       </HStack>

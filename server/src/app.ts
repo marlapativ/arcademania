@@ -31,7 +31,7 @@ app.use(express.urlencoded({
 app.use(cors());
 app.use(session({ secret: 'SECRET' }));
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 // Custom routing
 routes(app);
