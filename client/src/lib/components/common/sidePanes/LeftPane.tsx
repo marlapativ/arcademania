@@ -13,7 +13,7 @@ const LeftPane = () => {
         pos="sticky"
         margin-top="2.5"
         boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.1)"
-        h="100vh"
+        minH="calc(100vh - 65px)"
         w={navSize === "small" ? "75px" : "200px"}
         flexDir="column"
         justifyContent="space-between"
