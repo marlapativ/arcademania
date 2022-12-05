@@ -5,14 +5,12 @@ import {
   Flex,
   Text,
   HStack,
-  IconButton,
   useBreakpointValue,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { FiStar } from "react-icons/fi";
 
 import MenuItems from "./MenuItems";
 
