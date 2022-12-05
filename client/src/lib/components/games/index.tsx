@@ -3,8 +3,11 @@ import type { GameInfoCollection } from "lib/types/components/common";
 import Game2048 from "./2048/Game2048";
 import CarGame from "./carcrash/CarGame";
 import Connect4 from "./connect4/Connect4";
+import MemoryGame from "./memorygame/src/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
+import TicTacToe from "./tictactoe/src/tictactoe";
+import TypingSpeed from "./typingspeed/src/typingspeed";
 
 const games: GameInfoCollection = {
   1: {
@@ -40,6 +43,21 @@ const games: GameInfoCollection = {
     altImage: "images/Minesweeper.png",
     description:
       "Classic implementation of the Minesweeper game in Javascript with flag the cell feature.",
+  },
+  6: {
+    id: 6,
+    name: "Tic Tac Toe",
+    component: <TicTacToe />,
+  },
+  7: {
+    id: 7,
+    name: "Typing Speed",
+    component: <TypingSpeed />,
+  },
+  8: {
+    id: 8,
+    name: "Memory Game",
+    component: <MemoryGame />,
   },
 };
 
