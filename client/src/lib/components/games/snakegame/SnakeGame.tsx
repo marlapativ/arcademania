@@ -1,6 +1,10 @@
 import { Button, Container } from "@chakra-ui/react";
 import React from "react";
+import { useDispatch } from "react-redux";
 
+import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
+import { getUser } from "lib/services/user-service";
+import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import type { SnakeGameProps } from "lib/types/components/games/snakeGame.types";
 
 import Food from "./Food";
@@ -154,14 +158,26 @@ class SnakeGame extends React.Component<unknown, SnakeGameProps> {
     this.setState({
       gameOver: `Game Over! Your Score was ${snakeDots.length} Try Again`,
     });
+    this.saveGameScores(snakeDots.length);
+  };
+
+  // eslint-disable-next-line class-methods-use-this
+  saveGameScores = (gameScore: number) => {
+    const dispatch = useDispatch();
+    saveScore(2, getUser().userId, gameScore).then(() => {
+      getLeaderboard(2).then((leaderboard) =>
+        dispatch(
+          setGameLeaderboard({
+            gameId: 2,
+            data: leaderboard,
+          })
+        )
+      );
+    });
   };
 
   render() {
-    const { play } = this.state;
-    const { snakeDots } = this.state;
-    const { food } = this.state;
-    const { pause } = this.state;
-    const { gameOver } = this.state;
+    const { play, snakeDots, food, pause, gameOver } = this.state;
     let button;
     if (play) {
       button = (

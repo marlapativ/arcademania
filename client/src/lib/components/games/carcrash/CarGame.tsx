@@ -3,6 +3,10 @@ import Image from "next/image";
 import React from "react";
 
 import ModalComponent from "lib/components/common/modal/Modal";
+import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
+import { getUser } from "lib/services/user-service";
+import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
+import { useDispatch } from "lib/store/store";
 import type { CarGameProps } from "lib/types/components/games/carGame.types";
 
 import BlueCar from "./BlueCar";
@@ -54,12 +58,14 @@ class CarGame extends React.Component<unknown, CarGameProps> {
     }
   };
 
+  // eslint-disable-next-line class-methods-use-this
   saveGameScores = (gameScore: number) => {
-    saveScore(GAME_ID, getUser().id, gameScore).then(() => {
-      getLeaderboard(GAME_ID).then((leaderboard) =>
+    const dispatch = useDispatch();
+    saveScore(3, getUser().userId, gameScore).then(() => {
+      getLeaderboard(3).then((leaderboard) =>
         dispatch(
           setGameLeaderboard({
-            gameId: GAME_ID,
+            gameId: 3,
             data: leaderboard,
           })
         )
