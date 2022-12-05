@@ -26,10 +26,11 @@ export interface NavItemProps extends ReactChildrenProps {
   active: boolean;
 }
 
-export interface GameHeaderProps extends ReactChildrenProps {
+export type GameHeaderProps = {
+  gameInfo: GameInfoComponent;
   helpContent: string;
   isFavourite: boolean;
-}
+};
 
 export type GameInfoCollection = {
   [id: number]: GameInfoComponent;

@@ -1,12 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import {
-  Heading,
-  Stack,
-  VStack,
-  useColorModeValue,
-  HStack,
-  Text,
-} from "@chakra-ui/react";
+import { Heading, Stack, VStack, useColorModeValue } from "@chakra-ui/react";
 
 import type { ScoreProps } from "lib/types/components/games/games.common";
 

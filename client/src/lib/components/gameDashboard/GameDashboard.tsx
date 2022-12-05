@@ -4,7 +4,6 @@ import type { GameInfoProps } from "../../types/components/common";
 import games from "../games";
 
 import GameBody from "./gameBody/GameBody";
-import GameFooter from "./gameFooter/GameFooter";
 import GameHeader from "./gameHeader/GameHeader";
 import Leaderboard from "./leaderboard/Leaderboard";
 
@@ -15,8 +14,7 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
       <Grid
         templateAreas={`
                   "header leaderboard"
-                  "main leaderboard"
-                  "footer leaderboard"`}
+                  "main leaderboard"`}
         gridTemplateRows={{
           base: "1fr",
           md: "1fr",
@@ -30,13 +28,14 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         fontWeight="bold"
       >
         <GridItem pl={2} area="header">
-          <GameHeader helpContent={game?.helpContent} isFavourite />
+          <GameHeader
+            helpContent={game?.helpContent}
+            isFavourite
+            gameInfo={game}
+          />
         </GridItem>
         <GridItem pl={2} area="main">
           <GameBody>{game?.component}</GameBody>
-        </GridItem>
-        <GridItem pl={2} area="footer">
-          <GameFooter id={game?.id} name={game?.name} />
         </GridItem>
         <Show above="md">
           <GridItem pl={1} area="leaderboard">
