@@ -39,6 +39,11 @@ const CarouselGameSlide: React.FC<GameInfoComponentProps> = ({ game }) => {
                 <Text>{game.description}</Text>
               </Flex>
               <Button
+                color="white"
+                bg="blue.400"
+                _hover={{
+                  bg: "blue.300",
+                }}
                 onClick={() => {
                   router.push(`game/${game.id}`);
                 }}

@@ -17,10 +17,7 @@ const FlaggedCell: React.FC<Flag> = ({ flag }) => {
       colorScheme="teal"
       cursor="auto"
       size={{ base: "sm", sm: "sm", md: "md", lg: "md" }}
-      style={{
-        paddingInlineStart: "var(--chakra-space-2)",
-        paddingInlineEnd: "var(--chakra-space-2)",
-      }}
+      className="pad-x-2-override"
     />
   ) : (
     <IconButton

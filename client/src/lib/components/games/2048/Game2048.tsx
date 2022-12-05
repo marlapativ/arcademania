@@ -194,7 +194,7 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
             boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
             m={{ sm: 2, md: 8, lg: 2 }}
           >
-            <Box style={{ position: "relative" }}>
+            <Box pos="relative">
               <GameStatusMessage
                 show={showGameMessage}
                 win={win}
