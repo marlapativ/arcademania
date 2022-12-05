@@ -9,11 +9,11 @@ import SnakeGame from "./snakegame/SnakeGame";
 const games: GameInfoCollection = {
   1: {
     id: 1,
-    name: "Minesweeper",
-    component: <Minesweeper rows={10} columns={10} bombs={10} />,
-    image: "images/Minesweeper.png",
+    name: "2048",
+    component: <Game2048 rows={4} columns={4} />,
+    image: "images/2048.png",
     description:
-      "Classic implementation of the Minesweeper game in Javascript with features like flagging the cell.",
+      "Slide the numbered tiles on a grid to combine them to create a tile with the number 2048 to win the game!",
   },
   2: {
     id: 2,
@@ -32,8 +32,11 @@ const games: GameInfoCollection = {
   },
   5: {
     id: 5,
-    name: "2048",
-    component: <Game2048 rows={4} columns={4} />,
+    name: "Minesweeper",
+    component: <Minesweeper rows={10} columns={10} bombs={10} />,
+    image: "images/Minesweeper.png",
+    description:
+      "Classic implementation of the Minesweeper game in Javascript with flag the cell feature.",
   },
 };
 
