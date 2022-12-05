@@ -18,26 +18,41 @@ const games: GameInfoCollection = {
     altImage: "images/2048.png",
     description:
       "Slide the numbered tiles on a grid to combine them to create a tile with the number 2048 to win the game!",
-    helpContent: "",
+    helpContent:
+      "Slide the numbered tiles on a grid to combine them to create a tile with the number 2048 to win the game!",
   },
   2: {
     id: 2,
     name: "Snake Game",
     component: <SnakeGame />,
-    helpContent: "",
+    image: "images/Snake_Game.png",
+    altImage: "images/Snake_Game.png",
+    description:
+      "Use keyboard arrows to move the snake to eat the frog within the boundaries to win the maximum score!",
+    helpContent:
+      "Use keyboard arrows to move the snake to eat the frog within the boundaries to win the maximum score!",
   },
   3: {
     id: 3,
     name: "Car Game",
     component: <CarGame />,
+    image: "images/carGame.png",
     altImage: "images/race-car.gif",
-    helpContent: "",
+    description:
+      "Use left and right arrow buttons to escape the red car from blue car to win the game!",
+    helpContent:
+      "Use left and right arrow buttons to escape the red car from blue car to win the game!",
   },
   4: {
     id: 4,
     name: "Connect4",
     component: <Connect4 />,
-    helpContent: "",
+    image: "images/Connect4.png",
+    altImage: "images/Connect4.png",
+    description:
+      "This is a multi player game, click on the row to insert respective disks into the columns, connect any 4 dots and win the game",
+    helpContent:
+      "This is a multi player game, click on the row to insert respective disks into the columns, connect any 4 dots and win the game",
   },
   5: {
     id: 5,
