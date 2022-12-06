@@ -15,10 +15,6 @@ export interface Score {
   score: number;
 }
 
-export type ScoreProps = Score & {
-  show: boolean;
-};
-
 export interface Matrix {
   rows: number;
   columns: number;

@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Heading, Stack, VStack, useColorModeValue } from "@chakra-ui/react";
 
-import type { ScoreProps } from "lib/types/components/games/games.common";
+import type { Score } from "lib/types/components/games/games.common";
 
-const GameScore: React.FC<ScoreProps> = ({ score, show }) => {
-  if (!show) return null;
+const GameScore: React.FC<Score> = ({ score }) => {
   return (
     <Stack
       bg={useColorModeValue("white", "gray.800")}

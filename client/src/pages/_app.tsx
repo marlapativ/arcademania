@@ -5,10 +5,9 @@ import Head from "next/head";
 import { Provider } from "react-redux";
 
 import defaultSEOConfig from "../../next-seo.config";
+import { wrapper } from "../lib/store/store";
 import { Chakra } from "lib/components/common/Chakra";
 import Layout from "lib/layout";
-import { wrapper } from "lib/store/store";
-
 import "lib/styles/globals.scss";
 import "swiper/css/bundle";
 

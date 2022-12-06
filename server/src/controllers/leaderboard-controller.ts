@@ -3,6 +3,7 @@ import * as leaderboardService from '../services/leaderboard/leaderboard-service
 import { setResponse, setError } from '../utils/http-utils';
 import { isValid } from '../config/validators';
 import { ILeaderboard } from '../types/models/leaderboard.types';
+import logger from '../config/logger';
 
 /**
  * It creates a user and returns the user object in the response
@@ -37,6 +38,7 @@ export const saveScore = async (req: CustomRequest<ILeaderboard>, response: Cust
         const data = await leaderboardService.saveScore(parseInt(gameId, 10), userId, score);
         setResponse(response, data);
     } catch (err) {
+        logger.error(err.message);
         setError(response, err);
     }
 }

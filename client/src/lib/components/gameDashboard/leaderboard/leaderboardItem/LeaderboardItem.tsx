@@ -64,16 +64,19 @@ const LeaderboardItemContainer: React.FC<LeaderboardItemContainerProps> = ({
 }) => {
   return (
     <>
-      {users.map((e: LeaderboardItemData, i: number) => (
-        <LeaderboardItem
-          icon={e.icon}
-          userId={e.userId}
-          index={i}
-          name={e.name}
-          score={e.score}
-          key={e.userId}
-        />
-      ))}
+      {users.map((e: LeaderboardItemData, i: number) => {
+        const key = `${e.userId}~${i}`;
+        return (
+          <LeaderboardItem
+            icon={e.icon}
+            userId={e.userId}
+            index={i}
+            name={e.name}
+            score={e.score}
+            key={key}
+          />
+        );
+      })}
     </>
   );
 };
