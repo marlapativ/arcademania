@@ -21,6 +21,11 @@ const LeftPane = () => {
     >
       <Flex
         p="5%"
+        pos="sticky"
+        margin-top="2.5"
+        boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.1)"
+        h="max-content"
+        w={navSize === "small" ? "75px" : "200px"}
         flexDir="column"
         align-items={navSize === "small" ? "center" : "flex-start"}
         as="nav"

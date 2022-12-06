@@ -88,7 +88,7 @@ const SignInDrawer = () => {
                     <FormControl
                       isInvalid={!!errors.username && touched.username}
                     >
-                      <FormLabel htmlFor="username">UserName</FormLabel>
+                      <FormLabel htmlFor="username">Username</FormLabel>
                       <Field
                         as={Input}
                         id="username"

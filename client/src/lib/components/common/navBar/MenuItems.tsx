@@ -27,7 +27,7 @@ import type { AuthProps } from "lib/types/components/auth.types";
 const LoggedInMenu = () => {
   const token = "";
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="center" zIndex={1001}>
       <Menu>
         <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
           <HStack>
@@ -54,6 +54,7 @@ const LoggedInMenu = () => {
         <MenuList
           bg={useColorModeValue("white", "gray.900")}
           borderColor={useColorModeValue("gray.200", "gray.700")}
+          zIndex={1000}
         >
           <MenuItem>
             <Link href="profile/myProfile">Profile</Link>
