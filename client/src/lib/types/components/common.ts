@@ -70,6 +70,10 @@ export type UserInfo = UserId & {
   icon?: string;
 };
 
+export type UserInfoProps = UserInfo & {
+  size?: "sm" | "md" | "lg";
+};
+
 export type UseCallbackFunc<T> = {
   apply: () => void;
   data: T;
