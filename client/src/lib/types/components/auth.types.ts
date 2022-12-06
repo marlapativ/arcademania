@@ -13,6 +13,6 @@ export type SignUpUserType = {
   confirmpassword: string;
 };
 
-export type AuthType = {
+export type AuthState = {
   token: string;
 };

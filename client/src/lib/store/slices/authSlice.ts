@@ -1,9 +1,7 @@
 import type { Draft, PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export type AuthState = {
-  token: string;
-};
+import type { AuthState } from "lib/types/components/auth.types";
 
 /**
  * Default state object with initial values.

@@ -9,6 +9,8 @@ import Leaderboard from "./leaderboard/Leaderboard";
 
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
+  if (!game) return <div />;
+
   return (
     <Box p={2}>
       <Grid
@@ -28,11 +30,7 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         fontWeight="bold"
       >
         <GridItem pl={2} area="header">
-          <GameHeader
-            helpContent={game?.helpContent}
-            isFavourite
-            gameInfo={game}
-          />
+          <GameHeader helpContent={game?.helpContent} gameInfo={game} />
         </GridItem>
         <GridItem pl={2} area="main">
           <GameBody>{game?.component}</GameBody>

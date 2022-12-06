@@ -23,10 +23,9 @@ import { signOut } from "lib/services/auth-service";
 import { getAuthState } from "lib/store/slices/authSlice";
 import { useSelector } from "lib/store/store";
 import type { AuthProps } from "lib/types/components/auth.types";
-import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
 const LoggedInMenu = () => {
-  const token = getSessionStorageToken();
+  const token = "";
   return (
     <Flex alignItems="center" zIndex={1001}>
       <Menu>

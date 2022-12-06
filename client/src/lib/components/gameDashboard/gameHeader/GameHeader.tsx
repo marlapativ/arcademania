@@ -15,22 +15,27 @@ import type {
 } from "../../../types/components/common";
 import PopOver from "lib/components/common/popover/PopOver";
 import * as favouritesService from "lib/services/favourites-service";
-import { setFavourite } from "lib/store/slices/favouritesSlice";
-import { useDispatch } from "lib/store/store";
+import {
+  setFavourite,
+  resetFavourite,
+  getFavourites,
+} from "lib/store/slices/favouritesSlice";
+import { useDispatch, useSelector } from "lib/store/store";
 
-const GameHeader: React.FC<GameHeaderProps> = ({
-  gameInfo,
-  helpContent,
-  isFavourite,
-}) => {
+const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
+  const { favourites } = useSelector(getFavourites);
+  const isFavourite = favourites.some((e) => e.gameId === gameInfo?.id);
+
   const dispatch = useDispatch();
   const addFavourite = (game: GameInfoComponent) => {
     if (!game) return;
     favouritesService
-      .setFavourite(game.id, !isFavourite)
-      .then(() =>
-        dispatch(setFavourite({ id: game.id, isFavourite: !isFavourite }))
-      );
+      .updateFavourite(game.id, !isFavourite)
+      .then((favourite) => {
+        dispatch(
+          !isFavourite ? setFavourite(favourite) : resetFavourite(favourite)
+        );
+      });
   };
 
   return (
@@ -52,7 +57,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
             size="lg"
             title="Add to Favourites"
             aria-label="Add to Favourites"
-            icon={isFavourite ? <FiStar /> : <FaStar />}
+            icon={isFavourite ? <FaStar /> : <FiStar />}
             float="right"
             onClick={() => {
               addFavourite(gameInfo);

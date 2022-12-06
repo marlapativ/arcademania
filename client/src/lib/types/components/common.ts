@@ -29,7 +29,6 @@ export interface NavItemProps extends ReactChildrenProps {
 export type GameHeaderProps = {
   gameInfo: GameInfoComponent;
   helpContent: string;
-  isFavourite: boolean;
 };
 
 export type GameInfoCollection = {
@@ -42,11 +41,15 @@ export type GameInfo = {
   image?: string;
   altImage?: string;
   description?: string;
+  isFavourite?: boolean;
 };
 
 export type GameFavourites = {
-  id: number;
-  isFavourite: boolean;
+  gameId: number;
+};
+
+export type FavouritesState = {
+  favourites: GameFavourites[];
 };
 
 export type GameHelp = {
@@ -65,6 +68,10 @@ export type UserId = {
 export type UserInfo = UserId & {
   name: string;
   icon?: string;
+};
+
+export type UserInfoProps = UserInfo & {
+  size?: "sm" | "md" | "lg";
 };
 
 export type UseCallbackFunc<T> = {
