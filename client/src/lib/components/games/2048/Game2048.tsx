@@ -25,7 +25,7 @@ import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import { useDispatch } from "lib/store/store";
 
-// import Cell2048 from "./cell2048/Cell2048";
+import Cell2048 from "./cell2048/Cell2048";
 import {
   isExist,
   swipeDown,
@@ -210,7 +210,7 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
                 p="2"
                 borderRadius="4px"
               >
-                {/* {game.map((eachRow, rowIndex) =>
+                {game.map((eachRow, rowIndex) =>
                   eachRow.map((value, columnIndex) => {
                     const key = rowIndex * columns + columnIndex;
                     const coordinate: Coordinate = {
@@ -225,7 +225,7 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
                       />
                     );
                   })
-                )} */}
+                )}
               </Grid>
             </Box>
           </Box>
