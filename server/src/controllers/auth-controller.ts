@@ -3,6 +3,7 @@ import { CustomResponse, CustomRequest } from '../types/config/express-types';
 import * as authService from '../services/auth/auth-service';
 import { ISignInUser, IUser } from '../types/models/user.types';
 import { setResponse, setError } from '../utils/http-utils';
+import logger from '../config/logger';
 
 /**
  * It creates a user and returns the user object in the response
@@ -46,7 +47,9 @@ export const loginUser = async (req: CustomRequest<ISignInUser>, response: Custo
  * back to the client.
  */
  export const loginUserWithGoogle = async () => {
-    passport.authenticate('google', {scope:['email', 'profile']});
+   const user = passport.authenticate('google', {scope:['email', 'profile']});
+   logger.log(user);
+
 }
 
 /**

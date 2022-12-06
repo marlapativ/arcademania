@@ -24,8 +24,7 @@ router.get("/auth/logout", (req, res, next) => {
 })
 
 // Google Signin Route
-router.get('/auth/google',
-    passport.authenticate('google', {scope:['email', 'profile']}));
+router.get('/auth/google', authController.loginUserWithGoogle);
 
 
 // getUser Route

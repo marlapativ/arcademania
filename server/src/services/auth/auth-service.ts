@@ -30,9 +30,6 @@ export const loginUser = async (signInUser: ISignInUser) => {
     }
     else{
     const aToken: string =  generateAccessToken(user.id);
-    user.accesstoken = aToken;
-    user.token.push(aToken);
-    user.save();
 
     const refreshToken = generateRefreshAccessToken(user.id);
 

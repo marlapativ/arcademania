@@ -21,23 +21,18 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
             const newUser = new User({
               email: profile.email,
               name: profile.displayName,
-              accessToken,
             });
             await newUser.save();
             const token = await jwt.sign(
               { id: newUser._id, created: Date.now().toString() },
               "32c32774b99cc4bda1da32f3a096be03"
             );
-            newUser.token.push(token);
-            await newUser.save();
             done(null, newUser, { message: "Auth successful" });
           } else {
             const token = await jwt.sign(
               { id: obj._id, created: Date.now().toString() },
               "32c32774b99cc4bda1da32f3a096be03"
             );
-            obj.token.push(token);
-            await obj.save();
             done(null, obj, { message: "Auth Successful" });
           }
         } catch (err) {
@@ -51,4 +46,12 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
 
 export const applyPassportStrategies = (passport: PassportStatic) => {
   applyGoogleStrategy(passport);
+  passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+
+  passport.deserializeUser((user, done) =>{
+    done(null, user);
+  });
 };
+

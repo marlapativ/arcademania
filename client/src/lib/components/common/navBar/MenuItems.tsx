@@ -23,18 +23,16 @@ import { signOut } from "lib/services/auth-service";
 import { getAuthState } from "lib/store/slices/authSlice";
 import { useSelector } from "lib/store/store";
 import type { AuthProps } from "lib/types/components/auth.types";
+import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
 const LoggedInMenu = () => {
-  const token = "";
+  const token = getSessionStorageToken();
   return (
     <Flex alignItems="center" zIndex={1001}>
       <Menu>
         <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
           <HStack>
-            <Avatar
-              size="sm"
-              src="https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-            />
+            <Avatar size="sm" src="/images/profile.png" />
             <VStack
               display={{ base: "none", md: "flex" }}
               alignItems="flex-start"
@@ -42,9 +40,6 @@ const LoggedInMenu = () => {
               ml="2"
             >
               <Text fontSize="sm">Justina Clark</Text>
-              <Text fontSize="xs" color="gray.600">
-                Admin
-              </Text>
             </VStack>
             <Box display={{ base: "none", md: "flex" }}>
               <FiChevronDown />
@@ -57,9 +52,8 @@ const LoggedInMenu = () => {
           zIndex={1000}
         >
           <MenuItem>
-            <Link href="profile/myProfile">Profile</Link>
+            <Link href="http://localhost:3000/profile/myProfile">Profile</Link>
           </MenuItem>
-          <MenuItem>Favourites</MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut(token)}>Sign out</MenuItem>
         </MenuList>
