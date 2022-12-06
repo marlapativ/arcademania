@@ -1,5 +1,5 @@
 import { CustomResponse, CustomRequest } from '../types/config/express-types';
-import * as authService from '../services/auth/auth-service';
+import * as userService from '../services/user/user-service';
 import { setResponse, setError } from '../utils/http-utils';
 import { IUser } from '../types/models/user.types';
 
@@ -12,7 +12,7 @@ import { IUser } from '../types/models/user.types';
  export const updateProfile = async (req: CustomRequest<IUser>, response: CustomResponse) => {
     try {
         const userId:number = parseInt(req.query.id as string, 10)
-        const user = await authService.updateUser(userId,req.body);
+        const user = await userService.updateUser(userId,req.body);
         setResponse(response, user);
     } catch (err) {
         setError(response, err);
@@ -28,7 +28,7 @@ import { IUser } from '../types/models/user.types';
 export const getUser = async(req: CustomRequest<IUser>, response: CustomResponse) => {
     try {
         const token = req.user.userId;
-        const user = await authService.getUser(token);
+        const user = await userService.getUser(token);
         setResponse(response, user);
     } catch (err) {
         setError(response, err);

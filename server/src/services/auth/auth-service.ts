@@ -1,28 +1,11 @@
 import { IUser, ISignInUser } from "../../types/models/user.types";
 import { User } from "../../models/index";
-import { generateAccessToken, getUserFromJWT, generateRefreshAccessToken } from "../../middlewares/jwt";
-import mongoose from "mongoose";
+import { generateAccessToken, generateRefreshAccessToken } from "../../middlewares/jwt";
 
 export const createUser = async (user: IUser) => {
   const newUser = new User(user);
   return newUser.save();
 };
-
-export const updateUser = async (id:number, user: IUser) => {
-  const updatedUser =  await User.findByIdAndUpdate(id, user);
-  if (!updatedUser) {
-    throw new Error("User Update failed ");
-  }
-  return updatedUser;
-}
-
-export const getUser = async (userId:mongoose.ObjectId) => {
-  const user =  await User.findById(userId);
-  if (!user) {
-    throw new Error("User Not found");
-  }
-  return user;
-}
 
 export const loginUser = async (signInUser: ISignInUser) => {
   const user =  await User.findOne({

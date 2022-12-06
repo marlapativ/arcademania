@@ -1,6 +1,7 @@
 import leaderboardRouter from './leaderboard/leaderboard-router';
 import authRouter from './auth/auth-router';
 import favouritesRouter from './favourites/favourites-router';
+import userRouter from './user/user-router';
 import { Express } from 'express'
 
 import swaggerUI from 'swagger-ui-express';
@@ -9,6 +10,8 @@ import swaggerDoc from './swagger.json';
 const routes = (app: Express) => {
     // Signup Routes
     app.use('/api/v1', authRouter);
+
+    app.use('api/v1', userRouter);
 
     // Leaderboard Routes
     app.use('/api/v1', leaderboardRouter);
