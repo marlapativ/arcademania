@@ -1,8 +1,7 @@
 import { CustomResponse, CustomRequest } from '../types/config/express-types';
 import * as favouritesService from '../services/favourite/favourite-service';
 import { setResponse, setError } from '../utils/http-utils';
-import { IFavourite } from '../types/models/feautures.types';
-import mongoose from 'mongoose';
+import { IFavourite } from '../types/models/features.types';
 
 /**
  * It creates a user and returns the user object in the response

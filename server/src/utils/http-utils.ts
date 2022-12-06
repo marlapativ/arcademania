@@ -1,3 +1,4 @@
+import logger from '../config/logger';
 import { CustomResponse } from '../types/config/express-types';
 
 /**
@@ -17,6 +18,7 @@ export const setResponse = (response: CustomResponse, obj: any) => {
  * @param statusCode - Status code to set.
  */
 export const setError = (response: CustomResponse, err: Error, statusCode: number = 500) => {
+    logger.error(err.message);
     response.status(statusCode);
     response.json(err);
 }

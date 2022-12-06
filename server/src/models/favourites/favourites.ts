@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IFavourite } from '../../types/models/feautures.types';
+import { IFavourite } from '../../types/models/features.types';
 
 // Schema options to include id field & add timestamps while creation and updation.
 const schemaOptions = {

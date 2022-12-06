@@ -1,5 +1,6 @@
 import leaderboardRouter from './leaderboard/leaderboard-router';
 import authRouter from './auth/auth-router';
+import favouritesRouter from './favourites/favourites-router';
 import { Express } from 'express'
 
 import swaggerUI from 'swagger-ui-express';
@@ -11,6 +12,9 @@ const routes = (app: Express) => {
 
     // Leaderboard Routes
     app.use('/api/v1', leaderboardRouter);
+
+    // Leaderboard Routes
+    app.use('/api/v1', favouritesRouter);
 
     // Setting up swagger
     setupSwagger(app);

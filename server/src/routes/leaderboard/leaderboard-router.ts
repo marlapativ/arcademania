@@ -1,4 +1,5 @@
 import express from 'express';
+import { authRoute } from '../../middlewares/authRoute';
 import * as leaderboardController from "../../controllers/leaderboard-controller";
 
 // Creating a new Router for Auth
@@ -11,6 +12,6 @@ router.route('/leaderboard').get(leaderboardController.getLeaderboard);
 router.route('/leaderboard/:id').get(leaderboardController.getLeaderboard);
 
 // Save Game Scores
-router.route('/leaderboard/:id').post(leaderboardController.saveScore);
+router.route('/leaderboard/:id').post(authRoute, leaderboardController.saveScore);
 
 export default router;

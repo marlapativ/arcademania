@@ -3,9 +3,9 @@ import cors from 'cors';
 import routes from './routes/index';
 import mongoose from 'mongoose'
 import logger from './config/logger';
-import session from 'express-session';
 
 import passport from 'passport';
+import { applyPassportStrategies } from './middlewares/passport';
 /*
  * Port to host the server
  */
@@ -29,9 +29,10 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(cors());
-app.use(session({ secret: 'SECRET' }));
+
+// Passport Setup
+applyPassportStrategies(passport);
 app.use(passport.initialize());
-app.use(passport.session());
 
 // Custom routing
 routes(app);

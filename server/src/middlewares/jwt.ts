@@ -6,13 +6,13 @@ export const getUserFromJWT = (token: string) => {
 }
 
 export const generateAccessToken = (userId: number) => {
-   return jwt.sign({ id: userId }, authSecret.secret, {
+   return jwt.sign({ userId }, authSecret.secret, {
         expiresIn: 86400,
       });
 }
 
 export const generateRefreshAccessToken = (userId: number) => {
-    return jwt.sign({ id: userId, type:"refresh"}, authSecret.secret, {
+    return jwt.sign({ userId, type:"refresh"}, authSecret.secret, {
          expiresIn: 86400,
        });
  }

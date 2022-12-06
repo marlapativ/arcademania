@@ -1,6 +1,6 @@
 import { Favourites } from "../../models/favourites/favourites";
 import { IGameUserEntity } from "../../types/models/common.types";
-import { IFavourite } from "../../types/models/feautures.types";
+import { IFavourite } from "../../types/models/features.types";
 import mongoose from "mongoose";
 
 export const getFavourites = async (
