@@ -1,20 +1,20 @@
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-}
+.container {
 
-ol,
-ul {
-  padding-left: 30px;
-}
+  ol,
+  ul {
+    padding-left: 30px;
+  }
 
-li {
-  margin-bottom: 5px;
-}
+  li {
+    margin-bottom: 5px;
+  }
 
-button {
-  min-height: 30px;
-  height: auto;
-  width: 150px;
+  button {
+    min-height: 30px;
+    height: 100px;
+    width: 100px;
+  }
+
 }
 
 .board-row:after {
@@ -55,7 +55,6 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 300px;
 }
 
 .game-info {
@@ -64,6 +63,7 @@ button {
   flex-direction: column;
   align-items: center;
 }
+
 .game-info div {
   font-size: 20px;
   margin-bottom: 10px;
@@ -73,4 +73,9 @@ button {
   margin: 10px;
   height: 40px;
   font-size: 18px;
+}
+
+.spacer{
+  margin: 10px;
+  height: 40px;
 }

@@ -3,10 +3,11 @@ import type { GameInfoCollection } from "lib/types/components/common";
 import Game2048 from "./2048/Game2048";
 import CarGame from "./carcrash/CarGame";
 import Connect4 from "./connect4/Connect4";
+import Hangman from "./hangman/Hangman";
 // import MemoryGame from "./memorygame/src/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
-import TicTacToe from "./tictactoe/src/tictactoe";
+import TicTacToe from "./tictactoe/TicTacToe";
 import TypingSpeed from "./typingspeed/src/typingspeed";
 
 const games: GameInfoCollection = {
@@ -82,6 +83,12 @@ const games: GameInfoCollection = {
   //   component: <MemoryGame />,
   //   helpContent: "",
   // },
+  9: {
+    id: 9,
+    name: "Hangman",
+    component: <Hangman />,
+    helpContent: "",
+  },
 };
 
 export default games;
