@@ -57,15 +57,3 @@ export const getUser = async (token: string) => {
     },
   });
 };
-
-export const signOut = async (token: string) => {
-  const newurl = `${url}/auth/`;
-  return fetch(newurl, {
-    method: "GET",
-    headers: {
-      "cache-control": "no-cache",
-      "content-type": defaultContentType,
-      accessToken: `Bearer ${token}`,
-    },
-  });
-};

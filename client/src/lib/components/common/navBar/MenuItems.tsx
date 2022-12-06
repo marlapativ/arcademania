@@ -20,13 +20,19 @@ import { FiChevronDown } from "react-icons/fi";
 
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
-import { getUser, signOut } from "lib/services/auth-service";
-import { getAuthState } from "lib/store/slices/authSlice";
-import { useSelector } from "lib/store/store";
+import { getUser } from "lib/services/auth-service";
+import { getAuthState, setAccessToken } from "lib/store/slices/authSlice";
+import { useDispatch, useSelector } from "lib/store/store";
 import type { AuthState } from "lib/types/components/auth.types";
+import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
 const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
   const [username, setUserName] = useState("");
+  const dispatch = useDispatch();
+  const signOut = () => {
+    setSessionStorageToken("");
+    dispatch(setAccessToken({ token: "" }));
+  };
   getUser(token)
     .then((response) => response.json())
     .then((data) => {
@@ -64,7 +70,7 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
             <Link href="http://localhost:3000/profile/myprofile">Profile</Link>
           </MenuItem>
           <MenuDivider />
-          <MenuItem onClick={() => signOut(token)}>Sign out</MenuItem>
+          <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
         </MenuList>
       </Menu>
     </Flex>
@@ -94,6 +100,7 @@ const SignInMenu = () => {
 
 const MenuItems = () => {
   const { token } = useSelector(getAuthState);
+
   if (token && token !== "") {
     return <LoggedInMenu token={token} />;
   }
