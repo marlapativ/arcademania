@@ -25,8 +25,6 @@ import type {
 
 import MinesweeperCell from "./minesweeperCell/MinesweeperCell";
 
-const GAME_ID = 1;
-
 const neighbours: Coordinate[] = [
   { x: 1, y: -1 },
   { x: 1, y: 0 },
@@ -100,6 +98,7 @@ const createGame = (
 };
 
 const Minesweeper: React.FC<MinesweeperGameProps> = ({
+  gameId,
   rows,
   columns,
   bombs,
@@ -133,11 +132,11 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
   };
 
   const saveGameScores = (gameScore: number) => {
-    saveScore(GAME_ID, gameScore).then(() => {
-      getLeaderboard(GAME_ID).then((leaderboard) =>
+    saveScore(gameId, gameScore).then(() => {
+      getLeaderboard(gameId).then((leaderboard) =>
         dispatch(
           setGameLeaderboard({
-            gameId: GAME_ID,
+            gameId,
             data: leaderboard,
           })
         )

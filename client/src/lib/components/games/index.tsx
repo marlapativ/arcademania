@@ -13,7 +13,7 @@ const games: GameInfoCollection = {
   1: {
     id: 1,
     name: "2048",
-    component: <Game2048 rows={4} columns={4} />,
+    component: <Game2048 rows={4} columns={4} gameId={1} />,
     image: "images/2048.png",
     altImage: "images/2048.png",
     description:
@@ -57,7 +57,7 @@ const games: GameInfoCollection = {
   5: {
     id: 5,
     name: "Minesweeper",
-    component: <Minesweeper rows={10} columns={10} bombs={10} />,
+    component: <Minesweeper rows={10} columns={10} bombs={10} gameId={5} />,
     image: "images/Minesweeper.png",
     altImage: "images/Minesweeper.png",
     description:

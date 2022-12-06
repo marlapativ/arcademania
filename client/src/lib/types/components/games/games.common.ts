@@ -1,3 +1,7 @@
+export type GameEntity = {
+  gameId: number;
+};
+
 export interface Coordinate {
   x: number;
   y: number;

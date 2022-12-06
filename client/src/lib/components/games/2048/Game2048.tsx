@@ -34,8 +34,6 @@ import {
   swipeUp,
 } from "./utils/swipeUtils";
 
-const GAME_ID = 4;
-
 const getRandomValue = (): number => {
   return Math.random() > 0.2 ? 2 : 4;
 };
@@ -74,7 +72,7 @@ const createGame = (rows: number, columns: number): number[][] => {
   return game;
 };
 
-const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
+const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
   const dispatch = useDispatch();
   const [game, setGame] = useState(createGame(rows, columns));
   const [score, setScore] = useState(0);
@@ -96,11 +94,11 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   };
 
   const saveGameScores = (gameScore: number) => {
-    saveScore(GAME_ID, gameScore).then(() => {
-      getLeaderboard(GAME_ID).then((leaderboard) =>
+    saveScore(gameId, gameScore).then(() => {
+      getLeaderboard(gameId).then((leaderboard) =>
         dispatch(
           setGameLeaderboard({
-            gameId: GAME_ID,
+            gameId,
             data: leaderboard,
           })
         )

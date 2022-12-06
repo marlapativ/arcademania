@@ -1,4 +1,4 @@
-import type { Coordinate, Matrix } from "./games.common";
+import type { Coordinate, GameEntity, Matrix } from "./games.common";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export type _2048TileData = {
@@ -18,4 +18,4 @@ export enum Direction {
   DOWN,
 }
 
-export type Game2048Props = Matrix;
+export type Game2048Props = Matrix & GameEntity;
