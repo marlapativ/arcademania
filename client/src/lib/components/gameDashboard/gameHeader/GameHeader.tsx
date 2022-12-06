@@ -53,11 +53,20 @@ const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
             />
           </Container>
           <IconButton
-            mx={5}
+            fontSize="3xl"
+            bg=""
             size="lg"
             title="Add to Favourites"
             aria-label="Add to Favourites"
-            icon={isFavourite ? <FaStar /> : <FiStar />}
+            icon={
+              isFavourite ? (
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                <FaStar color={useColorModeValue("#ffd416", "#ffd416")} />
+              ) : (
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                <FiStar color={useColorModeValue("gray.600", "white")} />
+              )
+            }
             float="right"
             onClick={() => {
               addFavourite(gameInfo);

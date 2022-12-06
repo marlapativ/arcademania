@@ -29,7 +29,7 @@ const LoggedInMenu = () => {
   return (
     <Flex alignItems="center" zIndex={1001}>
       <Menu>
-        <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
+        <MenuButton transition="all 0.3s" _focus={{ boxShadow: "none" }}>
           <HStack>
             <Avatar size="sm" src="/images/profile.png" />
             <VStack

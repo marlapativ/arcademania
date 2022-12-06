@@ -7,6 +7,7 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   Button,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 import type { PopOverProps } from "lib/types/components/common";
@@ -19,13 +20,19 @@ const PopOver: React.FC<PopOverProps> = ({
   return (
     <Popover>
       <PopoverTrigger>
-        <Button>{triggerButtonText}</Button>
+        <Button color={useColorModeValue("gray.600", "white")}>
+          {triggerButtonText}
+        </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <PopoverArrow />
+        <PopoverArrow color={useColorModeValue("gray.600", "white")} />
         <PopoverCloseButton />
-        <PopoverHeader>{popOverHeader}</PopoverHeader>
-        <PopoverBody>{popOverCotent}</PopoverBody>
+        <PopoverHeader color={useColorModeValue("gray.600", "white")}>
+          {popOverHeader}
+        </PopoverHeader>
+        <PopoverBody color={useColorModeValue("gray.600", "white")}>
+          {popOverCotent}
+        </PopoverBody>
       </PopoverContent>
     </Popover>
   );

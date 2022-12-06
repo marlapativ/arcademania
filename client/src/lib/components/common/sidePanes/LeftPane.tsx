@@ -21,8 +21,10 @@ import { NavItemMenu } from "./NavItem";
 const Favourites: React.FC = () => {
   const router = useRouter();
   const { favourites } = useSelector(getFavourites);
-  const games = getGameInfo(favourites.map((e) => e.gameId));
-  return (
+  const games = getGameInfo(favourites.map((e) => e.gameId).slice(0, 5));
+  return games.length === 0 ? (
+    <div />
+  ) : (
     <MenuList>
       {games.map((game) => (
         <MenuItem
