@@ -28,6 +28,7 @@ import { setAxiosAuthHeader } from "lib/config/axios.config";
 import { signIn } from "lib/services/auth-service";
 import { setAccessToken } from "lib/store/slices/authSlice";
 import { useDispatch } from "lib/store/store";
+import { setSessionStorageToken } from "lib/utils/tokenUtils";
 // import messages from "../common/toastMessages/Messages.json";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
 
@@ -41,8 +42,9 @@ const SignInDrawer = () => {
     if (accessTokenObj.status === 200) {
       const body = await accessTokenObj.json();
       if (body.accessToken !== null) {
-        dispatch(setAccessToken({ token: body.accessToken }));
         setAxiosAuthHeader(body.accessToken);
+        setSessionStorageToken(body.accessToken);
+        dispatch(setAccessToken({ token: body.accessToken }));
       }
       // <ToastMessage
       //   messageTitle={messages.signinSuccessTitle}
