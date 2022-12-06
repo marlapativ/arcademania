@@ -131,6 +131,46 @@
                         "description": "Cannot get game leaderboard data"
                     }
                 }
+            },
+            "post": {
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "tags": [
+                    "Leaderboard"
+                ],
+                "summary": "Save the score for the given game",
+                "description": "Save the score for the given game",
+                "operationId": "saveScore",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Game Id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Score object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Score"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "If the save was succesful"
+                    },
+                    "500": {
+                        "description": "Cannot save game leaderboard data"
+                    }
+                }
             }
         },
         "/favourites": {
@@ -245,6 +285,14 @@
                 },
                 "password": {
                     "type": "string"
+                }
+            }
+        },
+        "Score": {
+            "type": "object",
+            "properties": {
+                "score": {
+                    "type": "number"
                 }
             }
         }
