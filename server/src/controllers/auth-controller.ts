@@ -51,35 +51,3 @@ export const loginUser = async (req: CustomRequest<ISignInUser>, response: Custo
    logger.log(user);
 
 }
-
-/**
- * It updates the user details and returns the updated object
- * @param req - Http Request with <IUser> as body
- * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
- * back to the client.
- */
- export const updateProfile = async (req: CustomRequest<IUser>, response: CustomResponse) => {
-    try {
-        const userId:number = parseInt(req.query.id as string, 10)
-        const user = await authService.updateUser(userId,req.body);
-        setResponse(response, user);
-    } catch (err) {
-        setError(response, err);
-    }
-}
-
-/**
- * This is used to get the user details based on the access token
- * @param req - Http Request with <IUser> as body
- * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
- * back to the client.
- */
-export const getUser = async(req: CustomRequest<IUser>, response: CustomResponse) => {
-    try {
-        const token = req.user.userId;
-        const user = await authService.getUser(token);
-        setResponse(response, user);
-    } catch (err) {
-        setError(response, err);
-    }
-}

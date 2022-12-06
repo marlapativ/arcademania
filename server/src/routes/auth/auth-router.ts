@@ -1,7 +1,7 @@
 import express from 'express';
-import passport from 'passport';
 import { authRoute } from '../../middlewares/authRoute';
 import * as authController from "../../controllers/auth-controller";
+import * as userController from "../../controllers/user-controller";
 
 // Creating a new Router for Auth
 const router = express.Router();
@@ -13,7 +13,7 @@ router.route('/auth/signup').post(authController.createUser);
 router.route('/auth/signin').post(authController.loginUser);
 
 // UpdateProfile Route
-router.route('/auth/updateProfile').post(authController.updateProfile)
+router.route('/auth/updateProfile').post(userController.updateProfile)
 
 // Logout Route
 router.get("/auth/logout", (req, res, next) => {
@@ -29,6 +29,6 @@ router.get('/auth/google', authController.loginUserWithGoogle);
 
 
 // getUser Route
-router.route('/auth/getUser').get(authRoute, authController.getUser);
+router.route('/auth/getUser').get(authRoute, userController.getUser);
 
 export default router;
