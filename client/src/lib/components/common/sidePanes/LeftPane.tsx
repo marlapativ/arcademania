@@ -1,12 +1,51 @@
-import { Divider, Flex, IconButton } from "@chakra-ui/react";
+import {
+  Divider,
+  Flex,
+  IconButton,
+  Button,
+  Icon,
+  Text,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { FiMenu, FiHome, FiClock, FiStar } from "react-icons/fi";
+import { FiMenu, FiHome, FiStar } from "react-icons/fi";
 
-import NavItem from "./NavItem";
+import { getGameInfo } from "lib/components/games";
+import { getFavourites } from "lib/store/slices/favouritesSlice";
+import { useSelector } from "lib/store/store";
+
+import { NavItemMenu } from "./NavItem";
+
+const Favourites: React.FC = () => {
+  const router = useRouter();
+  const { favourites } = useSelector(getFavourites);
+  const games = getGameInfo(favourites.map((e) => e.gameId));
+  return (
+    <MenuList>
+      {games.map((game) => (
+        <MenuItem
+          justifyContent="center"
+          key={game.id}
+          onClick={() => {
+            router.push({
+              pathname: `/game/[gameid]`,
+              query: { gameid: game.id },
+            });
+          }}
+        >
+          {game.name}
+        </MenuItem>
+      ))}
+    </MenuList>
+  );
+};
 
 const LeftPane = () => {
   const [navSize, changeNavSize] = useState("small");
   const [isOpen, setOpenState] = useState(false);
+  const router = useRouter();
   return (
     <Flex
       pos="sticky"
@@ -24,7 +63,7 @@ const LeftPane = () => {
         pos="sticky"
         margin-top="2.5"
         boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.1)"
-        h="max-content"
+        h="full"
         w={navSize === "small" ? "75px" : "200px"}
         flexDir="column"
         align-items={navSize === "small" ? "center" : "flex-start"}
@@ -46,25 +85,52 @@ const LeftPane = () => {
             }
           }}
         />
-        <NavItem
-          navSize={navSize}
-          title="Dashboard"
-          icon={FiHome}
-          active={isOpen}
-        />
-        <NavItem
-          navSize={navSize}
-          title="Recently Played"
-          icon={FiClock}
-          active={isOpen}
-        />
-        <Divider display={navSize === "small" ? "none" : "flex"} />
-        <NavItem
+
+        <Flex
+          mt={30}
+          flexDir="column"
+          w="100%"
+          alignItems={navSize === "small" ? "center" : "flex-start"}
+        >
+          <Button
+            variant="ghost"
+            size="lg"
+            h="100%"
+            w="100%"
+            backgroundColor={isOpen ? "AEC8CA" : "none"}
+            p={navSize === "small" ? "23px" : "5px"}
+            borderRadius={8}
+            _hover={{ textDecor: "none", background: "#AEC8CA" }}
+            onClick={() => {
+              router.push(`/`);
+            }}
+          >
+            <Flex>
+              <Icon
+                as={FiHome}
+                fontSize="xl"
+                color={isOpen ? "#82AAAD" : "gray.500"}
+              />
+              <Text
+                ml={5}
+                display={navSize === "small" ? "none" : "flex"}
+                transition="0.5s ease-out"
+              >
+                Dashboard
+              </Text>
+            </Flex>
+          </Button>
+        </Flex>
+
+        <NavItemMenu
           navSize={navSize}
           title="Favourites"
           icon={FiStar}
           active={isOpen}
-        />
+        >
+          <Favourites />
+        </NavItemMenu>
+        <Divider display={navSize === "small" ? "none" : "flex"} />
       </Flex>
     </Flex>
   );

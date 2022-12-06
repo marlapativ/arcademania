@@ -1,4 +1,4 @@
-import type { GameInfoCollection } from "lib/types/components/common";
+import type { GameInfo, GameInfoCollection } from "lib/types/components/common";
 
 import Game2048 from "./2048/Game2048";
 import CarGame from "./carcrash/CarGame";
@@ -89,6 +89,11 @@ const games: GameInfoCollection = {
     component: <Hangman />,
     helpContent: "",
   },
+};
+
+export const getGameInfo = (gameIds: number[]): GameInfo[] => {
+  if (!gameIds || gameIds.length === 0) return [];
+  return Object.values(games).filter((game) => gameIds.includes(game.id));
 };
 
 export default games;
