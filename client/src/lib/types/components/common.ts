@@ -65,6 +65,10 @@ export type UserId = {
   userId: string;
 };
 
+export type UserName = {
+  UserName: string;
+};
+
 export type UserInfo = UserId & {
   name: string;
   icon?: string;

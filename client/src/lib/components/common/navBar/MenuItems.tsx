@@ -15,21 +15,31 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import type React from "react";
+import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
-import { signOut } from "lib/services/auth-service";
+import { getUser, signOut } from "lib/services/auth-service";
 import { getAuthState } from "lib/store/slices/authSlice";
 import { useSelector } from "lib/store/store";
-import type { AuthProps } from "lib/types/components/auth.types";
+import type { AuthState } from "lib/types/components/auth.types";
 
-const LoggedInMenu = () => {
-  const token = "";
+const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
+  const [username, setUserName] = useState("");
+  getUser(token)
+    .then((response) => response.json())
+    .then((data) => {
+      setUserName(data.name);
+    });
   return (
     <Flex alignItems="center" zIndex={1001}>
       <Menu>
-        <MenuButton transition="all 0.3s" _focus={{ boxShadow: "none" }}>
+        <MenuButton
+          width="max-content"
+          transition="all 0.3s"
+          _focus={{ boxShadow: "none" }}
+        >
           <HStack>
             <Avatar size="sm" src="/images/profile.png" />
             <VStack
@@ -38,7 +48,7 @@ const LoggedInMenu = () => {
               spacing="1px"
               ml="2"
             >
-              <Text fontSize="sm">Justina Clark</Text>
+              <Text fontSize="sm">{username}</Text>
             </VStack>
             <Box display={{ base: "none", md: "flex" }}>
               <FiChevronDown />
@@ -82,9 +92,11 @@ const SignInMenu = () => {
   );
 };
 
-const MenuItems: React.FC<AuthProps> = () => {
+const MenuItems = () => {
   const { token } = useSelector(getAuthState);
-  if (token && token !== "") return <LoggedInMenu />;
+  if (token && token !== "") {
+    return <LoggedInMenu token={token} />;
+  }
   return <SignInMenu />;
 };
 

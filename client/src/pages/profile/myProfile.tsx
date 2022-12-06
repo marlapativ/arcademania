@@ -12,6 +12,7 @@ import {
   InputLeftAddon,
   InputRightElement,
   Stack,
+  Center,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import { useState } from "react";
@@ -54,7 +55,6 @@ const Myprofile = () => {
     getUser(token)
       .then((response) => response.json())
       .then((data) => {
-        // eslint-disable-next-line sonarjs/prefer-object-literal
         setUser({
           firstname: data.name.split(" ")[0],
           lastname: data.name.split(" ")[1],
@@ -82,7 +82,7 @@ const Myprofile = () => {
   };
   getUserDetails();
   return (
-    <Container ml={5} mt={5} float="right">
+    <Container ml={5} mt={5} float="left">
       <Formik
         initialValues={user}
         onSubmit={(values) => {
@@ -252,9 +252,11 @@ const Myprofile = () => {
                 </Box>
               </FormControl>
             </Stack>
-            <Button mt={5} colorScheme="blue" float="right" type="submit">
-              Submit
-            </Button>
+            <Center>
+              <Button mt={5} colorScheme="blue" type="submit">
+                Submit
+              </Button>
+            </Center>
           </form>
         )}
       </Formik>

@@ -55,7 +55,7 @@ const NavBar = () => {
           <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
-          <MenuItems isAuth={false} />
+          <MenuItems />
         </HStack>
       </Flex>
     </Box>
