@@ -60,11 +60,9 @@ const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
             aria-label="Add to Favourites"
             icon={
               isFavourite ? (
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                <FaStar color={useColorModeValue("#ffd416", "#ffd416")} />
+                <FaStar color="ffd416" />
               ) : (
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                <FiStar color={useColorModeValue("gray.600", "white")} />
+                <FiStar color="a9abab" />
               )
             }
             float="right"
