@@ -2,6 +2,7 @@ import { CustomResponse, CustomRequest } from '../types/config/express-types';
 import * as favouritesService from '../services/favourite/favourite-service';
 import { setResponse, setError } from '../utils/http-utils';
 import { IFavourite } from '../types/models/features.types';
+import { IGameUserEntity } from '../types/models/common.types';
 
 /**
  * It creates a user and returns the user object in the response
@@ -12,8 +13,8 @@ import { IFavourite } from '../types/models/features.types';
  export const getFavourites = async (req: CustomRequest<IFavourite>, response: CustomResponse) => {
     try {
         const userId = req.user.userId;
-        const data = favouritesService.getFavourites(userId);
-        setResponse(response, data);
+        const data = await favouritesService.getFavourites(userId);
+        setResponse(response, data || []);
     } catch (err) {
         setError(response, err);
     }
@@ -24,7 +25,9 @@ const handleFavourite = async (req: CustomRequest<IFavourite>, response: CustomR
         const gameId = parseInt(req.params.id, 10);
         const userId = req.user.userId;
         const data = await favouritesService.setFavourite(gameId, userId, isFavourite);
-        setResponse(response, data);
+        let result: IGameUserEntity[] = [];
+        if(data) result = [data];
+        setResponse(response, result);
     } catch (err) {
         setError(response, err);
     }

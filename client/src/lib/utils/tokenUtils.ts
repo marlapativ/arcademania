@@ -1,3 +1,5 @@
+import type { AuthState } from "lib/types/components/auth.types";
+
 const AUTH_TOKEN = "AUTH_TOKEN";
 
 export const parseJwtAndGet = (token: string, property = "id") => {
@@ -5,6 +7,10 @@ export const parseJwtAndGet = (token: string, property = "id") => {
   const base64Url = token.split(".")[1];
   const base64 = base64Url.replace("-", "+").replace("_", "/");
   return JSON.parse(window.atob(base64))[property];
+};
+
+export const isAuthenticated = (state: AuthState) => {
+  return state && state.token && state.token !== "";
 };
 
 export const getSessionStorageToken = (): string => {

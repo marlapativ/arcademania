@@ -23,6 +23,7 @@ import { signOut } from "lib/services/auth-service";
 import { getAuthState } from "lib/store/slices/authSlice";
 import { useSelector } from "lib/store/store";
 import type { AuthProps } from "lib/types/components/auth.types";
+import { isAuthenticated } from "lib/utils/tokenUtils";
 
 const LoggedInMenu = () => {
   const token = "";
@@ -90,8 +91,8 @@ const SignInMenu = () => {
 };
 
 const MenuItems: React.FC<AuthProps> = () => {
-  const { token } = useSelector(getAuthState);
-  if (token && token !== "") return <LoggedInMenu />;
+  const authState = useSelector(getAuthState);
+  if (isAuthenticated(authState)) return <LoggedInMenu />;
   return <SignInMenu />;
 };
 
