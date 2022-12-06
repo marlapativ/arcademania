@@ -10,4 +10,7 @@ router.route('/leaderboard').get(leaderboardController.getLeaderboard);
 // Get Game Leaderboard Route
 router.route('/leaderboard/:id').get(leaderboardController.getLeaderboard);
 
+// Save Game Scores
+router.route('/leaderboard/:id').post(leaderboardController.saveScore);
+
 export default router;
