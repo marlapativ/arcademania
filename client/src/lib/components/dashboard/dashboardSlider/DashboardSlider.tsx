@@ -78,14 +78,14 @@ const DashboardSlider: React.FC = () => {
         </Text>
       </Flex>
       <Grid my={2} h="38vh" w="80vw" templateColumns="repeat(4, 1fr)" gap={4}>
-        <GridItem colSpan={1}>
-          <SliderGame id={1} maxH="37vh" maxW="full" popoverPlacement="right" />
+        <GridItem colSpan={1} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
+          <SliderGame id={1} maxH="38vh" maxW="full" popoverPlacement="right" />
         </GridItem>
-        <GridItem colSpan={2}>
-          <SliderGame id={3} maxH="37vh" maxW="full" popoverPlacement="top" />
+        <GridItem colSpan={2} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
+          <SliderGame id={3} maxH="38vh" maxW="full" popoverPlacement="top" />
         </GridItem>
-        <GridItem colSpan={1}>
-          <SliderGame id={5} maxH="37vh" maxW="full" popoverPlacement="left" />
+        <GridItem colSpan={1} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
+          <SliderGame id={5} maxH="38vh" maxW="full" popoverPlacement="left" />
         </GridItem>
       </Grid>
     </Box>
