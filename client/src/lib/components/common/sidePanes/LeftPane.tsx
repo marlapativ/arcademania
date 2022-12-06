@@ -158,7 +158,7 @@ const Favourites: React.FC<{ games: GameInfo[] }> = ({ games }) => {
 const LeftPane = () => {
   const router = useRouter();
   const [navSize, changeNavSize] = useState("small");
-  const [isOpen, setOpenState] = useState(false);
+  const [isOpen, setOpenState] = useState(true);
   const { favourites } = useSelector(getFavourites);
   const games = getGameInfo(favourites.map((e) => e.gameId).slice(0, 4));
 
