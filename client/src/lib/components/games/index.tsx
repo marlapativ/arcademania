@@ -112,8 +112,8 @@ const games: GameInfoCollection = {
   },
 };
 
-export const getGameInfo = (gameIds: number[]): GameInfo[] => {
-  if (!gameIds || gameIds.length === 0) return [];
+export const getGameInfo = (gameIds: number[] | null = null): GameInfo[] => {
+  if (gameIds === null) return Object.values(games);
   return Object.values(games).filter((game) => gameIds.includes(game.id));
 };
 

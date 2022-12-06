@@ -19,6 +19,7 @@ export const NavItemMenu: React.FC<NavItemProps> = ({
     >
       <Menu placement="right">
         <MenuButton
+          title={title}
           fontSize="lg"
           w="100%"
           backgroundColor={active ? "AEC8CA" : "none"}
