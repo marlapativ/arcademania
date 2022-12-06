@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface IUser {
     name: string,
     email: string,
@@ -14,7 +16,7 @@ export interface ISignInUser{
 }
 
 export interface IUserInfo {
-    userId: string;
+    userId: mongoose.ObjectId;
     name: string;
     icon?: string;
 };

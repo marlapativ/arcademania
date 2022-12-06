@@ -7,6 +7,6 @@ export interface ILeaderboard extends IGameUserEntity {
 }
 
 export interface ILeaderboardGameData extends IUserInfo {
-    gameId: mongoose.ObjectId,
+    gameId: number,
     score: number;
 }

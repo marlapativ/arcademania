@@ -4,10 +4,10 @@ import { IFavourite } from "../../types/models/feautures.types";
 import mongoose from "mongoose";
 
 export const getFavourites = async (
-  userId: string
+  userId: mongoose.ObjectId
 ): Promise<IGameUserEntity[]> => {
   return Favourites.find({
-    userId: userId,
+    userId,
   })
     .limit(5)
     .exec();
@@ -18,9 +18,9 @@ export const setFavourite = async (
   userId: mongoose.ObjectId,
   isFavourite: boolean
 ) => {
-  let filter: IFavourite = {
-    userId: userId,
-    gameId: gameId,
+  const filter: IFavourite = {
+    userId,
+    gameId,
   };
   if (isFavourite) {
     Favourites.findOneAndUpdate(

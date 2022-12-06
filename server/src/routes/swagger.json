@@ -9,6 +9,14 @@
     "schemes": [
         "http"
     ],
+    "securityDefinitions" : {
+        "bearerAuth":{
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter the token with the `Bearer: ` prefix, e.g. 'Bearer abcde12345'."
+        }
+    },
     "paths": {
         "/auth/signup": {
             "post": {
@@ -121,6 +129,91 @@
                     },
                     "500": {
                         "description": "Cannot get game leaderboard data"
+                    }
+                }
+            }
+        },
+        "/favourites": {
+            "get": {
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Get User Favourites",
+                "description": "Gets the User specific favourite games",
+                "operationId": "getUserFavourites",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User Favourite games"
+                    },
+                    "500": {
+                        "description": "If the operation fails"
+                    }
+                }
+            }
+        },
+        "/favourites/{id}": {
+            "post": {
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Set the game as user Favourites",
+                "description": "Set the game as user Favourites",
+                "operationId": "setUserFavourites",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Game Id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "If the game was set as favourite for the user sucessfully"
+                    },
+                    "500": {
+                        "description": "Cannot set user favourites"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Remove the game as user Favourites",
+                "description": "Remove the game as user Favourites",
+                "operationId": "removeUserFavourites",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Game Id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "If the game was not removed as favourite for the user sucessfully"
+                    },
+                    "500": {
+                        "description": "Cannot remove user favourites"
                     }
                 }
             }

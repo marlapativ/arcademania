@@ -1,8 +1,8 @@
 import { CustomResponse, CustomRequest } from '../types/config/express-types';
 import * as favouritesService from '../services/favourite/favourite-service';
 import { setResponse, setError } from '../utils/http-utils';
-import { IFavouriteRequest } from '../types/models/feautures.types';
 import { IFavourite } from '../types/models/feautures.types';
+import mongoose from 'mongoose';
 
 /**
  * It creates a user and returns the user object in the response
@@ -20,14 +20,21 @@ import { IFavourite } from '../types/models/feautures.types';
     }
 }
 
-export const setFavourite = async (req: CustomRequest<IFavouriteRequest>, response: CustomResponse) => {
+const handleFavourite = async (req: CustomRequest<IFavourite>, response: CustomResponse, isFavourite: boolean) => {
     try {
-        const gameId = parseInt(req.params.id);
+        const gameId = parseInt(req.params.id, 10);
         const userId = req.user.userId;
-        const isFav = req.body.isFavourite;
-        const data = await favouritesService.setFavourite(gameId, userId, isFav);
+        const data = await favouritesService.setFavourite(gameId, userId, isFavourite);
         setResponse(response, data);
     } catch (err) {
         setError(response, err);
     }
+}
+
+export const setFavourite = async (req: CustomRequest<IFavourite>, response: CustomResponse) => {
+    handleFavourite(req, response, true);
+}
+
+export const resetFavourite = async (req: CustomRequest<IFavourite>, response: CustomResponse) => {
+    handleFavourite(req, response, false);
 }
