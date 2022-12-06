@@ -8,7 +8,7 @@ import DashboardSlider from "./dashboardSlider/DashboardSlider";
 const Dashboard: React.FC = () => {
   return (
     <Stack>
-      <VStack my={1}>
+      <VStack my={1} gap={2}>
         <DashboardCarousel />
         <DashboardSlider />
         <DashboardList />

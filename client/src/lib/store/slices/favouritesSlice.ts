@@ -1,10 +1,10 @@
 import type { Draft, PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { GameInfo } from "lib/types/components/common";
+import type { GameFavourites } from "lib/types/components/common";
 
 export type FavouritesState = {
-  favourites: GameInfo[];
+  favourites: GameFavourites[];
 };
 
 /**
@@ -23,7 +23,7 @@ export const favouritesSlice = createSlice({
   reducers: {
     setFavourite: (
       state: Draft<FavouritesState>,
-      action: PayloadAction<GameInfo>
+      action: PayloadAction<GameFavourites>
     ) => {
       const newFavourites = [...state.favourites];
       newFavourites.push(action.payload);

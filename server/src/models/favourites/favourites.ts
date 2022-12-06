@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ILeaderboard } from '../../types/models/leaderboard.types';
+import { IFavourite } from '../../types/models/feautures.types';
 
 // Schema options to include id field & add timestamps while creation and updation.
 const schemaOptions = {
@@ -16,7 +16,7 @@ const schemaOptions = {
 };
 
 // User Schema
-const schema = new mongoose.Schema<ILeaderboard>({
+const schema = new mongoose.Schema<IFavourite>({
     gameId: {
         type: Number,
         required: true
@@ -25,14 +25,9 @@ const schema = new mongoose.Schema<ILeaderboard>({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    score: {
-        type: Number,
-        required: true,
-        trim: true,
-    },
 }, schemaOptions);
 
 /**
- * @typedef Leaderboard
+ * @typedef Favourites
  */
-export const Leaderboard = mongoose.model<ILeaderboard>('Leaderboard', schema);
+export const Favourites = mongoose.model<IFavourite>('Favourites', schema);

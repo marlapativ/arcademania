@@ -44,6 +44,11 @@ export type GameInfo = {
   description?: string;
 };
 
+export type GameFavourites = {
+  id: number;
+  isFavourite: boolean;
+};
+
 export type GameHelp = {
   helpContent: string;
 };

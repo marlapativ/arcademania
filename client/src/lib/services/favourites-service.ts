@@ -11,3 +11,13 @@ export const setFavourite = async (id: number, isFavourite = true) => {
       raiseError(error);
     });
 };
+
+export const getFavourites = async () => {
+  const url = `${API_URL}favourites`;
+  return axios
+    .get(url)
+    .then((response) => response.data)
+    .catch((error) => {
+      raiseError(error);
+    });
+};

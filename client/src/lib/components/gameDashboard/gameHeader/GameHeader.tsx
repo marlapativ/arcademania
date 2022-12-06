@@ -14,6 +14,7 @@ import type {
   GameInfoComponent,
 } from "../../../types/components/common";
 import PopOver from "lib/components/common/popover/PopOver";
+import * as favouritesService from "lib/services/favourites-service";
 import { setFavourite } from "lib/store/slices/favouritesSlice";
 import { useDispatch } from "lib/store/store";
 
@@ -25,7 +26,11 @@ const GameHeader: React.FC<GameHeaderProps> = ({
   const dispatch = useDispatch();
   const addFavourite = (game: GameInfoComponent) => {
     if (!game) return;
-    dispatch(setFavourite(game));
+    favouritesService
+      .setFavourite(game.id, !isFavourite)
+      .then(() =>
+        dispatch(setFavourite({ id: game.id, isFavourite: !isFavourite }))
+      );
   };
 
   return (
