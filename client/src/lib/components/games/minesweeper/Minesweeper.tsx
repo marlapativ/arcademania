@@ -206,7 +206,7 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
   return (
     <Stack>
       <VStack>
-        <GameScore score={score} show={!showGameMessage} />
+        <GameScore score={score} />
         <Flex mt={0}>
           <Box
             bg={useColorModeValue("white", "gray.800")}
