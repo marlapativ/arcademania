@@ -24,6 +24,7 @@ export interface NavItemProps extends ReactChildrenProps {
   title: string;
   icon: IconType;
   active: boolean;
+  onClick?: () => void;
 }
 
 export type GameHeaderProps = {
@@ -42,6 +43,7 @@ export type GameInfo = {
   altImage?: string;
   description?: string;
   isFavourite?: boolean;
+  icon?: IconType;
 };
 
 export type GameFavourites = {

@@ -34,7 +34,7 @@ const LeaderboardItem: React.FC<LeaderboardItemData> = ({
       <Box
         maxW="450px"
         w="full"
-        bg="white"
+        bg={useColorModeValue("white", "gray.700")}
         boxShadow="2xl"
         rounded="full"
         px={3}
@@ -43,7 +43,9 @@ const LeaderboardItem: React.FC<LeaderboardItemData> = ({
         <Stack py={2} direction="row" justifyContent="space-between">
           <Stack direction="row" align="center">
             <GameAvatar userId={userId} name={name} icon={icon} />
-            <Text fontWeight={600}>{name}</Text>
+            <Text fontWeight={600} color={useColorModeValue("black", "white")}>
+              {name}
+            </Text>
           </Stack>
           <Stack direction="row" spacing={2} fontSize="2xl" alignItems="center">
             {index === 0 ? (
@@ -51,7 +53,9 @@ const LeaderboardItem: React.FC<LeaderboardItemData> = ({
                 <RiTrophyFill color="#ffab20" />
               </Icon>
             ) : null}
-            <Text color="pink.500">{numberWithCommas(score)}</Text>
+            <Text color={useColorModeValue("pink.500", "pink.300")}>
+              {numberWithCommas(score)}
+            </Text>
           </Stack>
         </Stack>
       </Box>

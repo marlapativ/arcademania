@@ -19,6 +19,7 @@ const NavBar = () => {
   return (
     <Box>
       <Flex
+        boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)"
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         minH="60px"

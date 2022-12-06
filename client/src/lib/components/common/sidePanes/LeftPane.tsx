@@ -11,17 +11,101 @@ import {
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiMenu, FiHome, FiStar } from "react-icons/fi";
+import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 
+import type { GameInfo, NavItemProps } from "../../../types/components/common";
 import { getGameInfo } from "lib/components/games";
 import { getFavourites } from "lib/store/slices/favouritesSlice";
 import { useSelector } from "lib/store/store";
 
 import { NavItemMenu } from "./NavItem";
 
-const Favourites: React.FC = () => {
+type GameNavbarProps = NavItemProps & {
+  games: GameInfo[];
+};
+
+const NavItem: React.FC<NavItemProps> = ({
+  navSize,
+  active,
+  title,
+  icon,
+  onClick,
+}) => {
+  return (
+    <Flex
+      mt={5}
+      flexDir="column"
+      w="100%"
+      alignItems={navSize === "small" ? "center" : "flex-start"}
+    >
+      <Button
+        variant="ghost"
+        size="lg"
+        h="100%"
+        w="100%"
+        backgroundColor={active ? "AEC8CA" : "none"}
+        p={navSize === "small" ? "23px" : "5px"}
+        borderRadius={8}
+        _hover={{ textDecor: "none", background: "#AEC8CA" }}
+        onClick={onClick}
+      >
+        <Flex>
+          <Icon
+            as={icon}
+            fontSize="xl"
+            color={active ? "#82AAAD" : "gray.500"}
+          />
+          <Text
+            ml={5}
+            display={navSize === "small" ? "none" : "flex"}
+            transition="0.5s ease-out"
+          >
+            {title}
+          </Text>
+        </Flex>
+      </Button>
+    </Flex>
+  );
+};
+
+const FavouriteGames: React.FC<GameNavbarProps> = ({
+  games,
+  active,
+  navSize,
+  icon,
+}) => {
   const router = useRouter();
-  const { favourites } = useSelector(getFavourites);
-  const games = getGameInfo(favourites.map((e) => e.gameId).slice(0, 5));
+  return games.length === 0 ? (
+    <div />
+  ) : (
+    <>
+      {games.map((game) => (
+        <NavItem
+          key={game.id}
+          active={active}
+          icon={game.icon || icon}
+          title={game.name}
+          navSize={navSize}
+          onClick={() => {
+            router.push({
+              pathname: `/game/[gameid]`,
+              query: { gameid: game.id },
+            });
+          }}
+        />
+      ))}
+    </>
+  );
+};
+
+const Favourites: React.FC<{ games: GameInfo[] }> = ({ games }) => {
+  const router = useRouter();
+  const clickHandler = (gameId: number) => {
+    router.push({
+      pathname: `/game/[gameid]`,
+      query: { gameid: gameId },
+    });
+  };
   return games.length === 0 ? (
     <div />
   ) : (
@@ -31,10 +115,7 @@ const Favourites: React.FC = () => {
           justifyContent="center"
           key={game.id}
           onClick={() => {
-            router.push({
-              pathname: `/game/[gameid]`,
-              query: { gameid: game.id },
-            });
+            clickHandler(game.id);
           }}
         >
           {game.name}
@@ -45,14 +126,17 @@ const Favourites: React.FC = () => {
 };
 
 const LeftPane = () => {
+  const router = useRouter();
   const [navSize, changeNavSize] = useState("small");
   const [isOpen, setOpenState] = useState(false);
-  const router = useRouter();
+  const { favourites } = useSelector(getFavourites);
+  const games = getGameInfo(favourites.map((e) => e.gameId).slice(0, 4));
+
   return (
     <Flex
       pos="sticky"
       margin-top="2.5"
-      boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.1)"
+      boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
       h="100%"
       w={navSize === "small" ? "75px" : "200px"}
       flexDir="column"
@@ -88,41 +172,15 @@ const LeftPane = () => {
           }}
         />
 
-        <Flex
-          mt={30}
-          flexDir="column"
-          w="100%"
-          alignItems={navSize === "small" ? "center" : "flex-start"}
-        >
-          <Button
-            variant="ghost"
-            size="lg"
-            h="100%"
-            w="100%"
-            backgroundColor={isOpen ? "AEC8CA" : "none"}
-            p={navSize === "small" ? "23px" : "5px"}
-            borderRadius={8}
-            _hover={{ textDecor: "none", background: "#AEC8CA" }}
-            onClick={() => {
-              router.push(`/`);
-            }}
-          >
-            <Flex>
-              <Icon
-                as={FiHome}
-                fontSize="xl"
-                color={isOpen ? "#82AAAD" : "gray.500"}
-              />
-              <Text
-                ml={5}
-                display={navSize === "small" ? "none" : "flex"}
-                transition="0.5s ease-out"
-              >
-                Dashboard
-              </Text>
-            </Flex>
-          </Button>
-        </Flex>
+        <NavItem
+          navSize={navSize}
+          active={isOpen}
+          icon={FiHome}
+          title="Dashboard"
+          onClick={() => {
+            router.push(`/`);
+          }}
+        />
 
         <NavItemMenu
           navSize={navSize}
@@ -130,9 +188,16 @@ const LeftPane = () => {
           icon={FiStar}
           active={isOpen}
         >
-          <Favourites />
+          <Favourites games={games} />
         </NavItemMenu>
         <Divider display={navSize === "small" ? "none" : "flex"} />
+        <FavouriteGames
+          games={games}
+          navSize={navSize}
+          active={isOpen}
+          icon={GiPerspectiveDiceSixFacesRandom}
+          title="Favourite Games"
+        />
       </Flex>
     </Flex>
   );

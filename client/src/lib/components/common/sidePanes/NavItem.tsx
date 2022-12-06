@@ -12,7 +12,7 @@ export const NavItemMenu: React.FC<NavItemProps> = ({
 }) => {
   return (
     <Flex
-      mt={30}
+      mt={5}
       flexDir="column"
       w="100%"
       alignItems={navSize === "small" ? "center" : "flex-start"}
