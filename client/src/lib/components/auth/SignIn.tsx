@@ -167,7 +167,7 @@ const SignInDrawer = () => {
               >
                 <Link
                   _hover={{ textDecoration: "none" }}
-                  href="http://localhost:8080/api/v1/auth/google"
+                  href="http://localhost:1/api/v1/auth/google"
                 >
                   Signin With Google
                 </Link>

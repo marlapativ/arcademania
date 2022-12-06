@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import { authRoute } from '../../middlewares/authRoute';
 import * as authController from "../../controllers/auth-controller";
 
 // Creating a new Router for Auth
@@ -28,6 +29,6 @@ router.get('/auth/google', authController.loginUserWithGoogle);
 
 
 // getUser Route
-router.route('/auth/getUser').get(authController.getUser);
+router.route('/auth/getUser').get(authRoute, authController.getUser);
 
 export default router;

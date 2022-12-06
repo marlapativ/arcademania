@@ -1,6 +1,7 @@
 import { IUser, ISignInUser } from "../../types/models/user.types";
 import { User } from "../../models/index";
 import { generateAccessToken, getUserFromJWT, generateRefreshAccessToken } from "../../middlewares/jwt";
+import mongoose from "mongoose";
 
 export const createUser = async (user: IUser) => {
   const newUser = new User(user);
@@ -11,9 +12,12 @@ export const updateUser = async (id:number, user: IUser) => {
   return User.findByIdAndUpdate(id, user)
 }
 
-export const getUser = async (token:string) => {
-  const user = getUserFromJWT(token);
-  return User.findById(JSON.parse(user.toString()).id);
+export const getUser = async (userId:mongoose.ObjectId) => {
+  const user =  await User.findById(userId);
+  if (!user) {
+    throw new Error("User Not found");
+  }
+  return user;
 }
 
 export const loginUser = async (signInUser: ISignInUser) => {

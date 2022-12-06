@@ -1,6 +1,6 @@
 import type { UserInfo } from "lib/types/components/common";
 
-const url = "http://localhost:8080/api/v1";
+const url = "http://localhost:8081/api/v1";
 const defaultContentType = "application/json";
 
 export const getUser = (): UserInfo => {

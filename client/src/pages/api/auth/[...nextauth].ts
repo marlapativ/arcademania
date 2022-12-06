@@ -15,7 +15,7 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-        const res = await fetch("http://localhost:8080/api/v1/auth/signin", {
+        const res = await fetch("http://localhost:8081/api/v1/auth/signin", {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },

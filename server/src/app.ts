@@ -9,7 +9,7 @@ import { applyPassportStrategies } from './middlewares/passport';
 /*
  * Port to host the server
  */
-const port = 8080;
+const port = 8081;
 
 // Database Connection
 mongoose.connect('mongodb://localhost:27017/Users', (err) => {

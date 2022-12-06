@@ -1,5 +1,5 @@
 // url of the backend server
-const url = "http://localhost:8080/api/v1";
+const url = "http://localhost:8081/api/v1";
 const defaultContentType = "application/json";
 
 /**
@@ -53,7 +53,7 @@ export const getUser = async (token: string) => {
     headers: {
       "cache-control": "no-cache",
       "content-type": defaultContentType,
-      accessToken: token,
+      authorization: `Bearer ${token}`,
     },
   });
 };
@@ -65,7 +65,7 @@ export const signOut = async (token: string) => {
     headers: {
       "cache-control": "no-cache",
       "content-type": defaultContentType,
-      accessToken: token,
+      accessToken: `Bearer ${token}`,
     },
   });
 };

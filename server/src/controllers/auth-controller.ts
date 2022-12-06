@@ -76,8 +76,8 @@ export const loginUser = async (req: CustomRequest<ISignInUser>, response: Custo
  */
 export const getUser = async(req: CustomRequest<IUser>, response: CustomResponse) => {
     try {
-        const token = req.headers.authorization
-        const user = authService.getUser(token);
+        const token = req.user.userId;
+        const user = await authService.getUser(token);
         setResponse(response, user);
     } catch (err) {
         setError(response, err);

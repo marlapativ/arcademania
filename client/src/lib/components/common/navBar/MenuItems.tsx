@@ -51,7 +51,7 @@ const LoggedInMenu = () => {
           zIndex={1000}
         >
           <MenuItem>
-            <Link href="http://localhost:3000/profile/myProfile">Profile</Link>
+            <Link href="http://localhost:3000/profile/myprofile">Profile</Link>
           </MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut(token)}>Sign out</MenuItem>

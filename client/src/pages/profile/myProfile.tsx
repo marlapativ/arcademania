@@ -18,23 +18,22 @@ import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
-import { updateUser } from "lib/services/auth-service";
+import { getUser, updateUser } from "lib/services/auth-service";
+import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
-const MyProfile = () => {
+const Myprofile = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handlePassClick = () => setShowConfirmPassword(!showConfirmPassword);
+  const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+  });
   let password = "";
   const userId = 0;
-  type FormValues = {
-    firstname: string;
-    lastname: string;
-    username: string;
-    email: string;
-    password: string;
-    confirmpassword: string;
-  };
   const setPassword = (value: string) => {
     password = value;
   };
@@ -50,15 +49,19 @@ const MyProfile = () => {
     return error;
   };
 
-  const getUserDetails = (): FormValues => {
-    return {
-      firstname: "abc",
-      lastname: "",
-      email: "",
-      username: "",
-      password: "",
-      confirmpassword: "",
-    };
+  const getUserDetails = async () => {
+    const token = getSessionStorageToken();
+    getUser(token)
+      .then((response) => response.json())
+      .then((data) => {
+        // eslint-disable-next-line sonarjs/prefer-object-literal
+        setUser({
+          firstname: data.name.split(" ")[0],
+          lastname: data.name.split(" ")[1],
+          username: data.username,
+          email: data.email,
+        });
+      });
   };
 
   const validatePassword = (value: string) => {
@@ -77,11 +80,11 @@ const MyProfile = () => {
     }
     return error;
   };
-  const userDetails = getUserDetails();
+  getUserDetails();
   return (
     <Container ml={5} mt={5} float="right">
       <Formik
-        initialValues={userDetails}
+        initialValues={user}
         onSubmit={(values) => {
           updateProfile(JSON.parse(JSON.stringify(values)));
         }}
@@ -101,7 +104,7 @@ const MyProfile = () => {
                           {...field}
                           id="firstName"
                           placeholder="First name"
-                          value={userDetails.firstname}
+                          value={user.firstname}
                         />
                       </FormControl>
                     )}
@@ -116,7 +119,7 @@ const MyProfile = () => {
                           {...field}
                           id="lastName"
                           placeholder="Last name"
-                          value={userDetails.lastname}
+                          value={user.lastname}
                         />
                         <FormErrorMessage display="block">
                           {form.errors.lastName}
@@ -139,7 +142,7 @@ const MyProfile = () => {
                             id="email"
                             placeholder="Please enter email"
                             type="email"
-                            value={userDetails.email}
+                            value={user.email}
                           />
                         </InputGroup>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
@@ -148,15 +151,19 @@ const MyProfile = () => {
                   </Field>
                 </Box>
                 <Box>
-                  <FormControl mb={3}>
-                    <FormLabel htmlFor="username">UserName</FormLabel>
-                    <Input
-                      id="username"
-                      placeholder="Please enter user name"
-                      value={userDetails.username}
-                      disabled
-                    />
-                  </FormControl>
+                  <Field name="username">
+                    {() => (
+                      <FormControl mb={3}>
+                        <FormLabel htmlFor="username">UserName</FormLabel>
+                        <Input
+                          id="username"
+                          placeholder="Please enter user name"
+                          value={user.username}
+                          disabled
+                        />
+                      </FormControl>
+                    )}
+                  </Field>
                 </Box>
 
                 <Box>
@@ -181,7 +188,6 @@ const MyProfile = () => {
                             pr="4.5rem"
                             id="password"
                             type={showPassword ? "text" : "password"}
-                            value={userDetails.password}
                             placeholder="Enter password"
                           />
                           <InputRightElement width="4.5rem">
@@ -226,7 +232,6 @@ const MyProfile = () => {
                             id="confirmpassword"
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="Confirm password"
-                            value={userDetails.confirmpassword}
                           />
                           <InputRightElement width="4.5rem">
                             <Button
@@ -257,4 +262,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default Myprofile;

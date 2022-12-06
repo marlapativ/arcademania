@@ -5,8 +5,6 @@ export interface IUser {
     email: string,
     username: string,
     password: string,
-    accesstoken: string,
-    token: [string],
     comparePassword: (password: string) => Promise<boolean>;
 }
 

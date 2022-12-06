@@ -38,7 +38,7 @@ const SignupDrawer = () => {
 
   const userSignUp = (values: SignUpUserType) => {
     const jsonValues = {
-      name: values.firstName + values.lastName,
+      name: `${values.firstName} ${values.lastName}`,
       email: values.email,
       username: values.username,
       password: values.password,
