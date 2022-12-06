@@ -1,9 +1,7 @@
-import { Grid } from "@chakra-ui/react";
 import React from "react";
 
+import { Grid } from "./App.styles";
 import Card from "./components/Card/Card";
-import memoryStyles from "./memoregame.module.scss";
-
 // Setup
 import { createBoard } from "./setup";
 import type { CardType } from "./setup";
@@ -74,7 +72,7 @@ const MemoryGame = () => {
 
   return (
     <div>
-      <Grid className={memoryStyles.gridClass}>
+      <Grid>
         {cards.map((card) => (
           <Card key={card.id} card={card} callback={handleCardClick} />
         ))}

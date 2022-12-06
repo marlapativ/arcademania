@@ -4,7 +4,7 @@ import Game2048 from "./2048/Game2048";
 import CarGame from "./carcrash/CarGame";
 import Connect4 from "./connect4/Connect4";
 import Hangman from "./hangman/Hangman";
-// import MemoryGame from "./memorygame/src/MemoryGame";
+import MemoryGame from "./memorygame/src/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/TicTacToe";
@@ -77,12 +77,12 @@ const games: GameInfoCollection = {
     component: <TypingSpeed />,
     helpContent: "",
   },
-  // 8: {
-  //   id: 8,
-  //   name: "Memory Game",
-  //   component: <MemoryGame />,
-  //   helpContent: "",
-  // },
+  8: {
+    id: 8,
+    name: "Memory Game",
+    component: <MemoryGame />,
+    helpContent: "",
+  },
   9: {
     id: 9,
     name: "Hangman",
