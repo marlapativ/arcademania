@@ -1,7 +1,6 @@
 import { IUser, ISignInUser } from "../../types/models/user.types";
 import { User } from "../../models/index";
-import { authSecret } from "../../config/auth-config";
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { generateAccessToken, getUserFromJWT, generateRefreshAccessToken } from "../../middlewares/jwt";
 
 export const createUser = async (user: IUser) => {
   const newUser = new User(user);
@@ -13,7 +12,7 @@ export const updateUser = async (id:number, user: IUser) => {
 }
 
 export const getUser = async (token:string) => {
-  const user = jwt.verify(token, authSecret.secret);
+  const user = getUserFromJWT(token);
   return User.findById(JSON.parse(user.toString()).id);
 }
 
@@ -30,16 +29,12 @@ export const loginUser = async (signInUser: ISignInUser) => {
       throw new Error("Invalid Password");
     }
     else{
-    const aToken: string = jwt.sign({ id: user.id }, authSecret.secret, {
-      expiresIn: 86400,
-    });
+    const aToken: string =  generateAccessToken(user.id);
     user.accesstoken = aToken;
     user.token.push(aToken);
     user.save();
 
-    const refreshToken = jwt.sign({ type: 'refresh' }, authSecret.secret, {
-        expiresIn: '2h'
-      });
+    const refreshToken = generateRefreshAccessToken(user.id);
 
     const res = {
       id: user.id,
