@@ -17,11 +17,13 @@ export async function getStaticProps() {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <Box margin="0 auto" transition="0.5s ease-out">
+      <Show above="md">
+        <aside className="asideLeftPane">
+          <LeftPane />
+        </aside>
+      </Show>
       <Box>
         <Header />
-        <Show above="md">
-          <LeftPane />
-        </Show>
         <Box as="main">{children}</Box>
         <Footer />
       </Box>
