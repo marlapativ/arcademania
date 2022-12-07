@@ -1,12 +1,10 @@
 import { Strategy as GoogleStratergy } from "passport-google-oauth2";
 import { User } from "../models/user/user";
-import jwt from "jsonwebtoken";
-import logger from "../config/logger";
 import { PassportStatic } from "passport";
 import passportenv from "../config/env-config";
 import { generateAccessToken } from "./jwt";
 import { CallbackError } from "mongoose";
-import { IUser } from "../types/models/user.types";
+import { ISavedUser, IUser } from "../types/models/user.types";
 
 const applyGoogleStrategy = (passport: PassportStatic) => {
   passport.use(
@@ -17,15 +15,24 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
         clientSecret: passportenv.GoodleClientSecret,
         callbackURL: "http://localhost:8080/api/v1/auth/google/callback",
         scope: ["email", "profile"],
+        passReqToCallback: true,
       },
-      (accessToken, refreshToken, profile, done) => {
-        User.findOne({
+      (
+        req: any,
+        accessToken: any,
+        refreshToken: any,
+        profile: any,
+        done: any
+      ) => {
+        User.findOne(
+          {
             email: profile.email,
           },
-          (err: CallbackError, user: IUser) => {
+          (err: CallbackError, user: any) => {
             if (err) {
               return done(null, false);
             } else if (user) {
+              req.user = { userId: user._id };
               return done(null, user);
             } else {
               const newUser = new User({
@@ -38,6 +45,7 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
                 if (err) {
                   return done(null, false);
                 } else {
+                  req.user = { userId: user._id };
                   return done(null, savedUser);
                 }
               });
@@ -48,7 +56,6 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
     )
   );
 };
-
 /**
  * Adds all the custom strategies to the PassportJS instance.
  *
