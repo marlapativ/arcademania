@@ -12,6 +12,13 @@ export interface IUser {
 }
 
 /**
+ * Saved User Entity.
+ */
+ export interface ISavedUser extends IUser{
+   id: number
+}
+
+/**
  * SignIn User Entity.
  */
 export interface ISignInUser{
