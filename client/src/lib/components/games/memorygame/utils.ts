@@ -1,3 +1,4 @@
+//function to shuffle the array of images
 export const shuffleArray = (arr: any[]): any[] => {
   return arr
     .map(a => [Math.random(), a])
