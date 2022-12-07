@@ -1,4 +1,4 @@
-import cardBack from "../../../../../../public/img/card_back.jpg";
+imimport cardBack from "../../../../../../public/img/card_back.jpg";
 
 export type CardType = {
   id: string;
