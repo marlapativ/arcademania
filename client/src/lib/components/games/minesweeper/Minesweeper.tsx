@@ -15,13 +15,15 @@ import {
 } from "../../../services/leaderboard-service";
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
 import GameScore from "../gameScore/GameScore";
+import { getAuthState } from "lib/store/slices/authSlice";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
-import { useDispatch } from "lib/store/store";
+import { useDispatch, useSelector } from "lib/store/store";
 import type { Coordinate } from "lib/types/components/games/games.common";
 import type {
   MinesweeperGameProps,
   MinesweeperCellData,
 } from "lib/types/components/games/minesweeper.types";
+import { isAuthenticated } from "lib/utils/tokenUtils";
 
 import MinesweeperCell from "./minesweeperCell/MinesweeperCell";
 
@@ -131,17 +133,20 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     );
   };
 
+  const authState = useSelector(getAuthState);
   const saveGameScores = (gameScore: number) => {
-    saveScore(gameId, gameScore).then(() => {
-      getLeaderboard(gameId).then((leaderboard) =>
-        dispatch(
-          setGameLeaderboard({
-            gameId,
-            data: leaderboard,
-          })
-        )
-      );
-    });
+    if (isAuthenticated(authState)) {
+      saveScore(gameId, gameScore).then(() => {
+        getLeaderboard(gameId).then((leaderboard) =>
+          dispatch(
+            setGameLeaderboard({
+              gameId,
+              data: leaderboard,
+            })
+          )
+        );
+      });
+    }
   };
 
   const endGame = (didWin?: boolean) => {
