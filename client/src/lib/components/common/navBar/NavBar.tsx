@@ -17,7 +17,7 @@ import MenuItems from "./MenuItems";
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Box>
+    <Box pos="relative" zIndex={99}>
       <Flex
         boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)"
         bg={useColorModeValue("white", "gray.800")}
