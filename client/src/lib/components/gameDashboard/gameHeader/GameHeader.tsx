@@ -15,20 +15,28 @@ import type {
 } from "../../../types/components/common";
 import PopOver from "lib/components/common/popover/PopOver";
 import * as favouritesService from "lib/services/favourites-service";
+import { getAuthState } from "lib/store/slices/authSlice";
 import {
   setFavourite,
   resetFavourite,
   getFavourites,
 } from "lib/store/slices/favouritesSlice";
 import { useDispatch, useSelector } from "lib/store/store";
+import { raiseError } from "lib/utils/toastUtils";
+import { isAuthenticated } from "lib/utils/tokenUtils";
 
 const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
   const { favourites } = useSelector(getFavourites);
+  const authState = useSelector(getAuthState);
   const isFavourite = favourites.some((e) => e.gameId === gameInfo?.id);
 
   const dispatch = useDispatch();
   const addFavourite = (game: GameInfoComponent) => {
     if (!game) return;
+    if (!isAuthenticated(authState)) {
+      raiseError("Login to save your favourites");
+      return;
+    }
     favouritesService
       .updateFavourite(game.id, !isFavourite)
       .then((favourite) => {
