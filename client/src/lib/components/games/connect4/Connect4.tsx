@@ -50,6 +50,7 @@ const checkStraightLine = (gameBoard: Board, player: Player) => {
         return true;
       }
       if (
+        i < 3 &&
         gameBoard[i][j] === player &&
         gameBoard[i + 1][j] === player &&
         gameBoard[i + 2][j] === player &&
