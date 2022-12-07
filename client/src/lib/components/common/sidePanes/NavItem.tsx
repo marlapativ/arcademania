@@ -27,7 +27,7 @@ export const NavItemMenu: React.FC<NavItemProps> = ({
           borderRadius={8}
           _hover={{ textDecor: "none", background: "#AEC8CA" }}
         >
-          <Flex justifyContent="center">
+          <Flex justifyContent="center" alignItems="center">
             <Icon
               as={icon}
               fontSize="xl"
