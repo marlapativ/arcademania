@@ -45,3 +45,32 @@ export const loginUser = async (signInUser: ISignInUser) => {
     return res;
   }
 };
+
+export const loginWithGoogle = async(profile: { email: string; displayName: string; }) => {
+  try {
+    const obj = await User.findOne({ email: profile.email });
+    if (!obj) {
+      const newUser = new User({
+        email: profile.email,
+        name: profile.displayName,
+        username: profile.email,
+        password: 'password'
+      });
+      await newUser.save();
+      const token = generateAccessToken(newUser.id);
+      const refreshToken = generateRefreshAccessToken(newUser.id);
+      const res = {
+        id: newUser.id,
+        username: newUser.username,
+        email: newUser.email,
+        accessToken: token,
+        refreshToken
+      }
+      return res;
+    } else {
+      const token = generateAccessToken(obj.id);
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
+}
