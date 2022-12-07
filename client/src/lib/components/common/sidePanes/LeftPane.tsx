@@ -25,6 +25,12 @@ type GameNavbarProps = NavItemProps & {
   games: GameInfo[];
 };
 
+/**
+ * Nav Item that is rendered in the Left Side Menu.
+ *
+ * @param NavItemProps props
+ * @returns NavItem
+ */
 const NavItem: React.FC<NavItemProps> = ({
   navSize,
   active,
@@ -71,6 +77,12 @@ const NavItem: React.FC<NavItemProps> = ({
   );
 };
 
+/**
+ * Component to render favourite games in the side panel.
+ *
+ * @param GameNavbarProps props.
+ * @returns FavouriteGames Component.
+ */
 const FavouriteGames: React.FC<GameNavbarProps> = ({
   games,
   active,
@@ -125,6 +137,12 @@ const FavouriteGames: React.FC<GameNavbarProps> = ({
   );
 };
 
+/**
+ * Component to render Favourites Menu in the Side bar for closed menu usage
+ *
+ * @param GameInfo[] props
+ * @returns Favourites
+ */
 const Favourites: React.FC<{ games: GameInfo[] }> = ({ games }) => {
   const router = useRouter();
   const clickHandler = (gameId: number) => {
@@ -152,6 +170,11 @@ const Favourites: React.FC<{ games: GameInfo[] }> = ({ games }) => {
   );
 };
 
+/**
+ * Left SideBar.
+ *
+ * @returns LeftPane
+ */
 const LeftPane = () => {
   const router = useRouter();
   const [navSize, changeNavSize] = useState("small");

@@ -7,6 +7,12 @@ import GameBody from "./gameBody/GameBody";
 import GameHeader from "./gameHeader/GameHeader";
 import Leaderboard from "./leaderboard/Leaderboard";
 
+/**
+ * Game Dashboard.
+ *
+ * @param GameInfoProps props
+ * @returns GameDashboard
+ */
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
   if (!game) return <div />;

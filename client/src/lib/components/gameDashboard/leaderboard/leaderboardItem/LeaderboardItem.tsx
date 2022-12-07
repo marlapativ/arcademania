@@ -15,6 +15,12 @@ import type {
 } from "lib/types/components/leaderboard/leaderboard.types";
 import { numberWithCommas } from "lib/utils/numberUtils";
 
+/**
+ * Component to render each Leaderboard Item data.
+ *
+ * @param LeaderboardItemData Leaderboard Item.
+ * @returns LeaderboardItem
+ */
 const LeaderboardItem: React.FC<LeaderboardItemData> = ({
   userId,
   icon,
@@ -63,6 +69,12 @@ const LeaderboardItem: React.FC<LeaderboardItemData> = ({
   );
 };
 
+/**
+ * Container for all Leaderboard Items.
+ *
+ * @param LeaderboardItemContainerProps props
+ * @returns LeaderboardItemContainer
+ */
 const LeaderboardItemContainer: React.FC<LeaderboardItemContainerProps> = ({
   users,
 }) => {

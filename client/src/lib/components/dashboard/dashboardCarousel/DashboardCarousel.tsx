@@ -8,6 +8,10 @@ import games from "lib/components/games";
 
 import styles from "./styles/DashboardCarousel.module.scss";
 
+/**
+ * Dashboard Carousel displaying all the games in the application.
+ * @returns Dashboard Carousel.
+ */
 const DashboardCarousel: React.FC = () => {
   const bg = useToken("colors", useColorModeValue("white", "gray.800"));
   return (

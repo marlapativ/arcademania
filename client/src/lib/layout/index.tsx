@@ -27,7 +27,10 @@ export async function getStaticProps() {
  */
 const Layout = ({ children }: LayoutProps) => {
   const dispatch = useDispatch();
+  const authState = useSelector(getAuthState);
+
   useEffect(() => {
+    // Setup the application Access token
     const token = getSessionStorageToken();
     if (token && token !== "") {
       setAxiosAuthHeader(token);
@@ -35,8 +38,8 @@ const Layout = ({ children }: LayoutProps) => {
     }
   });
 
-  const authState = useSelector(getAuthState);
   useEffect(() => {
+    // Fetch the favourites on initial page load
     if (isAuthenticated(authState)) {
       fetchFavourites().then((fav) => dispatch(setFavourite(fav)));
     }

@@ -13,6 +13,12 @@ import { useRouter } from "next/router";
 
 import type { GameInfoComponentProps } from "lib/types/components/common";
 
+/**
+ * GameSlide Component to be utilized by swiper in Dashboard.
+ *
+ * @param GameInfoComponentProps props
+ * @returns GameSlide.
+ */
 const GameSlide: React.FC<GameInfoComponentProps> = ({ game }) => {
   const router = useRouter();
   return (

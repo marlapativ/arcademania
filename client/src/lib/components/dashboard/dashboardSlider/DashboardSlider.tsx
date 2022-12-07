@@ -22,6 +22,12 @@ import { useRouter } from "next/router";
 import type { SliderGameProps } from "../../../types/components/common";
 import games from "lib/components/games";
 
+/**
+ * Component to render each game to be rendered as featured games.
+ *
+ * @param SliderGameProps props
+ * @returns SliderGameComponent.
+ */
 const SliderGame: React.FC<SliderGameProps> = ({
   id,
   maxH,
@@ -69,6 +75,10 @@ const SliderGame: React.FC<SliderGameProps> = ({
   );
 };
 
+/**
+ * Dashboard component to render featured games.
+ * @returns DashboardSlider.
+ */
 const DashboardSlider: React.FC = () => {
   return (
     <Box>

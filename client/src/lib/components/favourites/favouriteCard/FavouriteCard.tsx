@@ -10,6 +10,12 @@ import { useRouter } from "next/router";
 
 import type { GameInfo } from "lib/types/components/common";
 
+/**
+ * Child component to render each Favourite game.
+ *
+ * @param GameInfo props
+ * @returns FavouriteCard
+ */
 const FavouriteCard: React.FC<{ game: GameInfo }> = ({ game }) => {
   let gameImage = game.image;
   if (game.image && !game.image.startsWith("/")) {

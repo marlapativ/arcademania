@@ -3,6 +3,12 @@ import type React from "react";
 
 import type { NavItemProps } from "../../../types/components/common";
 
+/**
+ * NavItemMenu Component to render container for NavItems
+ *
+ * @param NavItemProps props
+ * @returns NavItemMenu
+ */
 export const NavItemMenu: React.FC<NavItemProps> = ({
   navSize,
   title,

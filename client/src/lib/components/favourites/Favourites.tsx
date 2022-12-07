@@ -8,6 +8,10 @@ import { useSelector } from "lib/store/store";
 
 import FavouriteCard from "./favouriteCard/FavouriteCard";
 
+/**
+ * Favourites Page Component.
+ * @returns Favourites
+ */
 const Favourites: React.FC = () => {
   const router = useRouter();
   const { favourites } = useSelector(getFavourites);

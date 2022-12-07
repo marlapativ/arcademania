@@ -5,6 +5,11 @@ import DashboardCarousel from "./dashboardCarousel/DashboardCarousel";
 import DashboardList from "./dashboardList/DashboardList";
 import DashboardSlider from "./dashboardSlider/DashboardSlider";
 
+/**
+ * Container Component for entire Dashboard.
+ *
+ * @returns Dashboard
+ */
 const Dashboard: React.FC = () => {
   return (
     <Stack>

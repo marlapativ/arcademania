@@ -9,6 +9,11 @@ import {
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 
+/**
+ *  404 Error Page component rendered on invalid paths accessed in the application.
+ *
+ * @returns 404 Page component.
+ */
 const ErrorPage404 = () => {
   const { colorMode } = useColorMode();
 

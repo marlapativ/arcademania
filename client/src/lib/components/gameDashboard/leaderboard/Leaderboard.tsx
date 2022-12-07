@@ -21,6 +21,12 @@ import type { LeaderboardItemContainerProps } from "lib/types/components/leaderb
 
 import LeaderboardItemContainer from "./leaderboardItem/LeaderboardItem";
 
+/**
+ * Leaderboard Container.
+ *
+ * @param LeaderboardItemContainerProps
+ * @returns LeaderboardElement
+ */
 const LeaderboardElement: React.FC<LeaderboardItemContainerProps> = ({
   users,
 }) => {
@@ -63,6 +69,11 @@ const LeaderboardElement: React.FC<LeaderboardItemContainerProps> = ({
   );
 };
 
+/**
+ * Spinner to show loader.
+ *
+ * @returns Loader
+ */
 const Loader: React.FC = () => {
   return (
     <Center alignItems="center" my="20" py="20">
@@ -77,6 +88,12 @@ const Loader: React.FC = () => {
   );
 };
 
+/**
+ * Leaderboard entrupoint component.
+ *
+ * @param GameInfoProps props
+ * @returns Leaderboard
+ */
 const Leaderboard: React.FC<GameInfoProps> = ({ id }) => {
   const dispatch = useDispatch();
   const leaderboard = useSelector(getLeaderboard)[id];

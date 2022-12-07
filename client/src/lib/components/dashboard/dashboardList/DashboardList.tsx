@@ -16,6 +16,12 @@ import { useRouter } from "next/router";
 import games from "lib/components/games";
 import type { GameInfoComponentProps } from "lib/types/components/common";
 
+/**
+ * Game Component where the Title, description and image are rendered.
+ *
+ * @param GameInfoComponentProps props
+ * @returns Individual Game Component
+ */
 const Game: React.FC<GameInfoComponentProps> = ({ game }) => {
   const router = useRouter();
   return (
@@ -53,6 +59,10 @@ const Game: React.FC<GameInfoComponentProps> = ({ game }) => {
   );
 };
 
+/**
+ * Dashboard List Component to render games in a list fashion.
+ * @returns List of Games.
+ */
 const DashboardList: React.FC = () => {
   return (
     <Box mt={10}>
