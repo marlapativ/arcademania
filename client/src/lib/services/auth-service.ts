@@ -1,13 +1,13 @@
-// url of the backend server
-const url = "http://localhost:8081/api/v1";
+import { API_URL } from "lib/config/config";
+
 const defaultContentType = "application/json";
 
 /**
  * This function is used to signin the user
- * @returns array of todos
+ * @returns the response of the login api (user details with accesstoken)
  */
 export const signIn = async (data: JSON) => {
-  const newurl = `${url}/auth/signin`;
+  const newurl = `${API_URL}/auth/signin`;
 
   return fetch(newurl, {
     method: "POST",
@@ -19,8 +19,12 @@ export const signIn = async (data: JSON) => {
   });
 };
 
+/**
+ * This function is used to signup the user and save the user details to database
+ * @returns the response of the signup api (created user details)
+ */
 export const createUser = async (data: JSON) => {
-  const newurl = `${url}/auth/signup`;
+  const newurl = `${API_URL}/auth/signup`;
 
   return fetch(newurl, {
     method: "POST",
@@ -29,32 +33,5 @@ export const createUser = async (data: JSON) => {
       "content-type": defaultContentType,
     },
     body: JSON.stringify(data),
-  });
-};
-
-export const updateUser = async (token: string, data: JSON) => {
-  const newurl = `${url}/user/updateProfile`;
-
-  return fetch(newurl, {
-    method: "POST",
-    headers: {
-      "cache-control": "no-cache",
-      "content-type": defaultContentType,
-      authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  });
-};
-
-export const getUser = async (token: string) => {
-  const newurl = `${url}/user/getUser`;
-
-  return fetch(newurl, {
-    method: "GET",
-    headers: {
-      "cache-control": "no-cache",
-      "content-type": defaultContentType,
-      authorization: `Bearer ${token}`,
-    },
   });
 };

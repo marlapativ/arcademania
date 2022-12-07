@@ -20,7 +20,7 @@ import { FiChevronDown } from "react-icons/fi";
 
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
-import { getUser } from "lib/services/auth-service";
+import { getUser } from "lib/services/user-service";
 import { getAuthState, setAccessToken } from "lib/store/slices/authSlice";
 import { useDispatch, useSelector } from "lib/store/store";
 import type { AuthState } from "lib/types/components/auth.types";

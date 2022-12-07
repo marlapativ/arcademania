@@ -19,7 +19,7 @@ import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
-import { getUser, updateUser } from "lib/services/auth-service";
+import { getUser, updateUser } from "lib/services/user-service";
 import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
 export type FormValues = {

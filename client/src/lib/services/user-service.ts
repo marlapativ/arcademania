@@ -1,27 +1,37 @@
-import type { UserInfo } from "lib/types/components/common";
+import { API_URL } from "lib/config/config";
 
-const url = "http://localhost:8081/api/v1";
 const defaultContentType = "application/json";
 
-export const getUser = (): UserInfo => {
-  const newurl = `${url}/auth/getUser`;
-  const user = {
-    userId: "",
-    name: "",
-  };
-  fetch(newurl, {
+/**
+ * This function is update the user details to database
+ * @returns the response of the update user api (updated user details)
+ */
+export const updateUser = async (token: string, data: JSON) => {
+  const newurl = `${API_URL}/user/updateProfile`;
+  return fetch(newurl, {
+    method: "POST",
+    headers: {
+      "cache-control": "no-cache",
+      "content-type": defaultContentType,
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+};
+
+/**
+ * This function is used to get the user details
+ * @returns the response of the getuser api (user details)
+ */
+export const getUser = async (token: string) => {
+  const newurl = `${API_URL}/user/getUser`;
+
+  return fetch(newurl, {
     method: "GET",
     headers: {
       "cache-control": "no-cache",
       "content-type": defaultContentType,
-      authorization: "token",
+      authorization: `Bearer ${token}`,
     },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      user.userId = data.id;
-      user.name = data.name;
-    });
-
-  return user;
+  });
 };
