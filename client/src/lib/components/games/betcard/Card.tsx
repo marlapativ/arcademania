@@ -42,3 +42,4 @@ const Card: React.FC<CardProps> = ({ value, suit, hidden }) => {
   );
 }
 
+export default Card;
