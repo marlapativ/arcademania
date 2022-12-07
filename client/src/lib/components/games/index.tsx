@@ -85,10 +85,10 @@ const games: GameInfoCollection = {
     id: 6,
     name: "Tic Tac Toe",
     component: <TicTacToe />,
-    helpContent: "",
     description:
       "Two players take turns in drawing either an ` O' or an ` X' in one square of a grid consisting of nine squares.",
-    icon: GiTicTacToe,
+    helpContent: "Two players take turns in drawing either an ` O' or an ` X' in one square of a grid consisting of nine squares.",
+      icon: GiTicTacToe,
   },
   7: {
     id: 7,
