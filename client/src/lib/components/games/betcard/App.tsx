@@ -112,5 +112,11 @@ const App: React.FC = () => {
     });
   }
 
+  const placeBet = (amount: number) => {
+    setBet(amount);
+    setBalance(Math.round((balance - amount) * 100) / 100);
+    setGameState(GameState.init);
+  }
+  
 
 }
