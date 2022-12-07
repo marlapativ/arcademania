@@ -27,6 +27,8 @@ export type FormValues = {
   lastname: string;
   firstname: string;
   email: string;
+  password: string;
+  confirmpassword: string;
 };
 
 const Myprofile = () => {
@@ -48,9 +50,30 @@ const Myprofile = () => {
   const setPassword = (value: string) => {
     password = value;
   };
-  const updateProfile = (values: JSON) => {
+  const updateProfile = (values: FormValues) => {
     const token = getSessionStorageToken();
-    updateUser(token, values);
+    const fullname = `${values.firstname} ${values.lastname}`;
+    if (
+      values.password &&
+      values.password !== "" &&
+      values.confirmpassword &&
+      values.confirmpassword !== ""
+    ) {
+      const valuesJSON = {
+        name: fullname,
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
+      updateUser(token, JSON.parse(JSON.stringify(valuesJSON)));
+    } else {
+      const valueJSON = {
+        name: fullname,
+        username: values.username,
+        email: values.email,
+      };
+      updateUser(token, JSON.parse(JSON.stringify(valueJSON)));
+    }
   };
 
   const validateEmail = (value: string) => {

@@ -3,16 +3,17 @@ import { User } from "../models/user/user";
 import jwt from "jsonwebtoken";
 import logger from "../config/logger";
 import { PassportStatic } from "passport";
+import passportenv from '../config/env-config';
 
 const applyGoogleStrategy = (passport: PassportStatic) => {
   passport.use(
     "google",
     new GoogleStratergy(
       {
-        clientID:
-          "22014990618-hd5bkqr2r4mida0ou8s7ginjbtikjnok.apps.googleusercontent.com",
-        clientSecret: "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",
+        clientID: passportenv.GoogleClientId,
+        clientSecret: passportenv.GoodleClientSecret,
         callbackURL: "http://localhost:8080/auth/google/callback",
+        scope: ['email', 'profile']
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
@@ -21,6 +22,8 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
             const newUser = new User({
               email: profile.email,
               name: profile.displayName,
+              username: profile.email,
+              password: 'password'
             });
             await newUser.save();
             const token = await jwt.sign(

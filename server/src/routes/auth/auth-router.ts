@@ -3,6 +3,7 @@ import { authRoute } from '../../middlewares/authRoute';
 import * as authController from "../../controllers/auth-controller";
 
 import * as userController from "../../controllers/user-controller";
+import passport from 'passport';
 
 // Creating a new Router for Auth
 const router = express.Router();
@@ -23,7 +24,12 @@ router.get("/auth/logout", (req, res, next) => {
 })
 
 // Google Signin Route
-router.get('/auth/google', authController.loginUserWithGoogle);
+router. get('/auth/google', passport.authenticate('google', {scope:['email', 'profile']}));
+
+router.get('/auth/google/callback',
+  passport.authenticate('google', (err, profile, info) => {
+    console.log("PROFILE: ", profile);
+  }));
 
 // getUser Route
 router.route('/user/getUser').get(authRoute, userController.getUser);

@@ -8,8 +8,10 @@ import { IUser } from "../../types/models/user.types";
  * @param user - user object of type IUser with the details of users that needs to be updated
  */
 export const updateUser = async (id:mongoose.ObjectId, user: IUser) => {
-    const updatedUser =  await User.findByIdAndUpdate(id, user);
-    updatedUser.save();
+    const updatedUser =  await User.findOneAndUpdate({
+      username: user.username
+    }, user, {new: true});
+    await updatedUser.save();
     if (!updatedUser) {
       throw new Error("User Update failed ");
     }
