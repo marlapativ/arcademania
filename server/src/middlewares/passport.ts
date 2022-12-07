@@ -2,10 +2,12 @@ import { Strategy as GoogleStratergy } from "passport-google-oauth2";
 import { User } from "../models/user/user";
 import { PassportStatic } from "passport";
 import passportenv from "../config/env-config";
-import { generateAccessToken } from "./jwt";
 import { CallbackError } from "mongoose";
-import { ISavedUser, IUser } from "../types/models/user.types";
 
+/**
+ * This method is used to apply the google stratergy to the login flow
+ * @param passport PassportJS static instance.
+ */
 const applyGoogleStrategy = (passport: PassportStatic) => {
   passport.use(
     "google",
@@ -13,7 +15,7 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
       {
         clientID: passportenv.GoogleClientId,
         clientSecret: passportenv.GoodleClientSecret,
-        callbackURL: "http://localhost:8080/api/v1/auth/google/callback",
+        callbackURL: passportenv.GoogleCallBackURL,
         scope: ["email", "profile"],
         passReqToCallback: true,
       },

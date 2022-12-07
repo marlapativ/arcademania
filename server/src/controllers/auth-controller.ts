@@ -3,8 +3,8 @@ import { CustomResponse, CustomRequest } from "../types/config/express-types";
 import * as authService from "../services/auth/auth-service";
 import { ISignInUser, IUser } from "../types/models/user.types";
 import { setResponse, setError } from "../utils/http-utils";
-import logger from "../config/logger";
 import { generateAccessToken } from "../middlewares/jwt";
+import { clientURL } from "../config/auth-config";
 
 /**
  * It creates a user and returns the user object in the response
@@ -45,7 +45,7 @@ export const loginUser = async (
 };
 
 /**
- * It logsIn a user with google profile and returns the accesstoken in the response
+ * This is a callback function triggered on google authentication success
  */
 export const authWithGoogleRoute = passport.authenticate("google",{
     passReqToCallback: true,
@@ -53,6 +53,9 @@ export const authWithGoogleRoute = passport.authenticate("google",{
   }
 );
 
+/**
+ * This function is used to set the accesstoken and redirect back to client url
+ */
 export const triggerGoogleLoginResponse = async (
   req: CustomRequest<ISignInUser>,
   response: CustomResponse
@@ -60,8 +63,7 @@ export const triggerGoogleLoginResponse = async (
   try {
     const user = req.user as any;
     const token = generateAccessToken(user.id);
-    // setResponse(response, token);
-    response.redirect(`http://localhost:3000?token=${token}`);
+    response.redirect(`${clientURL}?token=${token}`);
   } catch (err) {
     setError(response, err, 500);
   }
