@@ -21,12 +21,17 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
+import router from "next/router";
 import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
+import { setAxiosAuthHeader } from "lib/config/axios.config";
 import { createUser } from "lib/services/auth-service";
+import { setAccessToken } from "lib/store/slices/authSlice";
 import type { SignUpUserType } from "lib/types/components/auth.types";
+import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
 const SignupDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,15 +40,29 @@ const SignupDrawer = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handlePassClick = () => setShowConfirmPassword(!showConfirmPassword);
   let password = "";
+  const dispatch = useDispatch();
 
-  const userSignUp = (values: SignUpUserType) => {
+  const userSignUp = async (values: SignUpUserType) => {
     const jsonValues = {
       name: `${values.firstName} ${values.lastName}`,
       email: values.email,
       username: values.username,
       password: values.password,
     };
-    createUser(JSON.parse(JSON.stringify(jsonValues)));
+    const accessTokenObj = await createUser(
+      JSON.parse(JSON.stringify(jsonValues))
+    );
+    if (accessTokenObj.status === 200) {
+      const body = await accessTokenObj.json();
+      if (body.accessToken !== null) {
+        setAxiosAuthHeader(body.accessToken);
+        setSessionStorageToken(body.accessToken);
+        dispatch(setAccessToken({ token: body.accessToken }));
+        router.push({
+          pathname: `/`,
+        });
+      }
+    }
     onClose();
   };
 

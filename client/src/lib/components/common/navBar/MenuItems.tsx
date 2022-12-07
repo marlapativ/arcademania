@@ -27,12 +27,15 @@ import type { AuthState } from "lib/types/components/auth.types";
 import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
 /**
- * This component creates and renders the authmodule or the user profile module with menu options
- * @returns MenuItems Component
+ * This component creates and renders the menu of loggedin user with myprofile, favourites and signout options
+ * @returns LoggedInMenu Component
  */
 const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
   const [username, setUserName] = useState("");
   const dispatch = useDispatch();
+  /**
+   * This method is used to remove the accesstoken from the local storage and navigates the user to dashboard page
+   */
   const signOut = () => {
     setSessionStorageToken("");
     dispatch(setAccessToken({ token: "" }));
@@ -40,11 +43,15 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
       pathname: `/`,
     });
   };
+  /**
+   * This method is used to get the user details from the jwt token and set the username
+   */
   getUser(token)
     .then((response) => response.json())
     .then((data) => {
       setUserName(data.name);
     });
+
   return (
     <Flex alignItems="center" zIndex={1001}>
       <Menu>
@@ -99,6 +106,10 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
   );
 };
 
+/**
+ * This component creates and renders the authmodule
+ * @returns AuthMenu Component with signin and signup buttons
+ */
 const SignInMenu = () => {
   return (
     <HStack
@@ -120,6 +131,10 @@ const SignInMenu = () => {
   );
 };
 
+/**
+ * This main component creates and renders either the authmodule or loggedIn module based on the accesstoken availability
+ * @returns menuItems
+ */
 const MenuItems = () => {
   const { token } = useSelector(getAuthState);
 
@@ -129,4 +144,5 @@ const MenuItems = () => {
   return <SignInMenu />;
 };
 
+// exporting the main component
 export default MenuItems;
