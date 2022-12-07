@@ -98,7 +98,7 @@ const games: GameInfoCollection = {
     component: <TypingSpeed />,
     description:
     "Requires the player to quickly and precisely type in the words from sentence given",
-    helpContent: "",
+    helpContent: "Requires the player to quickly and precisely type in the words from sentence given",
     icon: FaKeyboard,
   },
   8: {
