@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Status from './Status';
+import Controls from './Controls';
+import Hand from './Hand';
+import jsonData from './deck.json';
 
 const App: React.FC = () => {
   enum GameState {
@@ -255,6 +259,22 @@ const App: React.FC = () => {
     }
   }
 
-
-
+  return (
+    <>
+      <Status message={message} balance={balance} />
+      <Controls
+        balance={balance}
+        gameState={gameState}
+        buttonState={buttonState}
+        betEvent={placeBet}
+        hitEvent={hit}
+        standEvent={stand}
+        resetEvent={resetGame}
+      />
+      <Hand title={`Dealer's Hand (${dealerScore})`} cards={dealerCards} />
+      <Hand title={`Your Hand (${userScore})`} cards={userCards} />
+    </>
+  );
 }
+
+export default App;
