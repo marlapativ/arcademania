@@ -29,3 +29,4 @@ const Hand: React.FC<HandProps> = ({ title, cards }) => {
   );
 }
 
+export default Hand;
