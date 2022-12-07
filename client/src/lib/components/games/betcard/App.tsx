@@ -147,6 +147,25 @@ const App: React.FC = () => {
     }
   }
 
+  const dealCard = (dealType: Deal, value: string, suit: string) => {
+    switch (dealType) {
+      case Deal.user:
+        userCards.push({ 'value': value, 'suit': suit, 'hidden': false });
+        setUserCards([...userCards]);
+        break;
+      case Deal.dealer:
+        dealerCards.push({ 'value': value, 'suit': suit, 'hidden': false });
+        setDealerCards([...dealerCards]);
+        break;
+      case Deal.hidden:
+        dealerCards.push({ 'value': value, 'suit': suit, 'hidden': true });
+        setDealerCards([...dealerCards]);
+        break;
+      default:
+        break;
+    }
+  }
+
 
 
 }
