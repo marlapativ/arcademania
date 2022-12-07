@@ -4,13 +4,12 @@ import React from "react";
 import Card from "./Card/Card";
 import memoryStyles from "./memorygame.module.scss";
 
-// Setup
+// Importing functions from setup and utils 
 import { createBoard } from "./setup";
 import type { CardType } from "./setup";
 import { shuffleArray } from "./utils";
-// Types
-// Styles
 
+//Fucntions to shuffle the card array
 const MemoryGame = () => {
   const [cards, setCards] = React.useState<CardType[]>(
     shuffleArray(createBoard())
