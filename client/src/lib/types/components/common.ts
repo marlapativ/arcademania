@@ -19,6 +19,9 @@ export type GameInfoComponentProps = ReactChildrenProps & {
   game: GameInfoComponent;
 };
 
+/**
+ * Props for navigation bar items in side pane
+ */
 export interface NavItemProps extends ReactChildrenProps {
   navSize: string;
   title: string;
@@ -27,6 +30,9 @@ export interface NavItemProps extends ReactChildrenProps {
   onClick?: () => void;
 }
 
+/**
+ * type for header in game dashboard
+ */
 export type GameHeaderProps = {
   gameInfo: GameInfoComponent;
   helpContent: string;
@@ -54,6 +60,9 @@ export type FavouritesState = {
   favourites: GameFavourites[];
 };
 
+/**
+ * type for help popover in game header
+ */
 export type GameHelp = {
   helpContent: string;
 };
@@ -63,14 +72,23 @@ export type GameInfoComponent = GameInfo &
     component: React.ReactNode;
   };
 
+/**
+ * type for help userId
+ */
 export type UserId = {
   userId: string;
 };
 
+/**
+ * type for help username
+ */
 export type UserName = {
   UserName: string;
 };
 
+/**
+ * type for userinfo along with userId
+ */
 export type UserInfo = UserId & {
   name: string;
   icon?: string;
@@ -85,10 +103,16 @@ export type UseCallbackFunc<T> = {
   data: T;
 };
 
+/**
+ * token type as part of Auth info
+ */
 export type AuthInfo = {
   token: string;
 };
 
+/**
+ * props specific to Modal
+ */
 export type ModalDataProps = {
   modalHeader: string;
   modalCotent: string;
@@ -96,12 +120,18 @@ export type ModalDataProps = {
   buttonAction: AnyFunction;
 };
 
+/**
+ * props popover component
+ */
 export type PopOverProps = {
   popOverHeader: string;
   popOverCotent: string;
   triggerButtonText: string;
 };
 
+/**
+ * props for Toastmessage component
+ */
 export type ToastMessageProps = {
   messageTitle: string;
   messageDesc: string;
