@@ -3,6 +3,12 @@ import { Heading, Stack, VStack, useColorModeValue } from "@chakra-ui/react";
 
 import type { Score } from "lib/types/components/games/games.common";
 
+/**
+ * Game Score Component that can be reused across the games.
+ *
+ * @param Score props
+ * @returns GameScore
+ */
 const GameScore: React.FC<Score> = ({ score }) => {
   return (
     <Stack

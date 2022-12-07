@@ -2,6 +2,13 @@ import { Stack, VStack, Heading, Button } from "@chakra-ui/react";
 
 import type { GameStatusMessageProps } from "lib/types/components/games/gamestatusmessage.types";
 
+/**
+ * Game Status Message Component.
+ * Reusable component to be used accross games.
+ *
+ * @param GameStatusMessageProps props
+ * @returns GameStatusMessage
+ */
 const GameStatusMessage: React.FC<GameStatusMessageProps> = ({
   show,
   win,

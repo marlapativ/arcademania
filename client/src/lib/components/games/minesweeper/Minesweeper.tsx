@@ -27,6 +27,9 @@ import { isAuthenticated } from "lib/utils/tokenUtils";
 
 import MinesweeperCell from "./minesweeperCell/MinesweeperCell";
 
+/**
+ * Neighbours to the current cell.
+ */
 const neighbours: Coordinate[] = [
   { x: 1, y: -1 },
   { x: 1, y: 0 },
@@ -38,6 +41,12 @@ const neighbours: Coordinate[] = [
   { x: 0, y: -1 },
 ];
 
+/**
+ * Set bombs in cells randomly for the given game matrix.
+ *
+ * @param game game matrix
+ * @param bombs number of bombs
+ */
 const setBombsRandomly = (
   game: MinesweeperCellData[][],
   bombs: number
@@ -61,6 +70,14 @@ const setBombsRandomly = (
   }
 };
 
+/**
+ * Create the game board with given parameters
+ *
+ * @param rows number of rows in board.
+ * @param columns number of columns in board.
+ * @param bombs number of bombs to set.
+ * @returns
+ */
 const createGame = (
   rows: number,
   columns: number,
@@ -99,6 +116,12 @@ const createGame = (
   return game;
 };
 
+/**
+ * Minesweeper Game Board Component
+ *
+ * @param MinesweeperGameProps props
+ * @returns Minesweeper
+ */
 const Minesweeper: React.FC<MinesweeperGameProps> = ({
   gameId,
   rows,
@@ -110,11 +133,18 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
   const [score, setScore] = useState(0);
   const [showGameMessage, setShowGameMessage] = useState(false);
   const [win, setWin] = useState(false);
+  const authState = useSelector(getAuthState);
 
+  /**
+   * Update the game state
+   */
   const updateGame = () => {
     setGame(_.cloneDeep(game));
   };
 
+  /**
+   * Show all the cells.
+   */
   const showAll = () => {
     game.forEach((row) =>
       row.forEach((column) => {
@@ -124,6 +154,11 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     updateGame();
   };
 
+  /**
+   * Counts the number of visible cells.
+   *
+   * @returns score
+   */
   const countVisible = () => {
     return game.reduce(
       (prev, row) =>
@@ -133,7 +168,11 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     );
   };
 
-  const authState = useSelector(getAuthState);
+  /**
+   * Save score on the backend via API
+   *
+   * @param gameScore score to save
+   */
   const saveGameScores = (gameScore: number) => {
     if (isAuthenticated(authState)) {
       saveScore(gameId, gameScore).then(() => {
@@ -149,6 +188,11 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     }
   };
 
+  /**
+   * Ends the game.
+   *
+   * @param didWin if the user won
+   */
   const endGame = (didWin?: boolean) => {
     const gameScore = countVisible() + (didWin ? bombs : 0);
     setScore(gameScore);
@@ -158,6 +202,9 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     saveGameScores(gameScore);
   };
 
+  /**
+   * Check if the user has won.
+   */
   const checkIfWon = () => {
     const maxVisibleCells = rows * columns - bombs;
     const visibleCells = countVisible();
@@ -167,6 +214,9 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     }
   };
 
+  /**
+   * Play the game again.
+   */
   const playAgain = () => {
     setGame(createGame(rows, columns, bombs));
     setScore(0);
@@ -174,6 +224,12 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     setWin(false);
   };
 
+  /**
+   * Unhides all the valid neighbour cells.
+   *
+   * @param coordinate Coordinate to trigger unhide at.
+   * @param showNeighbours shows all the neighbours.
+   */
   const unhideCellAndNeighbours = (
     coordinate: Coordinate,
     showNeighbours: boolean
@@ -202,6 +258,12 @@ const Minesweeper: React.FC<MinesweeperGameProps> = ({
     updateGame();
   };
 
+  /**
+   * Unhides the coordinate and neighbour cells.
+   *
+   * @param coordinate coordinate clicked
+   * @param value value at the current cell
+   */
   const unhideCell = (coordinate: Coordinate, value: number) => {
     unhideCellAndNeighbours(coordinate, value === 0);
     setScore(countVisible());

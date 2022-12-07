@@ -20,6 +20,9 @@ import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/TicTacToe";
 import TypingSpeed from "./typingspeed/typingspeed";
 
+/**
+ * Collection of all the games present in the application.
+ */
 const games: GameInfoCollection = {
   1: {
     id: 1,
@@ -112,8 +115,9 @@ const games: GameInfoCollection = {
     image: "images/memory.png",
     altImage: "images/memory.png",
     description:
-    "Flip cards and match the correct images to check how fast the memory can process",
-    helpContent: "This game will check the ability to remember images by flipping cards",
+      "Flip cards and match the correct images to check how fast the memory can process",
+    helpContent:
+      "This game will check the ability to remember images by flipping cards",
     icon: GiCard6Spades,
   },
   9: {
@@ -130,6 +134,12 @@ const games: GameInfoCollection = {
   },
 };
 
+/**
+ * Get all the games and their info
+ *
+ * @param gameIds gameids to filter
+ * @returns List of Games and their info
+ */
 export const getGameInfo = (gameIds: number[] | null = null): GameInfo[] => {
   if (gameIds === null) return Object.values(games);
   return Object.values(games).filter((game) => gameIds.includes(game.id));

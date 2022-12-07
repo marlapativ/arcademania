@@ -36,10 +36,21 @@ import {
   swipeUp,
 } from "./utils/swipeUtils";
 
+/**
+ * Generate a random value among numbers [2, 4].
+ * @returns 2 or 4.
+ */
 const getRandomValue = (): number => {
   return Math.random() > 0.2 ? 2 : 4;
 };
 
+/**
+ * Sets a random element for the given matrix.
+ *
+ * @param game matrix
+ * @param rows number of rows
+ * @param columns number of columns
+ */
 const setRandomElement = (
   game: number[][],
   rows: number,
@@ -61,6 +72,13 @@ const setRandomElement = (
   game[x][y] = getRandomValue();
 };
 
+/**
+ * Creates a game board to play 2048.
+ *
+ * @param rows number of rows
+ * @param columns number of columns
+ * @returns matrix
+ */
 const createGame = (rows: number, columns: number): number[][] => {
   const game: number[][] = new Array(rows);
   for (let i = 0; i < rows; i += 1) {
@@ -74,12 +92,19 @@ const createGame = (rows: number, columns: number): number[][] => {
   return game;
 };
 
+/**
+ * Game2048 Board Component.
+ *
+ * @param Game2048Props props
+ * @returns Game2048 Board.
+ */
 const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
   const dispatch = useDispatch();
   const [game, setGame] = useState(createGame(rows, columns));
   const [score, setScore] = useState(0);
   const [showGameMessage, setShowGameMessage] = useState(false);
   const [win, setWin] = useState(false);
+  const authState = useSelector(getAuthState);
 
   const KEY_DIRECTION_MAP = new Map([
     ["ArrowLeft", swipeLeft],
@@ -88,6 +113,9 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
     ["ArrowDown", swipeDown],
   ]);
 
+  /**
+   * Play Again.
+   */
   const playAgain = () => {
     setScore(0);
     setShowGameMessage(false);
@@ -95,7 +123,10 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
     setGame(createGame(rows, columns));
   };
 
-  const authState = useSelector(getAuthState);
+  /**
+   * Save the score via API.
+   * @param gameScore score to save
+   */
   const saveGameScores = (gameScore: number) => {
     if (isAuthenticated(authState)) {
       saveScore(gameId, gameScore).then(() => {
@@ -111,20 +142,38 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
     }
   };
 
+  /**
+   * End the game.
+   */
   const endGame = (didWin?: boolean) => {
     setWin(didWin ?? false);
     setShowGameMessage(true);
     saveGameScores(score);
   };
 
+  /**
+   * Update the score in the state.
+   * @param newScore score to update.
+   */
   const addScore = (newScore: number) => {
     setScore(score + newScore);
   };
 
+  /**
+   * Clone the current game.
+   *
+   * @returns matrix
+   */
   const cloneGame = () => {
     return structuredClone(game);
   };
 
+  /**
+   * Check if the game is over.
+   *
+   * @param swipedGrid matrix to validate against.
+   * @returns true, if the game ends.
+   */
   const checkGameOver = (swipedGrid: number[][]) => {
     const currentData = JSON.stringify(structuredClone(swipedGrid));
 
@@ -144,6 +193,11 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
     return true;
   };
 
+  /**
+   * Apply the operation on game based on the keyboard action performed.
+   *
+   * @param swipeFunc Function to apply based on keyboard input
+   */
   const swipe = (
     swipeFunc: UnaryFunction<number[][], SwipedGridData> | undefined
   ) => {
@@ -167,6 +221,11 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
     setGame(swipedGrid);
   };
 
+  /**
+   * Invoked relavent Swiper Function based on keyboard event.
+   *
+   * @param key KeyboardEvent key.
+   */
   const handleKeyPress = ({ key }: KeyboardEvent) => {
     if (!KEY_DIRECTION_MAP.has(key)) {
       return;
@@ -176,9 +235,11 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
   };
 
   useEffect(() => {
+    // Add event listener
     window.addEventListener("keydown", handleKeyPress);
 
     return () => {
+      // Cleanup event listener
       window.removeEventListener("keydown", handleKeyPress);
     };
   });

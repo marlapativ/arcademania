@@ -3,6 +3,13 @@
 import type { SwipedGridData } from "lib/types/components/games/2048.types";
 import type { UnaryFunction } from "lib/types/components/games/games.common";
 
+/**
+ * Utility to check if the element exists in the matrix.
+ *
+ * @param game matrix
+ * @param element element to check
+ * @returns true, if the element exists
+ */
 export const isExist = (game: number[][], element: number): boolean => {
   for (let r = 0; r < game.length; r += 1) {
     for (let c = 0; c < game[r].length; c += 1) {
@@ -12,6 +19,12 @@ export const isExist = (game: number[][], element: number): boolean => {
   return false;
 };
 
+/**
+ * Perform Swipe left operation on the matrix.
+ *
+ * @param data matrix
+ * @returns Score & updated matrix.
+ */
 export const swipeLeft: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
@@ -58,6 +71,12 @@ export const swipeLeft: UnaryFunction<number[][], SwipedGridData> = (
   };
 };
 
+/**
+ * Perform Swipe right operation on the matrix.
+ *
+ * @param data matrix
+ * @returns Score & updated matrix.
+ */
 export const swipeRight: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
@@ -103,6 +122,13 @@ export const swipeRight: UnaryFunction<number[][], SwipedGridData> = (
     swipedGrid: clonedData,
   };
 };
+
+/**
+ * Perform Swipe up operation on the matrix.
+ *
+ * @param data matrix
+ * @returns Score & updated matrix.
+ */
 export const swipeUp: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
@@ -145,6 +171,13 @@ export const swipeUp: UnaryFunction<number[][], SwipedGridData> = (
     swipedGrid: clonedData,
   };
 };
+
+/**
+ * Perform Swipe down operation on the matrix.
+ *
+ * @param data matrix
+ * @returns Score & updated matrix.
+ */
 export const swipeDown: UnaryFunction<number[][], SwipedGridData> = (
   data: number[][]
 ) => {
