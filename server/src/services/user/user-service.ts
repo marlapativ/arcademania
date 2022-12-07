@@ -9,7 +9,7 @@ export const updateUser = async (id:number, user: IUser) => {
     }
     return updatedUser;
   }
-  
+
   export const getUser = async (userId:mongoose.ObjectId) => {
     const user =  await User.findById(userId);
     if (!user) {
