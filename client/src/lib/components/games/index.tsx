@@ -14,7 +14,7 @@ import Game2048 from "./2048/Game2048";
 import CarGame from "./carcrash/CarGame";
 import Connect4 from "./connect4/Connect4";
 import Hangman from "./hangman/Hangman";
-import MemoryGame from "./memorygame/src/MemoryGame";
+import MemoryGame from "./memorygame/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/TicTacToe";
@@ -100,15 +100,20 @@ const games: GameInfoCollection = {
     image: "images/TypingSpeed.png",
     altImage: "images/TypingSpeed.png",
     description:
-    "Requires the player to quickly and precisely type in the words from sentence given",
-    helpContent: "Requires the player to quickly and precisely type in the words from sentence given",
+      "Requires the player to quickly and precisely type in the words from sentence given",
+    helpContent:
+      "Requires the player to quickly and precisely type in the words from sentence given",
     icon: FaKeyboard,
   },
   8: {
     id: 8,
     name: "Memory Game",
     component: <MemoryGame />,
-    helpContent: "",
+    image: "images/memory.png",
+    altImage: "images/memory.png",
+    description:
+    "Flip cards and match the correct images to check how fast the memory can process",
+    helpContent: "This game will check the ability to remember images by flipping cards",
     icon: GiCard6Spades,
   },
   9: {
@@ -118,8 +123,9 @@ const games: GameInfoCollection = {
     image: "images/Hangman.png",
     altImage: "images/Hangman.png",
     description:
-    "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
-    helpContent: "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
+      "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
+    helpContent:
+      "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
     icon: GiSuicide,
   },
 };

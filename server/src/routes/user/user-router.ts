@@ -6,10 +6,10 @@ import * as userController from "../../controllers/user-controller";
 const router = express.Router();
 
 // getUser Route
-router.route('/auth/getUser').get(authRoute, userController.getUser);
+router.route('/user/getUser').get(authRoute, userController.getUser);
 
 
 // UpdateProfile Route
-router.route('/auth/updateProfile').post(userController.updateProfile);
+router.route('/user/updateProfile').post(authRoute, userController.updateProfile);
 
 export default router;

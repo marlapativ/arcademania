@@ -11,12 +11,13 @@ const routes = (app: Express) => {
     // Signup Routes
     app.use('/api/v1', authRouter);
 
+    // User Routes
     app.use('api/v1', userRouter);
 
     // Leaderboard Routes
     app.use('/api/v1', leaderboardRouter);
 
-    // Leaderboard Routes
+    // Favourites Routes
     app.use('/api/v1', favouritesRouter);
 
     // Setting up swagger

@@ -1,6 +1,8 @@
 .App {
     text-align: center;
     padding: 20px;
+    position: relative;
+    width: 100%;
     .Turn {
         border-radius: 20px;
         display: inline-flex;
@@ -54,7 +56,7 @@
   }
   
   .Overlay {
-    position: fixed;
+    position: absolute;
     display: flex;
     align-items: flex-start;
     justify-content: center;

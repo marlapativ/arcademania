@@ -5,6 +5,12 @@ import {
 import { Leaderboard } from "../../models/leaderboard/leaderboard";
 import mongoose from "mongoose";
 
+/**
+ * Get the leaderboard for the give game
+ *
+ * @param gameId Game Id.
+ * @returns List of LeaderboardGameData.
+ */
 export const getLeaderboard = (
   gameId: number
 ): Promise<ILeaderboardGameData[]> => {
@@ -58,6 +64,14 @@ export const getLeaderboard = (
   return data;
 };
 
+/**
+ * Saves the score for the given game and user.
+ *
+ * @param gameId Game Id.
+ * @param userId User Id.
+ * @param score Score.
+ * @returns Leaderboard.
+ */
 export const saveScore = (
   gameId: number,
   userId: mongoose.ObjectId,

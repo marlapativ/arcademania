@@ -6,7 +6,8 @@ import { ILeaderboard } from '../types/models/leaderboard.types';
 import logger from '../config/logger';
 
 /**
- * It creates a user and returns the user object in the response
+ * Get the leaderboard for the given game.
+ *
  * @param req - Http Request with any as body
  * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
  * back to the client.
@@ -25,7 +26,8 @@ import logger from '../config/logger';
 
 /**
  * Saves the score for the given game for the current user.
- * @param req - Http Request with any as body
+ *
+ * @param req - Http Request with ILeaderboard as body
  * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
  * back to the client.
  */

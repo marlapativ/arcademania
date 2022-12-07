@@ -38,7 +38,6 @@ const Myprofile = () => {
   const [username, setUserName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState(0);
   const user = {
     username,
     lastname,
@@ -50,7 +49,8 @@ const Myprofile = () => {
     password = value;
   };
   const updateProfile = (values: JSON) => {
-    updateUser(userId, values);
+    const token = getSessionStorageToken();
+    updateUser(token, values);
   };
 
   const validateEmail = (value: string) => {
@@ -67,8 +67,6 @@ const Myprofile = () => {
       .then((response) => response.json())
       .then((data) => {
         if (username === "") {
-          // eslint-disable-next-line no-underscore-dangle
-          setUserId(data._id);
           setFirstName(data.name.split(" ")[0]);
           setLastName(data.name.split(" ")[1]);
           setUserName(data.username);

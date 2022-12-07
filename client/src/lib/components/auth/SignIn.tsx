@@ -20,6 +20,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
@@ -34,11 +35,12 @@ import { setSessionStorageToken } from "lib/utils/tokenUtils";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
 
 const SignInDrawer = () => {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
-  const gooogleLoginURL = `${{ API_URL }}/auth/google`;
+  const gooogleLoginURL = `${API_URL}auth/google`;
   const login = async (values: JSON) => {
     const accessTokenObj = await signIn(values);
     if (accessTokenObj.status === 200) {
@@ -47,6 +49,9 @@ const SignInDrawer = () => {
         setAxiosAuthHeader(body.accessToken);
         setSessionStorageToken(body.accessToken);
         dispatch(setAccessToken({ token: body.accessToken }));
+        router.push({
+          pathname: `/profile/favourites`,
+        });
       }
       // <ToastMessage
       //   messageTitle={messages.signinSuccessTitle}
@@ -104,13 +109,6 @@ const SignInDrawer = () => {
                           if (!value) {
                             error = "username is required";
                           }
-                          // else if (
-                          //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                          //     value
-                          //   )
-                          // ) {
-                          //   error = "Invalid username address";
-                          // }
                           return error;
                         }}
                       />

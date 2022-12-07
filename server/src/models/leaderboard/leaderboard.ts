@@ -15,7 +15,7 @@ const schemaOptions = {
     }
 };
 
-// User Schema
+// Leaderboard Schema
 const schema = new mongoose.Schema<ILeaderboard>({
     gameId: {
         type: Number,

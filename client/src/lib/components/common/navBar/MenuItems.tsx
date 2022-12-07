@@ -26,6 +26,10 @@ import { useDispatch, useSelector } from "lib/store/store";
 import type { AuthState } from "lib/types/components/auth.types";
 import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
+/**
+ * This component creates and renders the authmodule or the user profile module with menu options
+ * @returns MenuItems Component
+ */
 const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
   const [username, setUserName] = useState("");
   const dispatch = useDispatch();
@@ -77,6 +81,15 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
             }
           >
             Profile
+          </MenuItem>
+          <MenuItem
+            onClick={() =>
+              router.push({
+                pathname: `/profile/favourites`,
+              })
+            }
+          >
+            Favourites
           </MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut()}>Sign out</MenuItem>

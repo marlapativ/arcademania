@@ -14,6 +14,11 @@ import Link from "next/link";
 
 import MenuItems from "./MenuItems";
 
+/**
+ * This component creates a common navbar with logo on the top left corner
+ * and authmodule or user profile on the top right corner
+ * @returns NavBar Component
+ */
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
