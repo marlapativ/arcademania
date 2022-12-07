@@ -24,38 +24,24 @@ const ThemeToggle = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (
-      userPreferenceState?.theme != null &&
-      userPreferenceState.theme !== colorMode
-    )
-      toggleColorMode();
-  }, [colorMode, toggleColorMode, userPreferenceState]);
-
-  const updateUserPreference = () => {
-    // If User is not authenticated ignore.
-    if (!isAuthenticated(authState)) {
-      return;
+    if (isAuthenticated(authState)) {
+      userPreferencesService
+        .saveUserPreferences(colorMode, userPreferenceState.recentlyPlayed)
+        .then(() => {
+          dispatch(
+            setUserPreferenceTheme({
+              theme: colorMode,
+            })
+          );
+        });
     }
-    const color = userPreferenceState.theme === "light" ? "dark" : "light";
-
-    userPreferencesService
-      .saveUserPreferences(color, userPreferenceState.recentlyPlayed)
-      .then(() => {
-        dispatch(
-          setUserPreferenceTheme({
-            theme: color,
-          })
-        );
-      });
-  };
+  }, [authState, colorMode, dispatch, userPreferenceState.recentlyPlayed]);
 
   return (
     <IconButton
       aria-label="theme toggle"
       icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-      onClick={() => {
-        updateUserPreference();
-      }}
+      onClick={toggleColorMode}
     />
   );
 };
