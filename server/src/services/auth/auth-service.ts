@@ -5,7 +5,7 @@ import passport from "passport";
 
 /**
  * This method used to create a new user
- * @param user - user object of type IUser with the details of user 
+ * @param user - user object of type IUser with the details of user
  */
 export const createUser = async (user: IUser) => {
   const newUser = new User(user);

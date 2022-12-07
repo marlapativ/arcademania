@@ -12,6 +12,10 @@ import {
 
 import type { PopOverProps } from "lib/types/components/common";
 
+/**
+ * This component creates and renders the popover modal along with it's trigger button
+ * @returns Popover Component
+ */
 const PopOver: React.FC<PopOverProps> = ({
   popOverHeader,
   popOverCotent,
@@ -38,4 +42,5 @@ const PopOver: React.FC<PopOverProps> = ({
   );
 };
 
+// exporting popover component
 export default PopOver;

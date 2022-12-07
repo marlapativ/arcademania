@@ -5,7 +5,7 @@ import { IUser } from "../../types/models/user.types";
 /**
  * This method finds the user with the help of id and updates it with the given details
  * @param id - id value of type mongoose.ObjectId
- * @param user - user object of type IUser with the details of users that needs to be updated 
+ * @param user - user object of type IUser with the details of users that needs to be updated
  */
 export const updateUser = async (id:mongoose.ObjectId, user: IUser) => {
     const updatedUser =  await User.findByIdAndUpdate(id, user);
