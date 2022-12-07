@@ -9,7 +9,7 @@ const TicTacToeBoard: React.FC<BoardProps> = ({ squares, onClick }) => {
   const renderSquare = (i: number): ReactNode => {
     return <Square value={squares[i]} onClick={() => onClick(i)} />;
   };
-
+//Render the square boxes
   return (
     <div className={styles.container}>
       <div className={styles["board-row"]}>

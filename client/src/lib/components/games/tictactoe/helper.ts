@@ -1,5 +1,5 @@
 import type { SquareType } from "lib/types/components/games/tictactoe.types";
-
+//Logic to decide the winner
 export const calculateWinner = (squares: SquareType[]): SquareType => {
   const lines = [
     [0, 1, 2],
