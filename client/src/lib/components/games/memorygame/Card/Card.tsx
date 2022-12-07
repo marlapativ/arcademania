@@ -1,6 +1,6 @@
 import React from 'react';
 // Types
-import { CardType } from '../../setup';
+import { CardType } from '../setup';
 // Styles
 import { Wrapper, FrontImg, BackImg } from './Card.styles';
 
