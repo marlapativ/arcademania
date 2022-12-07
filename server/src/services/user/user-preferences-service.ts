@@ -16,6 +16,7 @@ const getOrCreateUserPreference = async (userId: mongoose.ObjectId) => {
     userPreference = new UserPreference({
       userId,
       recentlyPlayed: [],
+      theme: "dark"
     });
     await userPreference.save();
   }
@@ -42,6 +43,17 @@ export const updateUserPreferences = async (
  *
  * @param userId userId
  */
-export const getUserPreferences = (userId: mongoose.ObjectId) => {
-  return getOrCreateUserPreference(userId);
+export const getUserPreferences = async (userId: mongoose.ObjectId) => {
+  const userPreference = await UserPreference.findOne({
+    userId,
+  });
+  if (!userPreference) {
+    const defaultPreferences: IUserPreference = {
+      userId,
+      recentlyPlayed: [],
+      theme: "dark"
+    }
+    return defaultPreferences;
+  }
+  return userPreference;
 };

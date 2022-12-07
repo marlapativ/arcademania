@@ -24,13 +24,12 @@ const ThemeToggle = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userPreferenceState.theme !== colorMode) toggleColorMode();
-  }, [
-    colorMode,
-    toggleColorMode,
-    userPreferenceState,
-    userPreferenceState.theme,
-  ]);
+    if (
+      userPreferenceState?.theme != null &&
+      userPreferenceState.theme !== colorMode
+    )
+      toggleColorMode();
+  }, [colorMode, toggleColorMode, userPreferenceState]);
 
   const updateUserPreference = () => {
     // If User is not authenticated ignore.

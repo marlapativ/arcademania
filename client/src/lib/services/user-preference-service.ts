@@ -3,7 +3,7 @@ import axios from "lib/config/axios.config";
 import { API_URL } from "lib/config/config";
 import type { UserPreference } from "lib/types/components/common";
 
-const defaultPrefences: UserPreference = {
+const defaultPreferences: UserPreference = {
   theme: "dark",
   recentlyPlayed: [],
 };
@@ -17,10 +17,10 @@ export const getUserPreferences = () => {
   const url = `${API_URL}userpreferences`;
   return axios
     .get<UserPreference>(url)
-    .then((response) => response.data)
+    .then((response) => response.data || defaultPreferences)
     .catch((error) => {
       raiseError(error);
-      return defaultPrefences;
+      return defaultPreferences;
     });
 };
 
@@ -38,9 +38,9 @@ export const saveUserPreferences = (
       theme,
       recentlyPlayed,
     })
-    .then((response) => response.data)
+    .then((response) => response.data || defaultPreferences)
     .catch((error) => {
       raiseError(error);
-      return defaultPrefences;
+      return defaultPreferences;
     });
 };
