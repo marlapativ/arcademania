@@ -42,12 +42,7 @@ export const loginUser = async (req: CustomRequest<ISignInUser>, response: Custo
 
 /**
  * It logsIn a user with google profile and returns the accesstoken in the response
- * @param req - Http Request with <ISignINUser> as body
- * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
- * back to the client.
  */
  export const loginUserWithGoogle = async () => {
-   const user = passport.authenticate('google', {scope:['email', 'profile']});
-   logger.log(user);
-
+   passport.authenticate('google', {scope:['email', 'profile']});
 }
