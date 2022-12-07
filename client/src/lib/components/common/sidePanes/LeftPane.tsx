@@ -186,7 +186,6 @@ const LeftPane = () => {
     <Flex
       pos="sticky"
       margin-top="2.5"
-      boxShadow="0 5px 20px 0px rgb(72 187 120 / 43%)"
       h="100%"
       w={navSize === "small" ? "75px" : "200px"}
       flexDir="column"
@@ -198,7 +197,6 @@ const LeftPane = () => {
         p="5%"
         pos="sticky"
         margin-top="2.5"
-        boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.1)"
         h="full"
         w={navSize === "small" ? "75px" : "200px"}
         flexDir="column"
