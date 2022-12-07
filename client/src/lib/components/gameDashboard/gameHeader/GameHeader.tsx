@@ -6,21 +6,15 @@ import {
   HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { FiStar } from "react-icons/fi";
 
-import {
-  getUserPreferences,
-  setUserPreferenceRecentlyPlayed,
-} from "../../../store/slices/userPreferencesSlice";
 import type {
   GameHeaderProps,
   GameInfoComponent,
 } from "../../../types/components/common";
 import PopOver from "lib/components/common/popover/PopOver";
 import * as favouritesService from "lib/services/favourites-service";
-import { saveUserPreferences } from "lib/services/user-preference-service";
 import { getAuthState } from "lib/store/slices/authSlice";
 import {
   setFavourite,
@@ -38,25 +32,8 @@ import { isAuthenticated } from "lib/utils/tokenUtils";
 const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
   const { favourites } = useSelector(getFavourites);
   const authState = useSelector(getAuthState);
-  const { theme, recentlyPlayed } = useSelector(getUserPreferences);
-
-  const isFavourite = favourites.some((e) => e.gameId === gameInfo?.id);
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (gameInfo !== null && isAuthenticated(authState)) {
-      const cloned: number[] = structuredClone(recentlyPlayed || []);
-      const index = cloned.indexOf(gameInfo.id);
-      if (index !== -1) {
-        cloned.splice(index, 1);
-      }
-      cloned.unshift(gameInfo.id);
-      saveUserPreferences(theme, cloned).then(() => {
-        dispatch(setUserPreferenceRecentlyPlayed(cloned));
-      });
-    }
-  }, [authState, dispatch, gameInfo, gameInfo.id]);
+  const isFavourite = favourites.some((e) => e.gameId === gameInfo?.id);
 
   /**
    * This method is used to add the game to favourites
@@ -77,6 +54,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
         );
       });
   };
+
   // returning the JSX
   return (
     <Stack px={2} w="full" rounded="xl">

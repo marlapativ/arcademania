@@ -145,4 +145,8 @@ export const getGameInfo = (gameIds: number[] | null = null): GameInfo[] => {
   return Object.values(games).filter((game) => gameIds.includes(game.id));
 };
 
+export const isValidGameId = (gameId: number) => {
+  return Object.values(games).findIndex((e) => e.id === gameId) > -1;
+};
+
 export default games;

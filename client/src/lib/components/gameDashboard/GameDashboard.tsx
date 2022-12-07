@@ -1,7 +1,16 @@
 import { Box, Grid, GridItem, Show } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 import type { GameInfoProps } from "../../types/components/common";
 import games from "../games";
+import { saveUserPreferences } from "lib/services/user-preference-service";
+import { getAuthState } from "lib/store/slices/authSlice";
+import {
+  getUserPreferences,
+  setUserPreferenceRecentlyPlayed,
+} from "lib/store/slices/userPreferencesSlice";
+import { useDispatch, useSelector } from "lib/store/store";
+import { isAuthenticated } from "lib/utils/tokenUtils";
 
 import GameBody from "./gameBody/GameBody";
 import GameHeader from "./gameHeader/GameHeader";
@@ -15,7 +24,23 @@ import Leaderboard from "./leaderboard/Leaderboard";
  */
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
-  if (!game) return <div />;
+  const dispatch = useDispatch();
+  const authState = useSelector(getAuthState);
+  const { theme, recentlyPlayed } = useSelector(getUserPreferences);
+
+  useEffect(() => {
+    if (game !== null && isAuthenticated(authState)) {
+      const cloned: number[] = structuredClone(recentlyPlayed || []);
+      const index = cloned.indexOf(game.id);
+      if (index !== -1) {
+        cloned.splice(index, 1);
+      }
+      cloned.unshift(game.id);
+      saveUserPreferences(theme, cloned).then(() => {
+        dispatch(setUserPreferenceRecentlyPlayed(cloned));
+      });
+    }
+  }, [authState, dispatch, game]);
 
   return (
     <Box p={2}>
