@@ -33,6 +33,10 @@ import { setAccessToken } from "lib/store/slices/authSlice";
 import type { SignUpUserType } from "lib/types/components/auth.types";
 import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
+/**
+ * This component is used to create and render the signUp Form in a drawer
+ * @returns SignUp Form in a drawer with drawer trigger button
+ */
 const SignupDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showPassword, setShowPassword] = useState(false);
@@ -42,6 +46,10 @@ const SignupDrawer = () => {
   let password = "";
   const dispatch = useDispatch();
 
+  /**
+   * This function is used to create a user and update the login status, it takes 1 parameter
+   * @param values obtainer from the signup form
+   */
   const userSignUp = async (values: SignUpUserType) => {
     const jsonValues = {
       name: `${values.firstName} ${values.lastName}`,
@@ -66,10 +74,19 @@ const SignupDrawer = () => {
     onClose();
   };
 
+  /**
+   * This method is used to set the password value which is used later to validate
+   * @param value password field value
+   */
   const setPassword = (value: string) => {
     password = value;
   };
 
+  /**
+   * This method is used to validate the password value
+   * @param value password field value
+   * @returns error if value doesn't meet the basic validations
+   */
   const validatePassword = (value: string) => {
     let error;
     if (!value) error = "Password is required";
@@ -81,6 +98,11 @@ const SignupDrawer = () => {
     return error;
   };
 
+  /**
+   * This method is used to validate the confirm password value with saved password value
+   * @param value confirm password field value
+   * @returns error if value doesn't meet the basic validations
+   */
   const validateConfirmPassword = (value: string) => {
     let error;
     if (!(value === password)) {
@@ -89,6 +111,11 @@ const SignupDrawer = () => {
     return error;
   };
 
+  /**
+   * This method is used to validate the username value
+   * @param value username field value
+   * @returns error if value doesn't meet the basic validations
+   */
   const validateUsername = (value: string) => {
     let error;
     if (!value) {
@@ -97,6 +124,11 @@ const SignupDrawer = () => {
     return error;
   };
 
+  /**
+   * This method is used to validate the email value
+   * @param value email field value
+   * @returns error if value doesn't meet the basic validations
+   */
   const validateEmail = (value: string) => {
     let error;
     if (!value) {
@@ -107,6 +139,11 @@ const SignupDrawer = () => {
     return error;
   };
 
+  /**
+   * This method is used to validate the lastname value
+   * @param value lastname field value
+   * @returns error if value is empty
+   */
   const validateLastName = (value: string) => {
     let error;
     if (!value) {
@@ -115,6 +152,9 @@ const SignupDrawer = () => {
     return error;
   };
 
+  /**
+   * returning the main signup form in a drawer with trigger button
+   */
   return (
     <>
       <Button

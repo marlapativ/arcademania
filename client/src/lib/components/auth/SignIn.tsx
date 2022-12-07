@@ -34,6 +34,10 @@ import { setSessionStorageToken } from "lib/utils/tokenUtils";
 // import messages from "../common/toastMessages/Messages.json";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
 
+/**
+ * This component is used to create and render the signIn Form in a drawer
+ * @returns SignIn Form in a drawer with drawer trigger button
+ */
 const SignInDrawer = () => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,6 +45,11 @@ const SignInDrawer = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const gooogleLoginURL = `${API_URL}auth/google`;
+
+  /**
+   * This method is used to set the session and fetch favourites on login
+   * @param values obtained from the form
+   */
   const login = async (values: JSON) => {
     const accessTokenObj = await signIn(values);
     if (accessTokenObj.status === 200) {
@@ -61,6 +70,9 @@ const SignInDrawer = () => {
     }
   };
 
+  /**
+   * returning the form along with trigger button
+   */
   return (
     <>
       <Button
@@ -180,4 +192,5 @@ const SignInDrawer = () => {
   );
 };
 
+// exporting the signin drawer component
 export default SignInDrawer;
