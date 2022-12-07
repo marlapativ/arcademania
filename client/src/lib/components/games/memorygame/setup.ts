@@ -9,7 +9,7 @@ export type CardType = {
   matchingCardId: string;
 };
 
-// Put the images in an array
+// Putting the images in an array to render later
 const cards: string[] = [
   "../img/card_1.jpg",
   "../img/card_2.jpg",
@@ -20,7 +20,7 @@ const cards: string[] = [
   "../img/card_7.jpg",
   "../img/card_8.jpg",
 ];
-
+//exporting the images 
 export const createBoard = () =>
   [...cards, ...cards].map((card, i) => ({
     id: `card${i}`,
