@@ -15,7 +15,7 @@ export const updateFavourite = (
     .then((response) => response.data)
     .catch((error) => {
       raiseError(error);
-      return {} as GameFavourites[];
+      return [] as GameFavourites[];
     });
 };
 

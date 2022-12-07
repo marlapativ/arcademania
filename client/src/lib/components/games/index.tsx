@@ -77,15 +77,19 @@ const games: GameInfoCollection = {
     altImage: "images/Minesweeper.png",
     description:
       "Classic implementation of the Minesweeper game in Javascript with flag the cell feature.",
-    helpContent: "",
+    helpContent:
+      "Minesweeper is a game where mines are hidden in a grid of squares. Safe squares have numbers telling you how many mines touch the square. You can use the number clues to solve the game by opening all of the safe squares. If you click on a mine you lose the game!",
     icon: FaBomb,
   },
   6: {
     id: 6,
     name: "Tic Tac Toe",
     component: <TicTacToe />,
-    helpContent: "",
+    image: "images/TicTacToe.png",
+    altImage: "images/TicTacToe.png",
     description:
+      "Two players take turns in drawing either an ` O' or an ` X' in one square of a grid consisting of nine squares.",
+    helpContent:
       "Two players take turns in drawing either an ` O' or an ` X' in one square of a grid consisting of nine squares.",
     icon: GiTicTacToe,
   },
@@ -93,7 +97,11 @@ const games: GameInfoCollection = {
     id: 7,
     name: "Typing Speed",
     component: <TypingSpeed />,
-    helpContent: "",
+    image: "images/TypingSpeed.png",
+    altImage: "images/TypingSpeed.png",
+    description:
+    "Requires the player to quickly and precisely type in the words from sentence given",
+    helpContent: "Requires the player to quickly and precisely type in the words from sentence given",
     icon: FaKeyboard,
   },
   8: {
@@ -107,13 +115,17 @@ const games: GameInfoCollection = {
     id: 9,
     name: "Hangman",
     component: <Hangman />,
-    helpContent: "",
+    image: "images/Hangman.png",
+    altImage: "images/Hangman.png",
+    description:
+    "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
+    helpContent: "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
     icon: GiSuicide,
   },
 };
 
-export const getGameInfo = (gameIds: number[]): GameInfo[] => {
-  if (!gameIds || gameIds.length === 0) return [];
+export const getGameInfo = (gameIds: number[] | null = null): GameInfo[] => {
+  if (gameIds === null) return Object.values(games);
   return Object.values(games).filter((game) => gameIds.includes(game.id));
 };
 

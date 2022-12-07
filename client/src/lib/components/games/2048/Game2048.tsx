@@ -22,8 +22,10 @@ import type {
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
 import GameScore from "../gameScore/GameScore";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
+import { getAuthState } from "lib/store/slices/authSlice";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
-import { useDispatch } from "lib/store/store";
+import { useDispatch, useSelector } from "lib/store/store";
+import { isAuthenticated } from "lib/utils/tokenUtils";
 
 import Cell2048 from "./cell2048/Cell2048";
 import {
@@ -93,17 +95,20 @@ const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
     setGame(createGame(rows, columns));
   };
 
+  const authState = useSelector(getAuthState);
   const saveGameScores = (gameScore: number) => {
-    saveScore(gameId, gameScore).then(() => {
-      getLeaderboard(gameId).then((leaderboard) =>
-        dispatch(
-          setGameLeaderboard({
-            gameId,
-            data: leaderboard,
-          })
-        )
-      );
-    });
+    if (isAuthenticated(authState)) {
+      saveScore(gameId, gameScore).then(() => {
+        getLeaderboard(gameId).then((leaderboard) =>
+          dispatch(
+            setGameLeaderboard({
+              gameId,
+              data: leaderboard,
+            })
+          )
+        );
+      });
+    }
   };
 
   const endGame = (didWin?: boolean) => {

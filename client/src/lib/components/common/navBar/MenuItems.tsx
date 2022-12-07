@@ -13,7 +13,7 @@ import {
   MenuList,
   Stack,
 } from "@chakra-ui/react";
-import Link from "next/link";
+import router from "next/router";
 import type React from "react";
 import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
@@ -32,6 +32,9 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
   const signOut = () => {
     setSessionStorageToken("");
     dispatch(setAccessToken({ token: "" }));
+    router.push({
+      pathname: `/`,
+    });
   };
   getUser(token)
     .then((response) => response.json())
@@ -66,8 +69,14 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
           borderColor={useColorModeValue("gray.200", "gray.700")}
           zIndex={1000}
         >
-          <MenuItem>
-            <Link href="http://localhost:3000/profile/myprofile">Profile</Link>
+          <MenuItem
+            onClick={() =>
+              router.push({
+                pathname: `/profile/myprofile`,
+              })
+            }
+          >
+            Profile
           </MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut()}>Sign out</MenuItem>

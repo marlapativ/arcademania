@@ -22,19 +22,30 @@ import { MdVpnKey } from "react-icons/md";
 import { getUser, updateUser } from "lib/services/auth-service";
 import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
+export type FormValues = {
+  username: string;
+  lastname: string;
+  firstname: string;
+  email: string;
+};
+
 const Myprofile = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handlePassClick = () => setShowConfirmPassword(!showConfirmPassword);
-  const [user, setUser] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    email: "",
-  });
+  const [firstname, setFirstName] = useState("");
+  const [username, setUserName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState(0);
+  const user = {
+    username,
+    lastname,
+    firstname,
+    email,
+  };
   let password = "";
-  const userId = 0;
   const setPassword = (value: string) => {
     password = value;
   };
@@ -44,7 +55,7 @@ const Myprofile = () => {
 
   const validateEmail = (value: string) => {
     let error;
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+    if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
       error = "Invalid email address";
     }
     return error;
@@ -55,18 +66,21 @@ const Myprofile = () => {
     getUser(token)
       .then((response) => response.json())
       .then((data) => {
-        setUser({
-          firstname: data.name.split(" ")[0],
-          lastname: data.name.split(" ")[1],
-          username: data.username,
-          email: data.email,
-        });
+        if (username === "") {
+          // eslint-disable-next-line no-underscore-dangle
+          setUserId(data._id);
+          setFirstName(data.name.split(" ")[0]);
+          setLastName(data.name.split(" ")[1]);
+          setUserName(data.username);
+          setEmail(data.email);
+        }
       });
   };
 
   const validatePassword = (value: string) => {
     let error;
-    if (value.length < 5) error = "Password must contain at least 6 characters";
+    if (value && value.length < 5)
+      error = "Password must contain at least 6 characters";
     if (!error) {
       setPassword(value);
     }
@@ -80,13 +94,14 @@ const Myprofile = () => {
     }
     return error;
   };
+
   getUserDetails();
   return (
     <Container ml={5} mt={5} float="left">
       <Formik
         initialValues={user}
-        onSubmit={(values) => {
-          updateProfile(JSON.parse(JSON.stringify(values)));
+        onSubmit={() => {
+          updateProfile(JSON.parse(JSON.stringify(user)));
         }}
       >
         {({ handleSubmit }) => (
@@ -104,7 +119,10 @@ const Myprofile = () => {
                           {...field}
                           id="firstName"
                           placeholder="First name"
-                          value={user.firstname}
+                          onChange={(e) => {
+                            setFirstName(e.target.value);
+                          }}
+                          value={firstname}
                         />
                       </FormControl>
                     )}
@@ -119,7 +137,10 @@ const Myprofile = () => {
                           {...field}
                           id="lastName"
                           placeholder="Last name"
-                          value={user.lastname}
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                          }}
+                          value={lastname}
                         />
                         <FormErrorMessage display="block">
                           {form.errors.lastName}
@@ -140,9 +161,12 @@ const Myprofile = () => {
                           <Input
                             {...field}
                             id="email"
-                            placeholder="Please enter email"
+                            placeholder={email}
                             type="email"
-                            value={user.email}
+                            value={email}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                            }}
                           />
                         </InputGroup>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
@@ -158,7 +182,7 @@ const Myprofile = () => {
                         <Input
                           id="username"
                           placeholder="Please enter user name"
-                          value={user.username}
+                          value={username}
                           disabled
                         />
                       </FormControl>

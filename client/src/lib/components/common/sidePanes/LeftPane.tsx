@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { FaRandom } from "react-icons/fa";
 import { FiMenu, FiHome, FiStar } from "react-icons/fi";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 
@@ -37,6 +38,7 @@ const NavItem: React.FC<NavItemProps> = ({
       flexDir="column"
       w="100%"
       alignItems={navSize === "small" ? "center" : "flex-start"}
+      title={title}
     >
       <Button
         variant="ghost"
@@ -48,6 +50,7 @@ const NavItem: React.FC<NavItemProps> = ({
         borderRadius={8}
         _hover={{ textDecor: "none", background: "#AEC8CA" }}
         onClick={onClick}
+        title={title}
       >
         <Flex>
           <Icon
@@ -75,8 +78,35 @@ const FavouriteGames: React.FC<GameNavbarProps> = ({
   icon,
 }) => {
   const router = useRouter();
+  const allGames = getGameInfo();
+  const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
   return games.length === 0 ? (
-    <div />
+    <>
+      {active ? null : (
+        <>
+          <Text mt={2} textAlign="center">
+            No Favourites yet!
+          </Text>
+          <Divider mt="28" display={navSize === "small" ? "none" : "flex"} />
+          <Text as="u" textAlign="center">
+            Play a Random game meanwhile!
+          </Text>
+        </>
+      )}
+      <NavItem
+        key={randomGame.id}
+        active={active}
+        icon={FaRandom}
+        title={randomGame.name}
+        navSize={navSize}
+        onClick={() => {
+          router.push({
+            pathname: `/game/[gameid]`,
+            query: { gameid: randomGame.id },
+          });
+        }}
+      />
+    </>
   ) : (
     <>
       {games.map((game) => (
@@ -128,7 +158,7 @@ const Favourites: React.FC<{ games: GameInfo[] }> = ({ games }) => {
 const LeftPane = () => {
   const router = useRouter();
   const [navSize, changeNavSize] = useState("small");
-  const [isOpen, setOpenState] = useState(false);
+  const [isOpen, setOpenState] = useState(true);
   const { favourites } = useSelector(getFavourites);
   const games = getGameInfo(favourites.map((e) => e.gameId).slice(0, 4));
 
@@ -181,7 +211,6 @@ const LeftPane = () => {
             router.push(`/`);
           }}
         />
-
         <NavItemMenu
           navSize={navSize}
           title="Favourites"
