@@ -108,7 +108,11 @@ const games: GameInfoCollection = {
     id: 8,
     name: "Memory Game",
     component: <MemoryGame />,
-    helpContent: "",
+    image: "images/memory.png",
+    altImage: "images/memory.png",
+    description:
+    "Flip cards and match the correct images to check how fast the memory can process",
+    helpContent: "This game will check the ability to remember images by flipping cards",
     icon: GiCard6Spades,
   },
   9: {
