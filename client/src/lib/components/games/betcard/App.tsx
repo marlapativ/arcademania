@@ -89,5 +89,28 @@ const App: React.FC = () => {
     }
   }, [dealerCount]);
 
+  const resetGame = () => {
+    console.clear();
+    setDeck(data);
+
+    setUserCards([]);
+    setUserScore(0);
+    setUserCount(0);
+
+    setDealerCards([]);
+    setDealerScore(0);
+    setDealerCount(0);
+
+    setBet(0);
+
+    setGameState(GameState.bet);
+    setMessage(Message.bet);
+    setButtonState({
+      hitDisabled: false,
+      standDisabled: false,
+      resetDisabled: true
+    });
+  }
+
 
 }
