@@ -26,5 +26,9 @@ const App: React.FC = () => {
   const data = JSON.parse(JSON.stringify(jsonData.cards));
   const [deck, setDeck]: any[] = useState(data);
 
+  const [userCards, setUserCards]: any[] = useState([]);
+  const [userScore, setUserScore] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+
 
 }
