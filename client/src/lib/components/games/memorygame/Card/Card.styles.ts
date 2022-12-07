@@ -9,11 +9,11 @@ export const Wrapper = styled.div`
     transform: rotateY(180deg);
   }
 `;
-
+//Adding props
 type Props = {
   flipped: boolean;
 };
-
+//importing css to pass on
 const sharedStyles = css`
   width: 100%;
   height: 100%;
@@ -22,7 +22,7 @@ const sharedStyles = css`
   cursor: pointer;
   transform-style: preserve-3d;
 `;
-
+//using trial condition to check flip
 export const FrontImg = styled.img<Props>`
   ${sharedStyles}
 
