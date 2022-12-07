@@ -40,7 +40,7 @@ const SignInDrawer = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
-  const gooogleLoginURL = `${{ API_URL }}/auth/google`;
+  const gooogleLoginURL = `${API_URL}auth/google`;
   const login = async (values: JSON) => {
     const accessTokenObj = await signIn(values);
     if (accessTokenObj.status === 200) {
@@ -109,13 +109,6 @@ const SignInDrawer = () => {
                           if (!value) {
                             error = "username is required";
                           }
-                          // else if (
-                          //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                          //     value
-                          //   )
-                          // ) {
-                          //   error = "Invalid username address";
-                          // }
                           return error;
                         }}
                       />
