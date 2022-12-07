@@ -4,7 +4,7 @@ type HangmanWordProps = {
   reveal?: boolean
 }
 
-/* Handle the word geerated for game*/
+/* Handle the word generated for game*/
 export function HangmanWord({
   guessedLetters,
   wordToGuess,
