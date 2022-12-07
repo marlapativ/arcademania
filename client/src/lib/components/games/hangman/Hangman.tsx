@@ -4,6 +4,7 @@ import { HangmanWord } from "./HangmanWord"
 import { Keyboard } from "./Keyboard"
 import words from "./wordList.json"
 
+/* To generate random words*/
 function getWord() {
   return words[Math.floor(Math.random() * words.length)]
 }
@@ -16,6 +17,7 @@ function Hangman() {
     letter => !wordToGuess.includes(letter)
   )
 
+  /*Giving 6 chances to guess letters */
   const isLoser = incorrectLetters.length >= 6
   const isWinner = wordToGuess
     .split("")
@@ -30,6 +32,8 @@ function Hangman() {
     [guessedLetters, isWinner, isLoser]
   )
 
+
+  //keyboard code
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const key = e.key
@@ -63,7 +67,8 @@ function Hangman() {
     }
   }, [])
 
-  return (
+  //return function for values
+  return ( 
     <div
       style={{
         maxWidth: "800px",
