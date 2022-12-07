@@ -34,5 +34,15 @@ const App: React.FC = () => {
   const [dealerScore, setDealerScore] = useState(0);
   const [dealerCount, setDealerCount] = useState(0);
 
+  const [balance, setBalance] = useState(100);
+  const [bet, setBet] = useState(0);
+
+  const [gameState, setGameState] = useState(GameState.bet);
+  const [message, setMessage] = useState(Message.bet);
+  const [buttonState, setButtonState] = useState({
+    hitDisabled: false,
+    standDisabled: false,
+    resetDisabled: true
+  });
 
 }
