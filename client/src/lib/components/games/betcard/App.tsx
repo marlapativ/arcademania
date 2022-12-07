@@ -23,4 +23,8 @@ const App: React.FC = () => {
     tie = 'Tie!'
   }
 
+  const data = JSON.parse(JSON.stringify(jsonData.cards));
+  const [deck, setDeck]: any[] = useState(data);
+
+
 }
