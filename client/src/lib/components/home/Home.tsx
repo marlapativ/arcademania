@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import Dashboard from "../dashboard/Dashboard";
 import { setAxiosAuthHeader } from "lib/config/axios.config";
 import { setAccessToken } from "lib/store/slices/authSlice";
+import { showSuccess } from "lib/utils/toastUtils";
 import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
 /**
@@ -25,6 +26,7 @@ const Home = () => {
       router.push({
         pathname: `/`,
       });
+      showSuccess("User logged In Successfully");
     }
   }, [accessToken, dispatch, router]);
 

@@ -11,3 +11,8 @@ export const raiseError = (message: Error | string) => {
   const title = message instanceof Error ? message.message : message;
   toast({ title, position: "bottom-right", status: "error", duration: 2000 });
 };
+
+export const showSuccess = (message: string) => {
+  const title = message;
+  toast({ title, position: "top", status: "success", duration: 2000 });
+};
