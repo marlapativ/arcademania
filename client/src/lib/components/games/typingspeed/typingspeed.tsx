@@ -60,13 +60,13 @@ class TypingSpeed extends Component {
   render() {
     return (
       <div className={styles.App}>
-        <h1>{this.state.wordsPerMinute ? `${this.state.wordsPerMinute} WPM`
+        <h1 className={styles['heading']}>{this.state.wordsPerMinute ? `${this.state.wordsPerMinute} WPM`
                                        : 'Test Your Typing Speed, Scrub!'}</h1>
-        <h1>{this.state.correctCount}</h1>
-        <h3>Type the following:</h3>
+        <h1 className={styles['score']}>{this.state.correctCount}</h1>
+        <h3 className={styles['sub_heading']}>Type the following:</h3>
         <h6>{this.state.words.map(word => word === this.state.words[0] ? 
               <em className={styles['current-word']}>{word} </em> : word + ' ')}</h6>
-        <input value={this.state.enteredText} 
+        <input className={styles['entryfield']} value={this.state.enteredText} 
                onChange={this.onWordChange}/>
       </div>
     )

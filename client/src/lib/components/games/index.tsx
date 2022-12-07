@@ -18,7 +18,7 @@ import MemoryGame from "./memorygame/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/TicTacToe";
-import TypingSpeed from "./typingspeed/src/typingspeed";
+import TypingSpeed from "./typingspeed/typingspeed";
 
 const games: GameInfoCollection = {
   1: {
