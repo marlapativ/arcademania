@@ -4,10 +4,16 @@ import type { IconType } from "react-icons";
 
 import type { ReactChildrenProps } from "../globals";
 
+/**
+ * Game Info Props.
+ */
 export interface GameInfoProps extends ReactChildrenProps {
   id: number;
 }
 
+/**
+ * Slider Game Props.
+ */
 export interface SliderGameProps {
   id: number;
   maxH: number | string;
@@ -15,6 +21,9 @@ export interface SliderGameProps {
   popoverPlacement: PlacementWithLogical;
 }
 
+/**
+ * Game Info Component Props.
+ */
 export type GameInfoComponentProps = ReactChildrenProps & {
   game: GameInfoComponent;
 };
@@ -38,10 +47,16 @@ export type GameHeaderProps = {
   helpContent: string;
 };
 
+/**
+ * Game Info Collection type.
+ */
 export type GameInfoCollection = {
   [id: number]: GameInfoComponent;
 };
 
+/**
+ * Game Info.
+ */
 export type GameInfo = {
   id: number;
   name: string;
@@ -52,10 +67,16 @@ export type GameInfo = {
   icon?: IconType;
 };
 
+/**
+ * Game Favourites.
+ */
 export type GameFavourites = {
   gameId: number;
 };
 
+/**
+ * Favourites State.
+ */
 export type FavouritesState = {
   favourites: GameFavourites[];
 };
@@ -67,6 +88,9 @@ export type GameHelp = {
   helpContent: string;
 };
 
+/**
+ * Game Info Component.
+ */
 export type GameInfoComponent = GameInfo &
   GameHelp & {
     component: React.ReactNode;
@@ -94,13 +118,11 @@ export type UserInfo = UserId & {
   icon?: string;
 };
 
+/**
+ * User Info Props
+ */
 export type UserInfoProps = UserInfo & {
   size?: "sm" | "md" | "lg";
-};
-
-export type UseCallbackFunc<T> = {
-  apply: () => void;
-  data: T;
 };
 
 /**

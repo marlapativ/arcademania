@@ -87,10 +87,7 @@ const FavouriteGames: React.FC<GameNavbarProps> = ({
           <Text mt={2} textAlign="center">
             No Favourites yet!
           </Text>
-          <Divider mt="28" display={navSize === "small" ? "none" : "flex"} />
-          <Text as="u" textAlign="center">
-            Play a Random game meanwhile!
-          </Text>
+          <Text textAlign="center">Play a random game meanwhile! &darr;</Text>
         </>
       )}
       <NavItem

@@ -3,6 +3,13 @@ import { API_URL } from "lib/config/config";
 import type { GameFavourites } from "lib/types/components/common";
 import { raiseError } from "lib/utils/toastUtils";
 
+/**
+ * Updates the favourite game for the given user.
+ *
+ * @param id Game Id
+ * @param isFavourite Set or reset favourite
+ * @returns Array of games set as favourite.
+ */
 export const updateFavourite = (
   id: number,
   isFavourite = true
@@ -19,6 +26,11 @@ export const updateFavourite = (
     });
 };
 
+/**
+ * Gets the favourites for the current user.
+ *
+ * @returns Array of games set as favourite.
+ */
 export const fetchFavourites = () => {
   const url = `${API_URL}favourites`;
   return axios

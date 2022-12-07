@@ -6,6 +6,12 @@ import type {
   SaveScoreResponse,
 } from "lib/types/components/leaderboard/leaderboard.types";
 
+/**
+ * Gets the leaderboard for the given game.
+ *
+ * @param id game id.
+ * @returns List of Leaderboard data.
+ */
 export const getLeaderboard = async (id: number) => {
   const url = `${API_URL}leaderboard/${id}`;
   return axios
@@ -18,6 +24,12 @@ export const getLeaderboard = async (id: number) => {
     });
 };
 
+/**
+ * Save the score for current user.
+ * @param gameId Game Id
+ * @param score score
+ * @returns Saved score response.
+ */
 export const saveScore = async (gameId: number, score: number) => {
   return axios
     .post<SaveScoreResponse>(`${API_URL}leaderboard/${gameId}`, {

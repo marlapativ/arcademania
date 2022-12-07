@@ -14,7 +14,7 @@ const initialState: FavouritesState = {
 };
 
 /**
- * Auth slice with reducer containing actions.
+ * Favourites slice with reducer containing actions.
  */
 export const favouritesSlice = createSlice({
   name: "favourites",

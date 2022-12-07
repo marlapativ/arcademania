@@ -10,6 +10,11 @@ import Layout from "lib/layout";
 import "lib/styles/globals.scss";
 import "swiper/css/bundle";
 
+/**
+ * NextJS Entrypoint.
+ *
+ * @returns App Component.
+ */
 const MyApp = ({
   Component,
   pageProps: { session, ...pageProps },

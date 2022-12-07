@@ -10,6 +10,9 @@ import { authSliceReducer } from "./slices/authSlice";
 import { favouritesSliceReducer } from "./slices/favouritesSlice";
 import { leaderboardSliceReducer } from "./slices/leaderboardSlice";
 
+/**
+ * Configuring Redux Store.
+ */
 const store = configureStore({
   reducer: {
     leaderboard: leaderboardSliceReducer,
@@ -21,6 +24,9 @@ const store = configureStore({
 
 const makeStore = () => store;
 
+/**
+ * Helper Types.
+ */
 export type Store = ReturnType<typeof makeStore>;
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
@@ -31,6 +37,9 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
+/**
+ * Create Wrapper for redux store.
+ */
 export const wrapper = createWrapper(makeStore, {
   debug: process.env.NODE_ENV === "development",
 });

@@ -1,3 +1,6 @@
+/**
+ * Game Status Message Props
+ */
 export interface GameStatusMessageProps {
   show: boolean;
   win: boolean;

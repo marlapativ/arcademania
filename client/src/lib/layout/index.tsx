@@ -22,6 +22,9 @@ export async function getStaticProps() {
   return { props: { title: "LeftPane" } };
 }
 
+/**
+ * Layout Component that renders the entire Dashboard.
+ */
 const Layout = ({ children }: LayoutProps) => {
   const dispatch = useDispatch();
   useEffect(() => {
