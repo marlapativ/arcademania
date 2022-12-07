@@ -43,9 +43,9 @@ export const loginUser = async (req: CustomRequest<ISignInUser>, response: Custo
 /**
  * It logsIn a user with google profile and returns the accesstoken in the response
  */
- export const loginUserWithGoogle = async () => {
-    passport.authenticate('google', {successReturnToOrRedirect : "http://localhost:3000" },
-     async (err, profile, info) => {
-        await authService.loginWithGoogle(profile);
-      })
-}
+ export const loginUserWithGoogle = async (req: CustomRequest<ISignInUser>, response: CustomResponse) => {
+    passport.authenticate('google', {successReturnToOrRedirect : "http://localhost:3000", passReqToCallback:true },
+     async (error, profile, next) => {
+        next('http://localhost:3000')
+      });
+    }
