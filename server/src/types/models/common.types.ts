@@ -1,16 +1,21 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 /**
  * Mongoose Entity.
  */
 export interface IEntity {
-    id: mongoose.ObjectId;
-};
+  id: mongoose.ObjectId;
+}
 
+/**
+ * User Entity
+ */
+export interface IUserEntity {
+  userId: mongoose.ObjectId;
+}
 /**
  * Game User Entity.
  */
-export interface IGameUserEntity {
-    gameId: number;
-    userId: mongoose.ObjectId;
+export interface IGameUserEntity extends IUserEntity {
+  gameId: number;
 }

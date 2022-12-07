@@ -9,8 +9,8 @@
     "schemes": [
         "http"
     ],
-    "securityDefinitions" : {
-        "bearerAuth":{
+    "securityDefinitions": {
+        "bearerAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header",
@@ -133,9 +133,11 @@
                 }
             },
             "post": {
-                "security": [{
-                    "bearerAuth": []
-                }],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "tags": [
                     "Leaderboard"
                 ],
@@ -175,9 +177,11 @@
         },
         "/favourites": {
             "get": {
-                "security": [{
-                    "bearerAuth": []
-                }],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "tags": [
                     "Favourites"
                 ],
@@ -199,9 +203,11 @@
         },
         "/favourites/{id}": {
             "post": {
-                "security": [{
-                    "bearerAuth": []
-                }],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "tags": [
                     "Favourites"
                 ],
@@ -257,6 +263,67 @@
                     }
                 }
             }
+        },
+        "/userpreferences": {
+            "get": {
+                "tags": [
+                    "User Preferences"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Get User Preferences",
+                "description": "Gets the user preferences like recently played and theme data",
+                "operationId": "getUserPreferences",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User Preferences Data"
+                    },
+                    "500": {
+                        "description": "Cannot get user preferences data"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "User Preferences"
+                ],
+                "summary": "Set User Preferences",
+                "description": "Sets the user preferences like recently played and theme data",
+                "operationId": "setUserPreferences",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User Preferences",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserPreferences"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "If the save was succesful"
+                    },
+                    "500": {
+                        "description": "Cannot save user preferences"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -293,6 +360,20 @@
             "properties": {
                 "score": {
                     "type": "number"
+                }
+            }
+        },
+        "UserPreferences" : {
+            "type": "object",
+            "properties": {
+                "theme": {
+                    "type": "string"
+                },
+                "recentlyPlayed": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
                 }
             }
         }

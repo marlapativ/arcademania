@@ -6,6 +6,7 @@ import { Express } from 'express'
 
 import swaggerUI from 'swagger-ui-express';
 import swaggerDoc from './swagger.json';
+import userPreferencesRouter from './user/user-preferences-router';
 
 const routes = (app: Express) => {
     // Signup Routes
@@ -19,6 +20,9 @@ const routes = (app: Express) => {
 
     // Favourites Routes
     app.use('/api/v1', favouritesRouter);
+
+    // User Preferences Routes
+    app.use('/api/v1', userPreferencesRouter);
 
     // Setting up swagger
     setupSwagger(app);
