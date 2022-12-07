@@ -117,6 +117,36 @@ const App: React.FC = () => {
     setBalance(Math.round((balance - amount) * 100) / 100);
     setGameState(GameState.init);
   }
-  
+
+  const drawCard = (dealType: Deal) => {
+    if (deck.length > 0) {
+      const randomIndex = Math.floor(Math.random() * deck.length);
+      const card = deck[randomIndex];
+      deck.splice(randomIndex, 1);
+      setDeck([...deck]);
+      console.log('Remaining Cards:', deck.length);
+      switch (card.suit) {
+        case 'spades':
+          dealCard(dealType, card.value, '♠');
+          break;
+        case 'diamonds':
+          dealCard(dealType, card.value, '♦');
+          break;
+        case 'clubs':
+          dealCard(dealType, card.value, '♣');
+          break;
+        case 'hearts':
+          dealCard(dealType, card.value, '♥');
+          break;
+        default:
+          break;
+      }
+    }
+    else {
+      alert('All cards have been drawn');
+    }
+  }
+
+
 
 }
