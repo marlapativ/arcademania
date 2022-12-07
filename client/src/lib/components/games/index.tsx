@@ -115,6 +115,8 @@ const games: GameInfoCollection = {
     id: 9,
     name: "Hangman",
     component: <Hangman />,
+    image: "images/Hangman.png",
+    altImage: "images/Hangman.png",
     description:
     "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
     helpContent: "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
