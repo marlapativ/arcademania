@@ -24,7 +24,7 @@ const ThemeToggle = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isAuthenticated(authState)) {
+    if (isAuthenticated(authState) && userPreferenceState.theme !== colorMode) {
       userPreferencesService
         .saveUserPreferences(colorMode, userPreferenceState.recentlyPlayed)
         .then(() => {

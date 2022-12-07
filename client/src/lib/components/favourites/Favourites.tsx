@@ -61,7 +61,7 @@ const Favourites: React.FC = () => {
       ) : (
         <>
           <Text fontSize="3xl">Your Favourites</Text>
-          <HStack pt={10} gap={5} justifyContent="center">
+          <HStack py={10} gap={5} justifyContent="center">
             {favGames.map((game) => (
               <FavouriteCard game={game} key={game.id} />
             ))}

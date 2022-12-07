@@ -38,6 +38,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
     "sass": "^1.56.1",
+    "sharp": "^0.31.2",
     "styled-components": "^5.3.6",
     "swiper": "^8.4.5"
   },
@@ -48,6 +49,7 @@
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.9",
     "@types/react-redux": "^7.1.24",
+    "@types/styled-components": "^5.1.26",
     "commitizen": "^4.2.5",
     "commitlint": "^17.1.2",
     "cross-env": "^7.0.3",
