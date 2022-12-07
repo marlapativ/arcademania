@@ -25,12 +25,21 @@ import { useDispatch, useSelector } from "lib/store/store";
 import { raiseError } from "lib/utils/toastUtils";
 import { isAuthenticated } from "lib/utils/tokenUtils";
 
+/**
+ * This component creates and renders the game header with game name along with help and option to mark favourite
+ * @returns GameDashboard Header Component
+ */
 const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
   const { favourites } = useSelector(getFavourites);
   const authState = useSelector(getAuthState);
   const isFavourite = favourites.some((e) => e.gameId === gameInfo?.id);
 
   const dispatch = useDispatch();
+  /**
+   * This method is used to add the game to favourites
+   * @param game game object with game info
+   * @returns nothing from this method in case of error
+   */
   const addFavourite = (game: GameInfoComponent) => {
     if (!game) return;
     if (!isAuthenticated(authState)) {
@@ -45,7 +54,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
         );
       });
   };
-
+  // returning the JSX
   return (
     <Stack px={2} w="full" rounded="xl">
       <HStack justifyContent="space-between">
@@ -84,4 +93,5 @@ const GameHeader: React.FC<GameHeaderProps> = ({ gameInfo, helpContent }) => {
   );
 };
 
+// returning the header component
 export default GameHeader;
