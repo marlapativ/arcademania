@@ -1,5 +1,10 @@
 const APP_NAME = "arcademania";
 
+/**
+ *  Meta Component.
+ *
+ * @returns Metadata info
+ */
 const Meta = () => {
   return (
     <>

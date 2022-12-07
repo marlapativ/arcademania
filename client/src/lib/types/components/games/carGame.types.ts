@@ -1,5 +1,8 @@
 import type { AnyFunction } from "@chakra-ui/utils";
 
+/**
+ * Required props for BlueCar
+ */
 export interface BlueCar {
   show: boolean;
   blueCarLeft: number;
@@ -8,6 +11,9 @@ export interface BlueCar {
   setCount: AnyFunction;
 }
 
+/**
+ * Required props for car game main component
+ */
 export interface CarGameProps {
   play: boolean;
   gameOver: boolean;
@@ -18,6 +24,9 @@ export interface CarGameProps {
   intervalId: ReturnType<typeof setTimeout>;
 }
 
+/**
+ * Required props for results card
+ */
 export interface ResultCardProps {
   score: number;
   buttonAction: AnyFunction;

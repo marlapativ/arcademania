@@ -2,11 +2,16 @@ import { Center, Container } from "@chakra-ui/react";
 
 import type { ReactChildrenProps } from "../../../types/globals";
 
+/**
+ * Game Dashboard Body Component.
+ * @param ReactChildrenProps props
+ * @returns GameBody.
+ */
 const GameBody: React.FC<ReactChildrenProps> = ({ children }) => {
   return (
     <Container
       w="100%"
-      h="600px"
+      h="100%"
       maxW="100%"
       maxH="100%"
       mt={0}

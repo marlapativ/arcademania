@@ -6,6 +6,9 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import Meta from "lib/components/common/Meta";
 import customTheme from "lib/styles/theme";
 
+/**
+ * NextJS Custom _doc Component.
+ */
 class MyDocument extends Document {
   static getInitialProps(ctx: DocumentContext) {
     return Document.getInitialProps(ctx);

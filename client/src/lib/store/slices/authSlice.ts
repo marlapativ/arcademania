@@ -1,9 +1,7 @@
 import type { Draft, PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-export type AuthState = {
-  token: string;
-};
+import type { AuthState } from "lib/types/components/auth.types";
 
 /**
  * Default state object with initial values.
@@ -27,7 +25,7 @@ export const authSlice = createSlice({
 });
 
 // A small helper of user state for `useSelector` function.
-export const getLeaderboard = (state: { auth: AuthState }) => state.auth;
+export const getAuthState = (state: { auth: AuthState }) => state.auth;
 
 // Exports all actions
 export const { setAccessToken } = authSlice.actions;

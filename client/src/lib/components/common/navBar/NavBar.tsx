@@ -5,22 +5,28 @@ import {
   Flex,
   Text,
   HStack,
-  IconButton,
   useBreakpointValue,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { FiStar } from "react-icons/fi";
+
+import ThemeToggle from "lib/layout/header/ThemeToggle";
 
 import MenuItems from "./MenuItems";
 
+/**
+ * This component creates a common navbar with logo on the top left corner
+ * and authmodule or user profile on the top right corner with an option to change the theme
+ * @returns NavBar Component
+ */
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Box>
+    <Box pos="relative" zIndex={99}>
       <Flex
+        boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)"
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         minH="60px"
@@ -54,17 +60,11 @@ const NavBar = () => {
           justify="flex-end"
           direction="row"
         >
-          <Button onClick={toggleColorMode}>
+          <ThemeToggle />
+          {/* <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-          </Button>
-
-          <IconButton
-            size="lg"
-            variant="ghost"
-            aria-label="open menu"
-            icon={<FiStar />}
-          />
-          <MenuItems isAuth={false} />
+          </Button> */}
+          <MenuItems />
         </HStack>
       </Flex>
     </Box>

@@ -1,10 +1,20 @@
-import { GridItem, IconButton, Center, useColorModeValue } from '@chakra-ui/react';
+import {
+  GridItem,
+  IconButton,
+  Center,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { BsFillFlagFill } from "react-icons/bs";
 
 import type { Flag } from "lib/types/components/games/games.common";
 import type { MinesweeperCellProps } from "lib/types/components/games/minesweeper.types";
 
+/**
+ * Flagged Cell Component.
+ * @param Flag flag
+ * @returns
+ */
 const FlaggedCell: React.FC<Flag> = ({ flag }) => {
   return flag ? (
     <IconButton
@@ -30,6 +40,12 @@ const FlaggedCell: React.FC<Flag> = ({ flag }) => {
   );
 };
 
+/**
+ * Minesweeper Cell Component
+ *
+ * @param MinesweeperCellProps props
+ * @returns Minesweeper Cell
+ */
 const MinesweeperCell: React.FC<MinesweeperCellProps> = ({
   value,
   endGame,
@@ -54,6 +70,11 @@ const MinesweeperCell: React.FC<MinesweeperCellProps> = ({
     setFlag(false);
   }, [show]);
 
+  /**
+   * Flags the current cell.
+   *
+   * @param ev event
+   */
   const flagCell = (ev: React.MouseEvent) => {
     ev.preventDefault();
     if (!isHidden) return;
@@ -73,7 +94,10 @@ const MinesweeperCell: React.FC<MinesweeperCellProps> = ({
           cursor="auto"
           fontSize="sm"
         >
-          <Center color={useColorModeValue("gray.900", "white")}>{isHidden || (value > 0 && value)}</Center>
+          {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+          <Center color={useColorModeValue("gray.900", "white")}>
+            {isHidden || (value > 0 && value)}
+          </Center>
         </IconButton>
       )}
     </GridItem>

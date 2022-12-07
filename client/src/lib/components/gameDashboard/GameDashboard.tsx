@@ -4,17 +4,25 @@ import type { GameInfoProps } from "../../types/components/common";
 import games from "../games";
 
 import GameBody from "./gameBody/GameBody";
-import GameFooter from "./gameFooter/GameFooter";
 import GameHeader from "./gameHeader/GameHeader";
 import Leaderboard from "./leaderboard/Leaderboard";
 
+/**
+ * Game Dashboard.
+ *
+ * @param GameInfoProps props
+ * @returns GameDashboard
+ */
 const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
   const game = games[id];
+  if (!game) return <div />;
+
   return (
     <Box p={2}>
       <Grid
-        templateAreas={`"main leaderboard"
-                  "footer leaderboard"`}
+        templateAreas={`
+                  "header leaderboard"
+                  "main leaderboard"`}
         gridTemplateRows={{
           base: "1fr",
           md: "1fr",
@@ -27,15 +35,14 @@ const GameDashboard: React.FC<GameInfoProps> = ({ id }) => {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem px={1} area="main">
-          <GameHeader helpContent={game?.helpContent} isFavourite />
+        <GridItem pl={2} area="header">
+          <GameHeader helpContent={game?.helpContent} gameInfo={game} />
+        </GridItem>
+        <GridItem pl={2} area="main">
           <GameBody>{game?.component}</GameBody>
         </GridItem>
-        <GridItem pl={2} area="footer">
-          <GameFooter id={game?.id} name={game?.name} />
-        </GridItem>
         <Show above="md">
-          <GridItem px={1} area="leaderboard">
+          <GridItem pl={1} area="leaderboard">
             <Leaderboard id={id} />
           </GridItem>
         </Show>

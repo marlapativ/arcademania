@@ -4,6 +4,12 @@ import type { _2048TileData } from "lib/types/components/games/2048.types";
 
 import styles from "./styles/Cell2048.module.scss";
 
+/**
+ * 2048 Cell Component.
+ *
+ * @param _2048TileData props
+ * @returns 2048 Cell
+ */
 // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle
 const Cell2048: React.FC<_2048TileData> = ({ value }) => {
   return (

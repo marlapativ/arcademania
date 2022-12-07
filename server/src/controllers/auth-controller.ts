@@ -1,7 +1,9 @@
+import passport from 'passport';
 import { CustomResponse, CustomRequest } from '../types/config/express-types';
 import * as authService from '../services/auth/auth-service';
 import { ISignInUser, IUser } from '../types/models/user.types';
 import { setResponse, setError } from '../utils/http-utils';
+import logger from '../config/logger';
 
 /**
  * It creates a user and returns the user object in the response
@@ -20,7 +22,7 @@ export const createUser = async (req: CustomRequest<IUser>, response: CustomResp
 
 /**
  * It logsIn a user and returns the accesstoken in the response
- * @param req - Http Request with <ISignINUser> as body
+ * @param req - Http Request with <ISignInUser> as body
  * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
  * back to the client.
  */
@@ -39,17 +41,8 @@ export const loginUser = async (req: CustomRequest<ISignInUser>, response: Custo
 }
 
 /**
- * It updates the user details and returns the updated object
- * @param req - Http Request with <IUser> as body
- * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
- * back to the client.
+ * It logsIn a user with google profile and returns the accesstoken in the response
  */
- export const updateProfile = async (req: CustomRequest<IUser>, response: CustomResponse) => {
-    try {
-        const userId:number = parseInt(req.query.id as string)
-        const user = await authService.updateUser(userId,req.body);
-        setResponse(response, user);
-    } catch (err) {
-        setError(response, err);
-    }
+ export const loginUserWithGoogle = async () => {
+   passport.authenticate('google', {scope:['email', 'profile']});
 }

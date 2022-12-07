@@ -22,6 +22,12 @@ import { useRouter } from "next/router";
 import type { SliderGameProps } from "../../../types/components/common";
 import games from "lib/components/games";
 
+/**
+ * Component to render each game to be rendered as featured games.
+ *
+ * @param SliderGameProps props
+ * @returns SliderGameComponent.
+ */
 const SliderGame: React.FC<SliderGameProps> = ({
   id,
   maxH,
@@ -34,7 +40,7 @@ const SliderGame: React.FC<SliderGameProps> = ({
     <Popover trigger="hover" placement={popoverPlacement}>
       <PopoverTrigger>
         <Center borderRadius="xl">
-          <Image maxH={maxH} w={maxW} alt={game.name} src={game.altImage} />
+          <Image h={maxH} w={maxW} alt={game.name} src={game.altImage} />
         </Center>
       </PopoverTrigger>
       <PopoverContent>
@@ -69,6 +75,10 @@ const SliderGame: React.FC<SliderGameProps> = ({
   );
 };
 
+/**
+ * Dashboard component to render featured games.
+ * @returns DashboardSlider.
+ */
 const DashboardSlider: React.FC = () => {
   return (
     <Box>
@@ -78,13 +88,13 @@ const DashboardSlider: React.FC = () => {
         </Text>
       </Flex>
       <Grid my={2} h="38vh" w="80vw" templateColumns="repeat(4, 1fr)" gap={4}>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={1} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
           <SliderGame id={1} maxH="38vh" maxW="full" popoverPlacement="right" />
         </GridItem>
-        <GridItem colSpan={2}>
+        <GridItem colSpan={2} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
           <SliderGame id={3} maxH="38vh" maxW="full" popoverPlacement="top" />
         </GridItem>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={1} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
           <SliderGame id={5} maxH="38vh" maxW="full" popoverPlacement="left" />
         </GridItem>
       </Grid>

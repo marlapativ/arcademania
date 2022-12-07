@@ -1,18 +1,19 @@
-import { ILeaderboardGameData } from "../../types/models/leaderboard.types";
+import {
+  ILeaderboardGameData,
+  ILeaderboard,
+} from "../../types/models/leaderboard.types";
 import { Leaderboard } from "../../models/leaderboard/leaderboard";
+import mongoose from "mongoose";
 
+/**
+ * Get the leaderboard for the give game
+ *
+ * @param gameId Game Id.
+ * @returns List of LeaderboardGameData.
+ */
 export const getLeaderboard = (
   gameId: number
 ): Promise<ILeaderboardGameData[]> => {
-  if(gameId === 0){
-    // TODO: Fill this
-    // 1. Need to sum all the scores by user
-    // 2. Sort by score and get the top 10.
-    // 3. Cast to response object. Refer below.
-    return Promise.resolve([]);
-  }
-
-
   const data = Leaderboard.aggregate<ILeaderboardGameData>([
     {
       $match: {
@@ -63,5 +64,23 @@ export const getLeaderboard = (
   return data;
 };
 
-
-// TODO: Implement SaveScore
+/**
+ * Saves the score for the given game and user.
+ *
+ * @param gameId Game Id.
+ * @param userId User Id.
+ * @param score Score.
+ * @returns Leaderboard.
+ */
+export const saveScore = (
+  gameId: number,
+  userId: mongoose.ObjectId,
+  score: number
+): Promise<ILeaderboard> => {
+  const newRecord = new Leaderboard({
+    gameId,
+    userId,
+    score,
+  });
+  return newRecord.save();
+}

@@ -3,28 +3,23 @@ import {
   Button,
   Heading,
   Text,
-  Link as ChakraLink,
   useColorMode,
   Flex,
 } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 
+/**
+ *  404 Error Page component rendered on invalid paths accessed in the application.
+ *
+ * @returns 404 Page component.
+ */
 const ErrorPage404 = () => {
   const { colorMode } = useColorMode();
 
   return (
     <Flex minHeight="70vh" direction="column" justifyContent="center">
       <NextSeo title="404 Not Found" />
-      <Text textAlign="center" fontSize="xs" color="gray">
-        <ChakraLink
-          href="https://stories.freepik.com/web"
-          isExternal
-          rel="noopener noreferrer"
-        >
-          Illustration by Freepik Stories
-        </ChakraLink>
-      </Text>
 
       <Box marginY={4}>
         <Heading textAlign="center" size="lg">
@@ -39,7 +34,7 @@ const ErrorPage404 = () => {
             as={Link}
             href="/"
             backgroundColor={colorMode === "light" ? "gray.300" : "teal.500"}
-            size="sm"
+            size="lg"
           >
             Let&apos;s Head Back
           </Button>

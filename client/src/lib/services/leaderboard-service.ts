@@ -1,41 +1,43 @@
-import axios from "axios";
-
+import { raiseError } from "../utils/toastUtils";
+import axios from "lib/config/axios.config";
 import { API_URL } from "lib/config/config";
 import type {
   LeaderboardItemData,
   SaveScoreResponse,
 } from "lib/types/components/leaderboard/leaderboard.types";
 
-const raiseAlert = (err: Error) => {
-  // eslint-disable-next-line no-console
-  console.error(err);
-};
-
+/**
+ * Gets the leaderboard for the given game.
+ *
+ * @param id game id.
+ * @returns List of Leaderboard data.
+ */
 export const getLeaderboard = async (id: number) => {
   const url = `${API_URL}leaderboard/${id}`;
   return axios
     .get<LeaderboardItemData[]>(url)
     .then((response) => response.data)
     .catch((error) => {
-      raiseAlert(error);
+      raiseError(error);
       const data: LeaderboardItemData[] = [];
       return data;
     });
 };
 
-export const saveScore = async (
-  gameId: number,
-  userId: string,
-  score: number
-) => {
+/**
+ * Save the score for current user.
+ * @param gameId Game Id
+ * @param score score
+ * @returns Saved score response.
+ */
+export const saveScore = async (gameId: number, score: number) => {
   return axios
-    .post<SaveScoreResponse>(`${API_URL}leaderboard\${id}`, {
-      userId,
+    .post<SaveScoreResponse>(`${API_URL}leaderboard/${gameId}`, {
       score,
     })
     .then((response) => response.data)
     .catch((error) => {
-      raiseAlert(error);
+      raiseError(error);
       return [];
     });
 };

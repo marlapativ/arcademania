@@ -1,13 +1,13 @@
-// url of the backend server
-const url = "http://localhost:8080/api/v1";
+import { API_URL } from "lib/config/config";
+
 const defaultContentType = "application/json";
 
 /**
- * This function is used to get all todos
- * @returns array of todos
+ * This function is used to signin the user
+ * @returns the response of the login api (user details with accesstoken)
  */
-export const getAccessToken = async (data: JSON) => {
-  const newurl = `${url}/auth/signin`;
+export const signIn = async (data: JSON) => {
+  const newurl = `${API_URL}auth/signin`;
 
   return fetch(newurl, {
     method: "POST",
@@ -19,21 +19,12 @@ export const getAccessToken = async (data: JSON) => {
   });
 };
 
+/**
+ * This function is used to signup the user and save the user details to database
+ * @returns the response of the signup api (created user details)
+ */
 export const createUser = async (data: JSON) => {
-  const newurl = `${url}/auth/signup`;
-
-  return fetch(newurl, {
-    method: "POST",
-    headers: {
-      "cache-control": "no-cache",
-      "content-type": defaultContentType,
-    },
-    body: JSON.stringify(data),
-  });
-};
-
-export const updateUser = async (userId: number, data: JSON) => {
-  const newurl = `${url}/auth/updateProfile?id=${userId}`;
+  const newurl = `${API_URL}auth/signup`;
 
   return fetch(newurl, {
     method: "POST",

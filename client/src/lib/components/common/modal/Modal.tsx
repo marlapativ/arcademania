@@ -13,6 +13,10 @@ import type React from "react";
 
 import type { ModalDataProps } from "lib/types/components/common";
 
+/**
+ * This component creates and renders the a modal with action button
+ * @returns Modal Component
+ */
 const ModalComponent: React.FC<ModalDataProps> = ({
   modalHeader,
   modalCotent,
@@ -20,6 +24,9 @@ const ModalComponent: React.FC<ModalDataProps> = ({
   buttonAction,
 }) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  /**
+   * This method is used to set the action method to the button along with the close action
+   */
   const setActionButton = () => {
     buttonAction();
     onClose();
@@ -40,4 +47,6 @@ const ModalComponent: React.FC<ModalDataProps> = ({
     </Modal>
   );
 };
+
+// exporting the modal component
 export default ModalComponent;

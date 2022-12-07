@@ -18,10 +18,7 @@ export type LeaderboardGameState = {
 const initialState: LeaderboardState = {};
 
 /**
- * Create a slice as a reducer containing actions.
- *
- * In this example actions are included in the slice. It is fine and can be
- * changed based on your needs.
+ * Leaderboard slice with reducer containing actions.
  */
 export const leaderboardSlice = createSlice({
   name: "leaderboard",

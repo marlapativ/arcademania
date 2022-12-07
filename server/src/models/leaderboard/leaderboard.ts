@@ -15,10 +15,10 @@ const schemaOptions = {
     }
 };
 
-// User Schema
+// Leaderboard Schema
 const schema = new mongoose.Schema<ILeaderboard>({
     gameId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Number,
         required: true
     },
     userId: {

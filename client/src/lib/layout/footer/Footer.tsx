@@ -1,13 +1,11 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
+/**
+ * This component returns the footer which will be shared accross components and pages
+ * @returns footer
+ */
 const Footer = () => {
-  return (
-    <Flex as="footer" width="full" justifyContent="center">
-      <Text fontSize="sm" color="gray.500">
-        © 2022 ArcadeMania
-      </Text>
-    </Flex>
-  );
+  return <Flex as="footer" width="full" justifyContent="center" />;
 };
 
 export default Footer;

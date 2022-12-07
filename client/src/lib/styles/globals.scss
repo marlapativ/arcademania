@@ -1,7 +1,9 @@
 /* Global Styling here */
+//leftpane styling
 .asideLeftPane {
     position: sticky !important;
-    height: 100% !important;
+    height: 91vh !important;
+    overflow: auto;
     top: 0 !important;
     float: left;
     z-index: 100;

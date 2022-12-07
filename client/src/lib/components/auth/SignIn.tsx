@@ -16,23 +16,52 @@ import {
   InputRightElement,
   useDisclosure,
   VStack,
+  Link,
+  Center,
 } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
+import { setAxiosAuthHeader } from "lib/config/axios.config";
+import { API_URL } from "lib/config/config";
+import { signIn } from "lib/services/auth-service";
+import { setAccessToken } from "lib/store/slices/authSlice";
+import { useDispatch } from "lib/store/store";
+import { setSessionStorageToken } from "lib/utils/tokenUtils";
 // import messages from "../common/toastMessages/Messages.json";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
-import { getAccessToken } from "lib/services/auth-service";
 
+/**
+ * This component is used to create and render the signIn Form in a drawer
+ * @returns SignIn Form in a drawer with drawer trigger button
+ */
 const SignInDrawer = () => {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
+  const gooogleLoginURL = `${API_URL}auth/google`;
+
+  /**
+   * This method is used to set the session and fetch favourites on login
+   * @param values obtained from the form
+   */
   const login = async (values: JSON) => {
-    const accessTokenObj = await getAccessToken(values);
+    const accessTokenObj = await signIn(values);
     if (accessTokenObj.status === 200) {
+      const body = await accessTokenObj.json();
+      if (body.accessToken !== null) {
+        setAxiosAuthHeader(body.accessToken);
+        setSessionStorageToken(body.accessToken);
+        dispatch(setAccessToken({ token: body.accessToken }));
+        router.push({
+          pathname: `/profile/favourites`,
+        });
+      }
       // <ToastMessage
       //   messageTitle={messages.signinSuccessTitle}
       //   messageDesc={messages.siginSuccessDesc}
@@ -41,6 +70,9 @@ const SignInDrawer = () => {
     }
   };
 
+  /**
+   * returning the form along with trigger button
+   */
   return (
     <>
       <Button
@@ -77,7 +109,7 @@ const SignInDrawer = () => {
                     <FormControl
                       isInvalid={!!errors.username && touched.username}
                     >
-                      <FormLabel htmlFor="username">UserName</FormLabel>
+                      <FormLabel htmlFor="username">Username</FormLabel>
                       <Field
                         as={Input}
                         id="username"
@@ -88,12 +120,6 @@ const SignInDrawer = () => {
                           let error;
                           if (!value) {
                             error = "username is required";
-                          } else if (
-                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                              value
-                            )
-                          ) {
-                            error = "Invalid username address";
                           }
                           return error;
                         }}
@@ -144,6 +170,21 @@ const SignInDrawer = () => {
                 </form>
               )}
             </Formik>
+            <Center m={3}>or</Center>
+            <Center>
+              <Button
+                bg="blue.500"
+                color="white"
+                _hover={{ background: "blue.600" }}
+              >
+                <Link
+                  _hover={{ textDecoration: "none" }}
+                  href={gooogleLoginURL}
+                >
+                  Signin With Google
+                </Link>
+              </Button>
+            </Center>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
@@ -151,4 +192,5 @@ const SignInDrawer = () => {
   );
 };
 
+// exporting the signin drawer component
 export default SignInDrawer;

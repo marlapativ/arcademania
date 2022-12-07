@@ -22,9 +22,10 @@ import type {
 import GameStatusMessage from "../gameMessage/GameStatusMessage";
 import GameScore from "../gameScore/GameScore";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
-import { getUser } from "lib/services/user-service";
+import { getAuthState } from "lib/store/slices/authSlice";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
-import { useDispatch } from "lib/store/store";
+import { useDispatch, useSelector } from "lib/store/store";
+import { isAuthenticated } from "lib/utils/tokenUtils";
 
 import Cell2048 from "./cell2048/Cell2048";
 import {
@@ -35,12 +36,21 @@ import {
   swipeUp,
 } from "./utils/swipeUtils";
 
-const GAME_ID = 4;
-
+/**
+ * Generate a random value among numbers [2, 4].
+ * @returns 2 or 4.
+ */
 const getRandomValue = (): number => {
   return Math.random() > 0.2 ? 2 : 4;
 };
 
+/**
+ * Sets a random element for the given matrix.
+ *
+ * @param game matrix
+ * @param rows number of rows
+ * @param columns number of columns
+ */
 const setRandomElement = (
   game: number[][],
   rows: number,
@@ -62,6 +72,13 @@ const setRandomElement = (
   game[x][y] = getRandomValue();
 };
 
+/**
+ * Creates a game board to play 2048.
+ *
+ * @param rows number of rows
+ * @param columns number of columns
+ * @returns matrix
+ */
 const createGame = (rows: number, columns: number): number[][] => {
   const game: number[][] = new Array(rows);
   for (let i = 0; i < rows; i += 1) {
@@ -75,12 +92,19 @@ const createGame = (rows: number, columns: number): number[][] => {
   return game;
 };
 
-const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
+/**
+ * Game2048 Board Component.
+ *
+ * @param Game2048Props props
+ * @returns Game2048 Board.
+ */
+const Game2048: React.FC<Game2048Props> = ({ gameId, rows, columns }) => {
   const dispatch = useDispatch();
   const [game, setGame] = useState(createGame(rows, columns));
   const [score, setScore] = useState(0);
   const [showGameMessage, setShowGameMessage] = useState(false);
   const [win, setWin] = useState(false);
+  const authState = useSelector(getAuthState);
 
   const KEY_DIRECTION_MAP = new Map([
     ["ArrowLeft", swipeLeft],
@@ -89,6 +113,9 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
     ["ArrowDown", swipeDown],
   ]);
 
+  /**
+   * Play Again.
+   */
   const playAgain = () => {
     setScore(0);
     setShowGameMessage(false);
@@ -96,33 +123,57 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
     setGame(createGame(rows, columns));
   };
 
+  /**
+   * Save the score via API.
+   * @param gameScore score to save
+   */
   const saveGameScores = (gameScore: number) => {
-    saveScore(GAME_ID, getUser().userId, gameScore).then(() => {
-      getLeaderboard(GAME_ID).then((leaderboard) =>
-        dispatch(
-          setGameLeaderboard({
-            gameId: GAME_ID,
-            data: leaderboard,
-          })
-        )
-      );
-    });
+    if (isAuthenticated(authState)) {
+      saveScore(gameId, gameScore).then(() => {
+        getLeaderboard(gameId).then((leaderboard) =>
+          dispatch(
+            setGameLeaderboard({
+              gameId,
+              data: leaderboard,
+            })
+          )
+        );
+      });
+    }
   };
 
+  /**
+   * End the game.
+   */
   const endGame = (didWin?: boolean) => {
     setWin(didWin ?? false);
     setShowGameMessage(true);
     saveGameScores(score);
   };
 
+  /**
+   * Update the score in the state.
+   * @param newScore score to update.
+   */
   const addScore = (newScore: number) => {
     setScore(score + newScore);
   };
 
+  /**
+   * Clone the current game.
+   *
+   * @returns matrix
+   */
   const cloneGame = () => {
     return structuredClone(game);
   };
 
+  /**
+   * Check if the game is over.
+   *
+   * @param swipedGrid matrix to validate against.
+   * @returns true, if the game ends.
+   */
   const checkGameOver = (swipedGrid: number[][]) => {
     const currentData = JSON.stringify(structuredClone(swipedGrid));
 
@@ -142,6 +193,11 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
     return true;
   };
 
+  /**
+   * Apply the operation on game based on the keyboard action performed.
+   *
+   * @param swipeFunc Function to apply based on keyboard input
+   */
   const swipe = (
     swipeFunc: UnaryFunction<number[][], SwipedGridData> | undefined
   ) => {
@@ -165,6 +221,11 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
     setGame(swipedGrid);
   };
 
+  /**
+   * Invoked relavent Swiper Function based on keyboard event.
+   *
+   * @param key KeyboardEvent key.
+   */
   const handleKeyPress = ({ key }: KeyboardEvent) => {
     if (!KEY_DIRECTION_MAP.has(key)) {
       return;
@@ -174,9 +235,11 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   };
 
   useEffect(() => {
+    // Add event listener
     window.addEventListener("keydown", handleKeyPress);
 
     return () => {
+      // Cleanup event listener
       window.removeEventListener("keydown", handleKeyPress);
     };
   });
@@ -184,7 +247,7 @@ const Game2048: React.FC<Game2048Props> = ({ rows, columns }) => {
   return (
     <Stack>
       <VStack>
-        <GameScore score={score} show={!showGameMessage} />
+        <GameScore score={score} />
         <Flex mt={0}>
           <Box
             bg={useColorModeValue("white", "gray.800")}

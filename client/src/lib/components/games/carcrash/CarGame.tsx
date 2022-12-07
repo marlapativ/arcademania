@@ -1,16 +1,19 @@
-import { Container } from "@chakra-ui/react";
+import { Button, Center, Container } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
+import type { DispatchProp } from "react-redux";
+import { connect } from "react-redux";
 
-import ModalComponent from "lib/components/common/modal/Modal";
+import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
+import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import type { CarGameProps } from "lib/types/components/games/carGame.types";
 
 import BlueCar from "./BlueCar";
 import ResultsCard from "./ResultsCard";
 import carstyles from "./styles/carCrash.module.scss";
 
-class CarGame extends React.Component<unknown, CarGameProps> {
-  constructor(props: CarGameProps) {
+class CarGame extends React.Component<DispatchProp, CarGameProps> {
+  constructor(props: DispatchProp) {
     super(props);
     this.state = {
       play: false,
@@ -43,19 +46,28 @@ class CarGame extends React.Component<unknown, CarGameProps> {
       ?.getElementsByTagName("img")[0];
     if (blueCartopelem) {
       const blueCartop = blueCartopelem.offsetTop;
-      const { blueCarLeft } = this.state;
-      const { redCarLeft } = this.state;
-      const { count } = this.state;
+      const { blueCarLeft, redCarLeft, count, score, intervalId } = this.state;
       if (blueCarLeft === redCarLeft && blueCartop > 350 && blueCartop < 510) {
-        this.setState({ play: false });
-        this.setState({ score: count });
-        this.setState({ count: 0 });
-        this.setState({ gameOver: true });
-        const { intervalId } = this.state;
-        document.removeEventListener("keydown", this.onKeyDown, false);
         clearInterval({ intervalId } as unknown as number);
+        this.setState({ play: false, score: count, count: 0, gameOver: false });
+        document.removeEventListener("keydown", this.onKeyDown, false);
+        this.saveGameScores(score);
       }
     }
+  };
+
+  saveGameScores = (gameScore: number) => {
+    saveScore(3, gameScore).then(() => {
+      getLeaderboard(3).then((leaderboard) => {
+        const { dispatch } = this.props;
+        dispatch(
+          setGameLeaderboard({
+            gameId: 3,
+            data: leaderboard,
+          })
+        );
+      });
+    });
   };
 
   moveRedCar = (direction: string) => {
@@ -97,15 +109,11 @@ class CarGame extends React.Component<unknown, CarGameProps> {
   };
 
   render() {
-    const { score } = this.state;
+    const { score, gameOver, blueCarLeft, count, redCarLeft, play } =
+      this.state;
     const gameScore = score;
     let scoreCard;
     let blueCar;
-    const { gameOver } = this.state;
-    const { blueCarLeft } = this.state;
-    const { count } = this.state;
-    const { redCarLeft } = this.state;
-    const { play } = this.state;
 
     if (gameOver && !play) {
       scoreCard = (
@@ -126,15 +134,12 @@ class CarGame extends React.Component<unknown, CarGameProps> {
     }
     return (
       <Container>
-        {/* <GameStatusMessage show={true} playAgain={this.startGame} score={this.state.score} win={true} key={1} /> */}
-
-        <Container id="game" className={carstyles.game}>
-          <ModalComponent
-            modalHeader="start the Car Game"
-            modalCotent=""
-            actionButtonText="Start Game"
-            buttonAction={this.startGame}
-          />
+        <Center>
+          <Button mt={2} bg="blue.400" color="white" onClick={this.startGame}>
+            Play Game
+          </Button>
+        </Center>
+        <Container id="game" h="600px" className={carstyles.game}>
           {blueCar}
           <Container id="redCar" className="redCar">
             <Image
@@ -153,4 +158,4 @@ class CarGame extends React.Component<unknown, CarGameProps> {
   }
 }
 
-export default CarGame;
+export default connect()(CarGame);

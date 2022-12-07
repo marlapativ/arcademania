@@ -1,7 +1,18 @@
 import { useToast } from "@chakra-ui/react";
 import React from "react";
 
-const ToastMessage = (messageTitle: string, messageDesc: string) => {
+/**
+ * This component is used to render the status message
+ * @param messageTitle  message needs to be displayed
+ * @param messageDesc
+ * @param error
+ * @returns
+ */
+const ToastMessage = (
+  messageTitle: string,
+  messageDesc: string,
+  error: boolean
+) => {
   const toast = useToast();
   const toastIdRef = React.useRef() || "";
 
@@ -21,7 +32,7 @@ const ToastMessage = (messageTitle: string, messageDesc: string) => {
   return toast({
     title: messageTitle,
     description: messageDesc,
-    status: "success",
+    status: error ? "error" : "success",
     position: "top",
     duration: 3000,
     isClosable: true,

@@ -1,9 +1,15 @@
 import type { ReactChildrenProps } from "../globals";
 
+/**
+ * Auth props defining the auth state
+ */
 export interface AuthProps extends ReactChildrenProps {
   isAuth: boolean;
 }
 
+/**
+ * Signup user type defining required values
+ */
 export type SignUpUserType = {
   firstName: string;
   lastName: string;
@@ -13,6 +19,9 @@ export type SignUpUserType = {
   confirmpassword: string;
 };
 
-export type AuthType = {
+/**
+ * Auth state type defining the token
+ */
+export type AuthState = {
   token: string;
 };

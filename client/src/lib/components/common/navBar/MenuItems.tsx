@@ -13,34 +13,67 @@ import {
   MenuList,
   Stack,
 } from "@chakra-ui/react";
-import { useSession, signOut } from "next-auth/react";
+import router from "next/router";
 import type React from "react";
+import { useState, useEffect } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
-import type { AuthProps } from "lib/types/components/auth.types";
+import { setAxiosAuthHeader } from "lib/config/axios.config";
+import { getUser } from "lib/services/user-service";
+import { getAuthState, setAccessToken } from "lib/store/slices/authSlice";
+import { useDispatch, useSelector } from "lib/store/store";
+import type { AuthState } from "lib/types/components/auth.types";
+import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
-const LoggedInMenu = () => {
+/**
+ * This component creates and renders the menu of loggedin user with myprofile, favourites and signout options
+ * @returns LoggedInMenu Component
+ */
+const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
+  const [username, setUserName] = useState("");
+  const dispatch = useDispatch();
+  /**
+   * This method is used to remove the accesstoken from the local storage and navigates the user to dashboard page
+   */
+  const signOut = () => {
+    setAxiosAuthHeader("");
+    setSessionStorageToken("");
+    dispatch(setAccessToken({ token: "" }));
+    router.push({
+      pathname: `/`,
+    });
+  };
+
+  /**
+   * This method is used to get the user details from the jwt token and set the username
+   */
+  useEffect(() => {
+    getUser(token)
+      .then((response) => response.json())
+      .then((data) => {
+        setUserName(data.name);
+      });
+  }, [token]);
+
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="center" zIndex={1001}>
       <Menu>
-        <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
+        <MenuButton
+          width="max-content"
+          transition="all 0.3s"
+          _focus={{ boxShadow: "none" }}
+        >
           <HStack>
-            <Avatar
-              size="sm"
-              src="https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-            />
+            <Avatar size="sm" src="/images/profile.png" />
             <VStack
               display={{ base: "none", md: "flex" }}
               alignItems="flex-start"
               spacing="1px"
               ml="2"
             >
-              <Text fontSize="sm">Justina Clark</Text>
-              <Text fontSize="xs" color="gray.600">
-                Admin
-              </Text>
+              <Text fontSize="sm">{username}</Text>
             </VStack>
             <Box display={{ base: "none", md: "flex" }}>
               <FiChevronDown />
@@ -50,9 +83,26 @@ const LoggedInMenu = () => {
         <MenuList
           bg={useColorModeValue("white", "gray.900")}
           borderColor={useColorModeValue("gray.200", "gray.700")}
+          zIndex={1000}
         >
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>Favourites</MenuItem>
+          <MenuItem
+            onClick={() =>
+              router.push({
+                pathname: `/profile/myProfile`,
+              })
+            }
+          >
+            Profile
+          </MenuItem>
+          <MenuItem
+            onClick={() =>
+              router.push({
+                pathname: `/profile/favourites`,
+              })
+            }
+          >
+            Favourites
+          </MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
         </MenuList>
@@ -61,6 +111,10 @@ const LoggedInMenu = () => {
   );
 };
 
+/**
+ * This component creates and renders the authmodule
+ * @returns AuthMenu Component with signin and signup buttons
+ */
 const SignInMenu = () => {
   return (
     <HStack
@@ -82,10 +136,18 @@ const SignInMenu = () => {
   );
 };
 
-const MenuItems: React.FC<AuthProps> = () => {
-  const { data: session } = useSession();
-  if (session) return <LoggedInMenu />;
+/**
+ * This main component creates and renders either the authmodule or loggedIn module based on the accesstoken availability
+ * @returns menuItems
+ */
+const MenuItems = () => {
+  const { token } = useSelector(getAuthState);
+
+  if (token && token !== "") {
+    return <LoggedInMenu token={token} />;
+  }
   return <SignInMenu />;
 };
 
+// exporting the main component
 export default MenuItems;

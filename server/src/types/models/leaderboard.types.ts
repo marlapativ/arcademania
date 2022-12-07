@@ -1,13 +1,18 @@
 import { IUserInfo } from "./user.types";
 import mongoose from 'mongoose';
+import { IGameUserEntity } from "./common.types";
 
-export interface ILeaderboard {
-    gameId: mongoose.ObjectId,
-    userId: mongoose.ObjectId,
+/**
+ * Leaderboard Entity.
+ */
+export interface ILeaderboard extends IGameUserEntity {
     score: number;
 }
 
+/**
+ * Leaderboard Game Data Entity.
+ */
 export interface ILeaderboardGameData extends IUserInfo {
-    gameId: mongoose.ObjectId,
+    gameId: number,
     score: number;
 }

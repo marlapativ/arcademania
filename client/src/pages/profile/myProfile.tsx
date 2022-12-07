@@ -12,51 +12,73 @@ import {
   InputLeftAddon,
   InputRightElement,
   Stack,
+  Center,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
-import { updateUser } from "lib/services/auth-service";
+import { getUser, updateUser } from "lib/services/user-service";
+import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
-const MyProfile = () => {
+export type FormValues = {
+  username: string;
+  lastname: string;
+  firstname: string;
+  email: string;
+};
+
+const Myprofile = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handlePassClick = () => setShowConfirmPassword(!showConfirmPassword);
-  let password = "";
-  const userId = 0;
-  type FormValues = {
-    firstname: string;
-    lastname: string;
-    username: string;
-    email: string;
-    password: string;
-    confirmpassword: string;
+  const [firstname, setFirstName] = useState("");
+  const [username, setUserName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const user = {
+    username,
+    lastname,
+    firstname,
+    email,
   };
+  let password = "";
   const setPassword = (value: string) => {
     password = value;
   };
   const updateProfile = (values: JSON) => {
-    updateUser(userId, values);
+    const token = getSessionStorageToken();
+    updateUser(token, values);
   };
 
   const validateEmail = (value: string) => {
     let error;
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+    if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
       error = "Invalid email address";
     }
     return error;
   };
 
-  const getUserDetails = (): FormValues => {
-    return JSON.parse("{'firstname': 'abc'}");
+  const getUserDetails = async () => {
+    const token = getSessionStorageToken();
+    getUser(token)
+      .then((response) => response.json())
+      .then((data) => {
+        if (username === "") {
+          setFirstName(data.name.split(" ")[0]);
+          setLastName(data.name.split(" ")[1]);
+          setUserName(data.username);
+          setEmail(data.email);
+        }
+      });
   };
 
   const validatePassword = (value: string) => {
     let error;
-    if (value.length < 5) error = "Password must contain at least 6 characters";
+    if (value && value.length < 5)
+      error = "Password must contain at least 6 characters";
     if (!error) {
       setPassword(value);
     }
@@ -70,13 +92,14 @@ const MyProfile = () => {
     }
     return error;
   };
-  const userDetails = getUserDetails();
+
+  getUserDetails();
   return (
-    <Container ml={5} mt={5} float="right">
+    <Container ml={5} mt={5} float="left">
       <Formik
-        initialValues={userDetails}
-        onSubmit={(values) => {
-          updateProfile(JSON.parse(JSON.stringify(values)));
+        initialValues={user}
+        onSubmit={() => {
+          updateProfile(JSON.parse(JSON.stringify(user)));
         }}
       >
         {({ handleSubmit }) => (
@@ -94,7 +117,10 @@ const MyProfile = () => {
                           {...field}
                           id="firstName"
                           placeholder="First name"
-                          value={userDetails.firstname}
+                          onChange={(e) => {
+                            setFirstName(e.target.value);
+                          }}
+                          value={firstname}
                         />
                       </FormControl>
                     )}
@@ -109,7 +135,10 @@ const MyProfile = () => {
                           {...field}
                           id="lastName"
                           placeholder="Last name"
-                          value={userDetails.lastname}
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                          }}
+                          value={lastname}
                         />
                         <FormErrorMessage display="block">
                           {form.errors.lastName}
@@ -130,9 +159,12 @@ const MyProfile = () => {
                           <Input
                             {...field}
                             id="email"
-                            placeholder="Please enter email"
+                            placeholder={email}
                             type="email"
-                            value={userDetails.email}
+                            value={email}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                            }}
                           />
                         </InputGroup>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
@@ -141,15 +173,19 @@ const MyProfile = () => {
                   </Field>
                 </Box>
                 <Box>
-                  <FormControl mb={3}>
-                    <FormLabel htmlFor="username">UserName</FormLabel>
-                    <Input
-                      id="username"
-                      placeholder="Please enter user name"
-                      value={userDetails.username}
-                      disabled
-                    />
-                  </FormControl>
+                  <Field name="username">
+                    {() => (
+                      <FormControl mb={3}>
+                        <FormLabel htmlFor="username">UserName</FormLabel>
+                        <Input
+                          id="username"
+                          placeholder="Please enter user name"
+                          value={username}
+                          disabled
+                        />
+                      </FormControl>
+                    )}
+                  </Field>
                 </Box>
 
                 <Box>
@@ -174,7 +210,6 @@ const MyProfile = () => {
                             pr="4.5rem"
                             id="password"
                             type={showPassword ? "text" : "password"}
-                            value={userDetails.password}
                             placeholder="Enter password"
                           />
                           <InputRightElement width="4.5rem">
@@ -219,7 +254,6 @@ const MyProfile = () => {
                             id="confirmpassword"
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="Confirm password"
-                            value={userDetails.confirmpassword}
                           />
                           <InputRightElement width="4.5rem">
                             <Button
@@ -240,9 +274,11 @@ const MyProfile = () => {
                 </Box>
               </FormControl>
             </Stack>
-            <Button mt={5} colorScheme="blue" float="right" type="submit">
-              Submit
-            </Button>
+            <Center>
+              <Button mt={5} colorScheme="blue" type="submit">
+                Submit
+              </Button>
+            </Center>
           </form>
         )}
       </Formik>
@@ -250,4 +286,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default Myprofile;
