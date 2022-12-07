@@ -7,7 +7,7 @@ const defaultContentType = "application/json";
  * @returns the response of the login api (user details with accesstoken)
  */
 export const signIn = async (data: JSON) => {
-  const newurl = `${API_URL}/auth/signin`;
+  const newurl = `${API_URL}auth/signin`;
 
   return fetch(newurl, {
     method: "POST",
@@ -24,7 +24,7 @@ export const signIn = async (data: JSON) => {
  * @returns the response of the signup api (created user details)
  */
 export const createUser = async (data: JSON) => {
-  const newurl = `${API_URL}/auth/signup`;
+  const newurl = `${API_URL}auth/signup`;
 
   return fetch(newurl, {
     method: "POST",

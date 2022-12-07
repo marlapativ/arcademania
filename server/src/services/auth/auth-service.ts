@@ -8,13 +8,10 @@ import passport from "passport";
  * @param user - user object of type IUser with the details of user
  */
 export const createUser = async (user: IUser) => {
-  const newUser = new User(user);
-  newUser.save();
-  const userSignIN = {
-    username: newUser.username,
-    password: newUser.password,
-  }
-  return loginUser(userSignIN);
+  const newUser =  await new User(user);
+  await newUser.save();
+  const aToken: string =  generateAccessToken(newUser.id);
+  return {accessToken: aToken};
 };
 
 /**

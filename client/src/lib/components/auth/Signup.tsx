@@ -21,7 +21,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
-import router from "next/router";
 import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
@@ -66,9 +65,6 @@ const SignupDrawer = () => {
         setAxiosAuthHeader(body.accessToken);
         setSessionStorageToken(body.accessToken);
         dispatch(setAccessToken({ token: body.accessToken }));
-        router.push({
-          pathname: `/`,
-        });
       }
     }
     onClose();

@@ -7,7 +7,7 @@ const defaultContentType = "application/json";
  * @returns the response of the update user api (updated user details)
  */
 export const updateUser = async (token: string, data: JSON) => {
-  const newurl = `${API_URL}/user/updateProfile`;
+  const newurl = `${API_URL}user/updateProfile`;
   return fetch(newurl, {
     method: "POST",
     headers: {
@@ -24,7 +24,7 @@ export const updateUser = async (token: string, data: JSON) => {
  * @returns the response of the getuser api (user details)
  */
 export const getUser = async (token: string) => {
-  const newurl = `${API_URL}/user/getUser`;
+  const newurl = `${API_URL}user/getUser`;
 
   return fetch(newurl, {
     method: "GET",
