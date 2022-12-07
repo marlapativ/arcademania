@@ -176,5 +176,85 @@ const App: React.FC = () => {
     setDealerCards([...dealerCards])
   }
 
+  const calculate = (cards: any[], setScore: any) => {
+    let total = 0;
+    cards.forEach((card: any) => {
+      if (card.hidden === false && card.value !== 'A') {
+        switch (card.value) {
+          case 'K':
+            total += 10;
+            break;
+          case 'Q':
+            total += 10;
+            break;
+          case 'J':
+            total += 10;
+            break;
+          default:
+            total += Number(card.value);
+            break;
+        }
+      }
+    });
+    const aces = cards.filter((card: any) => {
+      return card.value === 'A';
+    });
+    aces.forEach((card: any) => {
+      if (card.hidden === false) {
+        if ((total + 11) > 21) {
+          total += 1;
+        }
+        else if ((total + 11) === 21) {
+          if (aces.length > 1) {
+            total += 1;
+          }
+          else {
+            total += 11;
+          }
+        }
+        else {
+          total += 11;
+        }
+      }
+    });
+    setScore(total);
+  }
+
+  const hit = () => {
+    drawCard(Deal.user);
+  }
+
+  const stand = () => {
+    buttonState.hitDisabled = true;
+    buttonState.standDisabled = true;
+    buttonState.resetDisabled = false;
+    setButtonState({ ...buttonState });
+    setGameState(GameState.dealerTurn);
+    revealCard();
+  }
+
+  const bust = () => {
+    buttonState.hitDisabled = true;
+    buttonState.standDisabled = true;
+    buttonState.resetDisabled = false;
+    setButtonState({ ...buttonState });
+    setMessage(Message.bust);
+  }
+
+  const checkWin = () => {
+    if (userScore > dealerScore || dealerScore > 21) {
+      setBalance(Math.round((balance + (bet * 2)) * 100) / 100);
+      setMessage(Message.userWin);
+    }
+    else if (dealerScore > userScore) {
+      setMessage(Message.dealerWin);
+    }
+    else {
+      setBalance(Math.round((balance + (bet * 1)) * 100) / 100);
+      setMessage(Message.tie);
+    }
+  }
+
+
 
 }
