@@ -30,5 +30,9 @@ const App: React.FC = () => {
   const [userScore, setUserScore] = useState(0);
   const [userCount, setUserCount] = useState(0);
 
+  const [dealerCards, setDealerCards]: any[] = useState([]);
+  const [dealerScore, setDealerScore] = useState(0);
+  const [dealerCount, setDealerCount] = useState(0);
+
 
 }
