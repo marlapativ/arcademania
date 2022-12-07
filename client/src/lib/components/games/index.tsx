@@ -14,7 +14,7 @@ import Game2048 from "./2048/Game2048";
 import CarGame from "./carcrash/CarGame";
 import Connect4 from "./connect4/Connect4";
 import Hangman from "./hangman/Hangman";
-import MemoryGame from "./memorygame/src/MemoryGame";
+import MemoryGame from "./memorygame/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/TicTacToe";
