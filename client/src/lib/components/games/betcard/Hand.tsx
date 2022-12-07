@@ -15,4 +15,17 @@ const Hand: React.FC<HandProps> = ({ title, cards }) => {
       );
     }
   }
+  return (
+    <div className={styles.handContainer}>
+      {getTitle()}
+      <div className={styles.cardContainer}>
+        {cards.map((card: any, index: number) => {
+          return (
+            <Card key={index} value={card.value} suit={card.suit} hidden={card.hidden} />
+          );
+        })}
+      </div>
+    </div>
+  );
 }
+
