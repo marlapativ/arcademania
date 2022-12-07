@@ -34,7 +34,7 @@ app.use(express.urlencoded({
 app.use(cors());
 
 // Passport Setup
-app.use(session({ secret: 'SECRET' })); 
+app.use(session({ secret: 'SECRET' }));
 applyPassportStrategies(passport);
 app.use(passport.initialize());
 app.use(passport.session());

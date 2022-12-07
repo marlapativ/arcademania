@@ -60,8 +60,8 @@ export const triggerGoogleLoginResponse = async (
   try {
     const user = req.user as any;
     const token = generateAccessToken(user.id);
-    response.redirect(`http://localhost:3000/auth?token=${token}`);
-    setResponse(response, token);
+    // setResponse(response, token);
+    response.redirect(`http://localhost:3000?token=${token}`);
   } catch (err) {
     setError(response, err, 500);
   }

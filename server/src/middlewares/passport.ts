@@ -39,10 +39,10 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
                 email: profile.email,
                 name: profile.displayName,
                 username: profile.email,
-                password: "Aas5dc7a@1239d",
+                password: "password",
               });
-              newUser.save((err, savedUser) => {
-                if (err) {
+              newUser.save((error, savedUser) => {
+                if (error) {
                   return done(null, false);
                 } else {
                   req.user = { userId: user._id };
