@@ -78,6 +78,15 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
           >
             Profile
           </MenuItem>
+          <MenuItem
+            onClick={() =>
+              router.push({
+                pathname: `/profile/favourites`,
+              })
+            }
+          >
+            Favourites
+          </MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
         </MenuList>

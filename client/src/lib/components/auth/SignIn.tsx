@@ -20,6 +20,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
@@ -34,6 +35,7 @@ import { setSessionStorageToken } from "lib/utils/tokenUtils";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
 
 const SignInDrawer = () => {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -47,6 +49,9 @@ const SignInDrawer = () => {
         setAxiosAuthHeader(body.accessToken);
         setSessionStorageToken(body.accessToken);
         dispatch(setAccessToken({ token: body.accessToken }));
+        router.push({
+          pathname: `/profile/favourites`,
+        });
       }
       // <ToastMessage
       //   messageTitle={messages.signinSuccessTitle}

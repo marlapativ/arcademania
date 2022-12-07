@@ -1,5 +1,8 @@
 import express from 'express';
+import { authRoute } from '../../middlewares/authRoute';
 import * as authController from "../../controllers/auth-controller";
+
+import * as userController from "../../controllers/user-controller";
 
 // Creating a new Router for Auth
 const router = express.Router();
@@ -21,6 +24,14 @@ router.get("/auth/logout", (req, res, next) => {
 
 // Google Signin Route
 router.get('/auth/google', authController.loginUserWithGoogle);
+
+// getUser Route
+router.route('/user/getUser').get(authRoute, userController.getUser);
+
+
+// UpdateProfile Route
+router.route('/user/updateProfile').post(authRoute,userController.updateProfile);
+
 
 
 export default router;

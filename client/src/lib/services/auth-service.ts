@@ -32,21 +32,22 @@ export const createUser = async (data: JSON) => {
   });
 };
 
-export const updateUser = async (userId: number, data: JSON) => {
-  const newurl = `${url}/auth/updateProfile?id=${userId}`;
+export const updateUser = async (token: string, data: JSON) => {
+  const newurl = `${url}/user/updateProfile`;
 
   return fetch(newurl, {
     method: "POST",
     headers: {
       "cache-control": "no-cache",
       "content-type": defaultContentType,
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   });
 };
 
 export const getUser = async (token: string) => {
-  const newurl = `${url}/auth/getUser`;
+  const newurl = `${url}/user/getUser`;
 
   return fetch(newurl, {
     method: "GET",
