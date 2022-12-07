@@ -96,6 +96,8 @@ const games: GameInfoCollection = {
     id: 7,
     name: "Typing Speed",
     component: <TypingSpeed />,
+    description:
+    "Requires the player to quickly and precisely type in the words from sentence given",
     helpContent: "",
     icon: FaKeyboard,
   },
