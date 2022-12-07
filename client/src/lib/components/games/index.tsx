@@ -100,8 +100,9 @@ const games: GameInfoCollection = {
     image: "images/TypingSpeed.png",
     altImage: "images/TypingSpeed.png",
     description:
-    "Requires the player to quickly and precisely type in the words from sentence given",
-    helpContent: "Requires the player to quickly and precisely type in the words from sentence given",
+      "Requires the player to quickly and precisely type in the words from sentence given",
+    helpContent:
+      "Requires the player to quickly and precisely type in the words from sentence given",
     icon: FaKeyboard,
   },
   8: {
@@ -118,8 +119,9 @@ const games: GameInfoCollection = {
     image: "images/Hangman.png",
     altImage: "images/Hangman.png",
     description:
-    "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
-    helpContent: "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
+      "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
+    helpContent:
+      "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
     icon: GiSuicide,
   },
 };

@@ -12,7 +12,6 @@ import {
   MenuItem,
   MenuList,
   Stack,
-  Link,
 } from "@chakra-ui/react";
 import router from "next/router";
 import type React from "react";
@@ -79,8 +78,14 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
           >
             Profile
           </MenuItem>
-          <MenuItem>
-            <Link href="/profile/favourites">Favourites</Link>
+          <MenuItem
+            onClick={() =>
+              router.push({
+                pathname: `/profile/favourites`,
+              })
+            }
+          >
+            Favourites
           </MenuItem>
           <MenuDivider />
           <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
