@@ -6,8 +6,10 @@ import { useDispatch } from "react-redux";
 import LeftPane from "../components/common/sidePanes/LeftPane";
 import { setAxiosAuthHeader } from "lib/config/axios.config";
 import { fetchFavourites } from "lib/services/favourites-service";
+import { getUserPreferences } from "lib/services/user-preference-service";
 import { getAuthState, setAccessToken } from "lib/store/slices/authSlice";
 import { setFavourite } from "lib/store/slices/favouritesSlice";
+import { fetchUserPreference } from "lib/store/slices/userPreferencesSlice";
 import { useSelector } from "lib/store/store";
 import { getSessionStorageToken, isAuthenticated } from "lib/utils/tokenUtils";
 
@@ -42,6 +44,14 @@ const Layout = ({ children }: LayoutProps) => {
     // Fetch the favourites on initial page load
     if (isAuthenticated(authState)) {
       fetchFavourites().then((fav) => dispatch(setFavourite(fav)));
+      getUserPreferences().then((prefs) =>
+        dispatch(
+          fetchUserPreference({
+            recentlyPlayed: prefs.recentlyPlayed,
+            theme: prefs.theme,
+          })
+        )
+      );
     }
   }, [authState, authState.token, dispatch]);
   return (

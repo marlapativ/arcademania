@@ -9,6 +9,7 @@ import {
 import { authSliceReducer } from "./slices/authSlice";
 import { favouritesSliceReducer } from "./slices/favouritesSlice";
 import { leaderboardSliceReducer } from "./slices/leaderboardSlice";
+import { userPreferencesSliceReducer } from "./slices/userPreferencesSlice";
 
 /**
  * Configuring Redux Store.
@@ -18,6 +19,7 @@ const store = configureStore({
     leaderboard: leaderboardSliceReducer,
     auth: authSliceReducer,
     favourites: favouritesSliceReducer,
+    userPreferences: userPreferencesSliceReducer,
   },
   devTools: true,
 });

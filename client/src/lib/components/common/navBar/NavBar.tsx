@@ -12,6 +12,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+import ThemeToggle from "lib/layout/header/ThemeToggle";
+
 import MenuItems from "./MenuItems";
 
 /**
@@ -58,9 +60,10 @@ const NavBar = () => {
           justify="flex-end"
           direction="row"
         >
-          <Button onClick={toggleColorMode}>
+          <ThemeToggle />
+          {/* <Button onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-          </Button>
+          </Button> */}
           <MenuItems />
         </HStack>
       </Flex>

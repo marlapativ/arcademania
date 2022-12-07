@@ -15,11 +15,12 @@ import {
 } from "@chakra-ui/react";
 import router from "next/router";
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
 import SignInDrawer from "../../auth/SignIn";
 import SignupDrawer from "../../auth/Signup";
+import { setAxiosAuthHeader } from "lib/config/axios.config";
 import { getUser } from "lib/services/user-service";
 import { getAuthState, setAccessToken } from "lib/store/slices/authSlice";
 import { useDispatch, useSelector } from "lib/store/store";
@@ -37,20 +38,24 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
    * This method is used to remove the accesstoken from the local storage and navigates the user to dashboard page
    */
   const signOut = () => {
+    setAxiosAuthHeader("");
     setSessionStorageToken("");
     dispatch(setAccessToken({ token: "" }));
     router.push({
       pathname: `/`,
     });
   };
+
   /**
    * This method is used to get the user details from the jwt token and set the username
    */
-  getUser(token)
-    .then((response) => response.json())
-    .then((data) => {
-      setUserName(data.name);
-    });
+  useEffect(() => {
+    getUser(token)
+      .then((response) => response.json())
+      .then((data) => {
+        setUserName(data.name);
+      });
+  }, [token]);
 
   return (
     <Flex alignItems="center" zIndex={1001}>
@@ -83,7 +88,7 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
           <MenuItem
             onClick={() =>
               router.push({
-                pathname: `/profile/myprofile`,
+                pathname: `/profile/myProfile`,
               })
             }
           >

@@ -118,6 +118,11 @@ export type UserInfo = UserId & {
   icon?: string;
 };
 
+export type UserPreference = {
+  theme: "light" | "dark";
+  recentlyPlayed: number[];
+};
+
 /**
  * User Info Props
  */
