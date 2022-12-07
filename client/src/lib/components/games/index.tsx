@@ -115,6 +115,8 @@ const games: GameInfoCollection = {
     id: 9,
     name: "Hangman",
     component: <Hangman />,
+    description:
+    "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
     helpContent: "",
     icon: GiSuicide,
   },
