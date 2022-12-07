@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component } from 'react'
 import styles from "./type.module.scss"
-
+//Define interface variables
 interface State {
   typeTest: string
   words: Array<string>
@@ -10,7 +10,7 @@ interface State {
   startTime: Date | null
   wordsPerMinute: number | null
 }
-
+//Assign values to variables
 class TypingSpeed extends Component {
   state: State = {
     typeTest : 'Hello welcome to ArcadeMania',
@@ -25,7 +25,7 @@ class TypingSpeed extends Component {
   componentDidMount() {
     this.setState({words: this.state.typeTest.split(' ')})
   }
-
+//Calculate typing speed per minute
   wordsPerMinute = (charsTyped: number, millis: number): number =>
     Math.floor((charsTyped / 5) / (millis / 60000))
 
@@ -56,7 +56,7 @@ class TypingSpeed extends Component {
     }
   }
 
-
+//Display heading and body
   render() {
     return (
       <div className={styles.App}>
