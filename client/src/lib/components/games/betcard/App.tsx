@@ -166,6 +166,15 @@ const App: React.FC = () => {
     }
   }
 
+  const revealCard = () => {
+    dealerCards.filter((card: any) => {
+      if (card.hidden === true) {
+        card.hidden = false;
+      }
+      return card;
+    });
+    setDealerCards([...dealerCards])
+  }
 
 
 }
