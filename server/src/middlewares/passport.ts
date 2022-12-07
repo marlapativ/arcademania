@@ -44,6 +44,11 @@ const applyGoogleStrategy = (passport: PassportStatic) => {
   );
 };
 
+/**
+ * Adds all the custom strategies to the PassportJS instance.
+ *
+ * @param passport PassportJS static instance.
+ */
 export const applyPassportStrategies = (passport: PassportStatic) => {
   applyGoogleStrategy(passport);
   passport.serializeUser((user, done) => {

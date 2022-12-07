@@ -15,7 +15,7 @@ const schemaOptions = {
     }
 };
 
-// User Schema
+// Favourites Schema
 const schema = new mongoose.Schema<IFavourite>({
     gameId: {
         type: Number,

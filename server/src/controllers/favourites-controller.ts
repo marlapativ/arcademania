@@ -5,8 +5,9 @@ import { IFavourite } from '../types/models/features.types';
 import { IGameUserEntity } from '../types/models/common.types';
 
 /**
- * It creates a user and returns the user object in the response
- * @param req - Http Request with <IUser> as body
+ * Gets User Favourites
+ *
+ * @param req - Http Request with <IFavourite> as body
  * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
  * back to the client.
  */
@@ -20,6 +21,13 @@ import { IGameUserEntity } from '../types/models/common.types';
     }
 }
 
+/**
+ * Helper function to update/delete the user favourite.
+ *
+ * @param req - Http Request with <IFavourite> as body
+ * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
+ * back to the client.
+ */
 const handleFavourite = async (req: CustomRequest<IFavourite>, response: CustomResponse, isFavourite: boolean) => {
     try {
         const gameId = parseInt(req.params.id, 10);
@@ -33,10 +41,24 @@ const handleFavourite = async (req: CustomRequest<IFavourite>, response: CustomR
     }
 }
 
+/**
+ * Sets the given game as user favourite.
+ *
+ * @param req - Http Request with <IFavourite> as body
+ * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
+ * back to the client.
+ */
 export const setFavourite = async (req: CustomRequest<IFavourite>, response: CustomResponse) => {
     handleFavourite(req, response, true);
 }
 
+/**
+ * Deletes the given game from user favourite.
+ *
+ * @param req - Http Request with <IFavourite> as body
+ * @param {CustomResponse} response - CustomResponse - This is the response object that will be sent
+ * back to the client.
+ */
 export const resetFavourite = async (req: CustomRequest<IFavourite>, response: CustomResponse) => {
     handleFavourite(req, response, false);
 }
