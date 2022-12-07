@@ -14,7 +14,7 @@ import Game2048 from "./2048/Game2048";
 import CarGame from "./carcrash/CarGame";
 import Connect4 from "./connect4/Connect4";
 import Hangman from "./hangman/Hangman";
-import MemoryGame from "./memorygame/src/MemoryGame";
+import MemoryGame from "./memorygame/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
 import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/TicTacToe";
@@ -89,14 +89,19 @@ const games: GameInfoCollection = {
     altImage: "images/TicTacToe.png",
     description:
       "Two players take turns in drawing either an ` O' or an ` X' in one square of a grid consisting of nine squares.",
-    helpContent: "Two players take turns in drawing either an ` O' or an ` X' in one square of a grid consisting of nine squares.",
-      icon: GiTicTacToe,
+    helpContent:
+      "Two players take turns in drawing either an ` O' or an ` X' in one square of a grid consisting of nine squares.",
+    icon: GiTicTacToe,
   },
   7: {
     id: 7,
     name: "Typing Speed",
     component: <TypingSpeed />,
-    helpContent: "",
+    image: "images/TypingSpeed.png",
+    altImage: "images/TypingSpeed.png",
+    description:
+    "Requires the player to quickly and precisely type in the words from sentence given",
+    helpContent: "Requires the player to quickly and precisely type in the words from sentence given",
     icon: FaKeyboard,
   },
   8: {
@@ -110,7 +115,11 @@ const games: GameInfoCollection = {
     id: 9,
     name: "Hangman",
     component: <Hangman />,
-    helpContent: "",
+    image: "images/Hangman.png",
+    altImage: "images/Hangman.png",
+    description:
+    "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
+    helpContent: "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
     icon: GiSuicide,
   },
 };

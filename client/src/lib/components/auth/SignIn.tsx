@@ -25,6 +25,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
 import { setAxiosAuthHeader } from "lib/config/axios.config";
+import { API_URL } from "lib/config/config";
 import { signIn } from "lib/services/auth-service";
 import { setAccessToken } from "lib/store/slices/authSlice";
 import { useDispatch } from "lib/store/store";
@@ -37,6 +38,7 @@ const SignInDrawer = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
+  const gooogleLoginURL = `${{ API_URL }}/auth/google`;
   const login = async (values: JSON) => {
     const accessTokenObj = await signIn(values);
     if (accessTokenObj.status === 200) {
@@ -167,7 +169,7 @@ const SignInDrawer = () => {
               >
                 <Link
                   _hover={{ textDecoration: "none" }}
-                  href="http://localhost:1/api/v1/auth/google"
+                  href={gooogleLoginURL}
                 >
                   Signin With Google
                 </Link>

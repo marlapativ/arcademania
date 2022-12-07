@@ -11,7 +11,7 @@ import { IUser } from '../types/models/user.types';
  */
  export const updateProfile = async (req: CustomRequest<IUser>, response: CustomResponse) => {
     try {
-        const userId:number = parseInt(req.query.id as string, 10)
+        const userId = req.user.userId;
         const user = await userService.updateUser(userId,req.body);
         setResponse(response, user);
     } catch (err) {
@@ -27,8 +27,8 @@ import { IUser } from '../types/models/user.types';
  */
 export const getUser = async(req: CustomRequest<IUser>, response: CustomResponse) => {
     try {
-        const token = req.user.userId;
-        const user = await userService.getUser(token);
+        const userId = req.user.userId;
+        const user = await userService.getUser(userId);
         setResponse(response, user);
     } catch (err) {
         setError(response, err);
