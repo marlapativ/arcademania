@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import type { SnakeGameProps } from "lib/types/components/games/snakeGame.types";
+import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
 import Food from "./Food";
 import Snake from "./Snake";
@@ -119,17 +120,20 @@ class SnakeGame extends React.Component<DispatchProp, SnakeGameProps> {
   };
 
   saveGameScores = (gameScore: number) => {
-    saveScore(2, gameScore).then(() => {
-      getLeaderboard(2).then((leaderboard) => {
-        const { dispatch } = this.props;
-        dispatch(
-          setGameLeaderboard({
-            gameId: 3,
-            data: leaderboard,
-          })
-        );
+    const token = getSessionStorageToken();
+    if (token && token !== "") {
+      saveScore(2, gameScore).then(() => {
+        getLeaderboard(2).then((leaderboard) => {
+          const { dispatch } = this.props;
+          dispatch(
+            setGameLeaderboard({
+              gameId: 3,
+              data: leaderboard,
+            })
+          );
+        });
       });
-    });
+    }
   };
 
   checkIfEat = () => {

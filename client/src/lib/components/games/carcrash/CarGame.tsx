@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getLeaderboard, saveScore } from "lib/services/leaderboard-service";
 import { setGameLeaderboard } from "lib/store/slices/leaderboardSlice";
 import type { CarGameProps } from "lib/types/components/games/carGame.types";
+import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
 import BlueCar from "./BlueCar";
 import ResultsCard from "./ResultsCard";
@@ -57,17 +58,20 @@ class CarGame extends React.Component<DispatchProp, CarGameProps> {
   };
 
   saveGameScores = (gameScore: number) => {
-    saveScore(3, gameScore).then(() => {
-      getLeaderboard(3).then((leaderboard) => {
-        const { dispatch } = this.props;
-        dispatch(
-          setGameLeaderboard({
-            gameId: 3,
-            data: leaderboard,
-          })
-        );
+    const token = getSessionStorageToken();
+    if (token && token !== "") {
+      saveScore(3, gameScore).then(() => {
+        getLeaderboard(3).then((leaderboard) => {
+          const { dispatch } = this.props;
+          dispatch(
+            setGameLeaderboard({
+              gameId: 3,
+              data: leaderboard,
+            })
+          );
+        });
       });
-    });
+    }
   };
 
   moveRedCar = (direction: string) => {
