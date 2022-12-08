@@ -20,6 +20,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { MdVpnKey } from "react-icons/md";
 
 import { getUser, updateUser } from "lib/services/user-service";
+import { raiseError, showSuccess } from "lib/utils/toastUtils";
 import { getSessionStorageToken } from "lib/utils/tokenUtils";
 
 export type FormValues = {
@@ -27,6 +28,8 @@ export type FormValues = {
   lastname: string;
   firstname: string;
   email: string;
+  password: string;
+  confirmpassword: string;
 };
 
 const Myprofile = () => {
@@ -48,9 +51,40 @@ const Myprofile = () => {
   const setPassword = (value: string) => {
     password = value;
   };
-  const updateProfile = (values: JSON) => {
+  const updateProfile = async (values: FormValues) => {
     const token = getSessionStorageToken();
-    updateUser(token, values);
+    const fullname = `${values.firstname} ${values.lastname}`;
+    if (
+      values.password &&
+      values.password !== "" &&
+      values.confirmpassword &&
+      values.confirmpassword !== ""
+    ) {
+      const valuesJSON = {
+        name: fullname,
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
+      const updatedUser = await updateUser(
+        token,
+        JSON.parse(JSON.stringify(valuesJSON))
+      );
+      if (updatedUser.status === 200) showSuccess("User Updated Successfully");
+      else raiseError("User update failed");
+    } else {
+      const valueJSON = {
+        name: fullname,
+        username: values.username,
+        email: values.email,
+      };
+      const updatedUser = await updateUser(
+        token,
+        JSON.parse(JSON.stringify(valueJSON))
+      );
+      if (updatedUser.status === 200) showSuccess("User Updated Successfully");
+      else raiseError("User update failed");
+    }
   };
 
   const validateEmail = (value: string) => {

@@ -22,11 +22,11 @@ const TicTacToe: React.FC = () => {
     const newHistory = history.slice(0, stepNumber + 1);
     const current = newHistory[newHistory.length - 1];
     const squares = current.squares.slice();
-
+/* Logic of the game*/
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = xIsNext ? "X" : "O";
+    squares[i] = xIsNext ? "X" : "O"; //decide next player
     setHistory(
       newHistory.concat([
         {
@@ -51,7 +51,7 @@ const TicTacToe: React.FC = () => {
     isStepLeft = step.squares.some((square) => square === null);
   });
 
-  let status;
+  let status; //Declare the status of game upon completion
   if (winner) {
     status = `Winner: ${winner}`;
   } else if (isStepLeft) {
@@ -60,8 +60,8 @@ const TicTacToe: React.FC = () => {
     status = "Nobody won :(";
   }
 
-  return (
-    <div className={styles.game}>
+  return ( 
+    <div className={styles.game}> 
       {showPlayerSelection ? (
         <div className={styles.players}>
           <button
@@ -71,7 +71,7 @@ const TicTacToe: React.FC = () => {
               setShowPlayerSelection(false);
             }}
           >
-            Player X
+            Player X 
           </button>
           <button
             type="button"
@@ -81,7 +81,7 @@ const TicTacToe: React.FC = () => {
             }}
           >
             Player O
-          </button>
+          </button> 
         </div>
       ) : (
         <div className={styles.spacer} />
@@ -104,7 +104,7 @@ const TicTacToe: React.FC = () => {
             }}
           >
             Start new game
-          </button>
+          </button>  //button to start game
         )}
       </div>
     </div>

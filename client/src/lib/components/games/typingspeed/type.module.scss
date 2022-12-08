@@ -2,12 +2,12 @@
   text-align: center;
   background-color:darkgrey;
 }
-
+//Style for current word to be typed
 .current-word {
   color:red;
   font-size: 40px;
 }
-
+//style for heading
 .heading{
   margin-top: 50px;
   color: rgb(6, 6, 6);
@@ -17,13 +17,13 @@
   color: rgb(4, 4, 4);
   font-size: 18px;
 }
-
+//Style for score
 .score{
   color: rgb(7, 7, 7);
   font-size: 20px;
   font: bolder;
 }
-
+//Designing entry box
 .entryfield{
   margin-bottom: 20px;
   background-color:dimgrey;
@@ -47,7 +47,7 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+//App header styling 
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

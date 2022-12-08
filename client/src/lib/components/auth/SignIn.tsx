@@ -30,6 +30,7 @@ import { API_URL } from "lib/config/config";
 import { signIn } from "lib/services/auth-service";
 import { setAccessToken } from "lib/store/slices/authSlice";
 import { useDispatch } from "lib/store/store";
+import { raiseError, showSuccess } from "lib/utils/toastUtils";
 import { setSessionStorageToken } from "lib/utils/tokenUtils";
 // import messages from "../common/toastMessages/Messages.json";
 // import ToastMessage from "../common/toastMessages/ToastMessage";
@@ -62,11 +63,10 @@ const SignInDrawer = () => {
           pathname: `/profile/favourites`,
         });
       }
-      // <ToastMessage
-      //   messageTitle={messages.signinSuccessTitle}
-      //   messageDesc={messages.siginSuccessDesc}
-      // />;
+      showSuccess("User logged In Successfully");
       onClose();
+    } else {
+      raiseError("Username or password is incorrect, please try again later");
     }
   };
 

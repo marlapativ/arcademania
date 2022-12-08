@@ -30,6 +30,7 @@ import { setAxiosAuthHeader } from "lib/config/axios.config";
 import { createUser } from "lib/services/auth-service";
 import { setAccessToken } from "lib/store/slices/authSlice";
 import type { SignUpUserType } from "lib/types/components/auth.types";
+import { raiseError, showSuccess } from "lib/utils/toastUtils";
 import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
 /**
@@ -66,6 +67,9 @@ const SignupDrawer = () => {
         setSessionStorageToken(body.accessToken);
         dispatch(setAccessToken({ token: body.accessToken }));
       }
+      showSuccess("User created Successfully");
+    } else {
+      raiseError("User already exists");
     }
     onClose();
   };

@@ -1,3 +1,4 @@
+/* Styling for head of the body*/
 const HEAD = (
   <div
     style={{
@@ -11,7 +12,7 @@ const HEAD = (
     }}
   />
 )
-
+/* Styling for body*/
 const BODY = (
   <div
     style={{
@@ -24,7 +25,7 @@ const BODY = (
     }}
   />
 )
-
+/* Styling for Right arm of the body*/
 const RIGHT_ARM = (
   <div
     style={{
@@ -39,7 +40,7 @@ const RIGHT_ARM = (
     }}
   />
 )
-
+/* Styling for left arm of the body*/
 const LEFT_ARM = (
   <div
     style={{
@@ -54,7 +55,7 @@ const LEFT_ARM = (
     }}
   />
 )
-
+/* Styling for right leg of the body*/
 const RIGHT_LEG = (
   <div
     style={{
@@ -69,7 +70,7 @@ const RIGHT_LEG = (
     }}
   />
 )
-
+/* Styling for left leg of the body*/
 const LEFT_LEG = (
   <div
     style={{
