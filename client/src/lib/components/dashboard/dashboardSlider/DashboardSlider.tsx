@@ -16,6 +16,7 @@ import {
   Button,
   Stack,
   VStack,
+  Show,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -30,7 +31,6 @@ import games from "lib/components/games";
  */
 const SliderGame: React.FC<SliderGameProps> = ({
   id,
-  maxH,
   maxW,
   popoverPlacement,
 }) => {
@@ -40,7 +40,12 @@ const SliderGame: React.FC<SliderGameProps> = ({
     <Popover trigger="hover" placement={popoverPlacement}>
       <PopoverTrigger>
         <Center borderRadius="xl">
-          <Image h={maxH} w={maxW} alt={game.name} src={game.altImage} />
+          <Image
+            h={{ base: "38vh", md: "25vh", lg: "38vh" }}
+            w={maxW}
+            alt={game.name}
+            src={game.altImage}
+          />
         </Center>
       </PopoverTrigger>
       <PopoverContent>
@@ -87,16 +92,36 @@ const DashboardSlider: React.FC = () => {
           Featured Games :
         </Text>
       </Flex>
-      <Grid my={2} h="38vh" w="80vw" templateColumns="repeat(4, 1fr)" gap={4}>
+      <Grid
+        my={2}
+        h={{ base: "38vh", md: "25vh", lg: "38vh" }}
+        w="80vw"
+        templateColumns={{
+          base: "repeat(4, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)",
+        }}
+        gap={4}
+      >
         <GridItem colSpan={1} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
           <SliderGame id={1} maxH="38vh" maxW="full" popoverPlacement="right" />
         </GridItem>
         <GridItem colSpan={2} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
           <SliderGame id={3} maxH="38vh" maxW="full" popoverPlacement="top" />
         </GridItem>
-        <GridItem colSpan={1} boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)">
-          <SliderGame id={5} maxH="38vh" maxW="full" popoverPlacement="left" />
-        </GridItem>
+        <Show above="lg">
+          <GridItem
+            colSpan={1}
+            boxShadow="0 -4px 17px 2px rgb(72 187 120 / 43%)"
+          >
+            <SliderGame
+              id={5}
+              maxH="38vh"
+              maxW="full"
+              popoverPlacement="left"
+            />
+          </GridItem>
+        </Show>
       </Grid>
     </Box>
   );
