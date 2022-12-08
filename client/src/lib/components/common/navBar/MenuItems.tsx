@@ -25,6 +25,7 @@ import { getUser } from "lib/services/user-service";
 import { getAuthState, setAccessToken } from "lib/store/slices/authSlice";
 import { useDispatch, useSelector } from "lib/store/store";
 import type { AuthState } from "lib/types/components/auth.types";
+import { showSuccess } from "lib/utils/toastUtils";
 import { setSessionStorageToken } from "lib/utils/tokenUtils";
 
 /**
@@ -44,6 +45,7 @@ const LoggedInMenu: React.FC<AuthState> = ({ token }) => {
     router.push({
       pathname: `/`,
     });
+    showSuccess("User logged out successfully");
   };
 
   /**

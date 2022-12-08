@@ -16,6 +16,7 @@ import Connect4 from "./connect4/Connect4";
 import Hangman from "./hangman/Hangman";
 import MemoryGame from "./memorygame/MemoryGame";
 import Minesweeper from "./minesweeper/Minesweeper";
+import RockPaperScissors from "./rockpaperscissors/RockPaperScissors";
 import SnakeGame from "./snakegame/SnakeGame";
 import TicTacToe from "./tictactoe/TicTacToe";
 import TypingSpeed from "./typingspeed/typingspeed";
@@ -130,6 +131,18 @@ const games: GameInfoCollection = {
       "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
     helpContent:
       "System thinks of a word and the player tries to guess it by suggesting letters within a certain number of guesses",
+    icon: GiSuicide,
+  },
+  10: {
+    id: 10,
+    name: "Rock Paper Scissors",
+    component: <RockPaperScissors />,
+    image: "images/",
+    altImage: "images/",
+    description:
+      "user should select any one option and the system will generate one option",
+    helpContent:
+      "user should select any one option and the system will generate one option",
     icon: GiSuicide,
   },
 };
