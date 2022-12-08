@@ -77,7 +77,7 @@ const SignInDrawer = () => {
     <>
       <Button
         variant="outline"
-        display={{ base: "none", md: "inline-flex" }}
+        display="inline-flex"
         color="white"
         bg="blue.400"
         _hover={{
