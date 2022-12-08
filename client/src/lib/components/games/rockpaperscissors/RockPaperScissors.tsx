@@ -117,7 +117,7 @@ const RockPaperScissors = () => {
                 choice={playerChoice}
                 result={result === "YOU WIN"}
               />
-              <p>YOU PICKED</p>
+              <p>You Picked</p>
             </Container>
 
             {isDone && (
@@ -139,7 +139,7 @@ const RockPaperScissors = () => {
                   result={result === "YOU LOSE"}
                 />
               )}
-              <p>THE System PICKED</p>
+              <p>System Picked</p>
             </Container>
           </Container>
         </Container>

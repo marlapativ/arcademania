@@ -103,7 +103,7 @@
         }
   
         .playerChoiceContainer,
-        .houseChoiceContainer
+        .systemChoiceContainer
         {
           display: flex;
           flex-direction: column;
@@ -113,7 +113,7 @@
             margin-right: 0;
           }
         }
-        .houseChoiceContainer{
+        .systemChoiceContainer{
           grid-area: houseChoice;
           span{
             height: 6.25rem;
@@ -263,7 +263,7 @@
             }
   
             .playerChoiceContainer,
-            .houseChoiceContainer
+            .systemChoiceContainer
             {
               margin: 0;
               flex-direction: column-reverse;
