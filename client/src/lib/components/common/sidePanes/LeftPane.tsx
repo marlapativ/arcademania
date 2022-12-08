@@ -7,7 +7,6 @@ import {
   Text,
   MenuList,
   MenuItem,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -189,8 +188,6 @@ const LeftPane = () => {
       margin-top="2.5"
       h="100%"
       w={navSize === "small" ? "75px" : "200px"}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
       flexDir="column"
       justifyContent="space-between"
       display="inline-block"

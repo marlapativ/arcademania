@@ -137,8 +137,8 @@ const games: GameInfoCollection = {
     id: 10,
     name: "Rock Paper Scissors",
     component: <RockPaperScissors />,
-    image: "images/",
-    altImage: "images/",
+    image: "images/rockpaperscissors.png",
+    altImage: "images/rockpaperscissors.png",
     description:
       "user should select any one option and the system will generate one option",
     helpContent:

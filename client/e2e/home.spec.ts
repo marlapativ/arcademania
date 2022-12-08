@@ -2,8 +2,8 @@ import { test, expect } from "@playwright/test";
 
 /** replace with env vars if needed */
 const LOCAL_HOST_URL = "http://localhost:3000/";
-const SIGN_IN_TEXT = "Sign in";
-const SIGN_UP_TEXT = "sign";
+const SIGN_IN_TEXT = "Sign In";
+const SIGN_UP_TEXT = "Sign Up";
 
 test("should have signin button on home page", async ({ page }) => {
   await page.goto(LOCAL_HOST_URL);
