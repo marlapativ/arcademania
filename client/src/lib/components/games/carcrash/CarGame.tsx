@@ -48,9 +48,9 @@ class CarGame extends React.Component<DispatchProp, CarGameProps> {
     if (blueCartopelem) {
       const blueCartop = blueCartopelem.offsetTop;
       const { blueCarLeft, redCarLeft, count, score, intervalId } = this.state;
-      if (blueCarLeft === redCarLeft && blueCartop > 350 && blueCartop < 510) {
+      if (blueCarLeft === redCarLeft && blueCartop > 510 && blueCartop < 610) {
         clearInterval({ intervalId } as unknown as number);
-        this.setState({ play: false, score: count, count: 0, gameOver: false });
+        this.setState({ play: false, score: count, count: 0, gameOver: true });
         document.removeEventListener("keydown", this.onKeyDown, false);
         this.saveGameScores(score);
       }
@@ -118,8 +118,9 @@ class CarGame extends React.Component<DispatchProp, CarGameProps> {
     const gameScore = score;
     let scoreCard;
     let blueCar;
+    let redCar;
 
-    if (gameOver && !play) {
+    if (gameOver) {
       scoreCard = (
         <ResultsCard score={gameScore} buttonAction={this.startGame} />
       );
@@ -135,6 +136,18 @@ class CarGame extends React.Component<DispatchProp, CarGameProps> {
           setCount={this.setCount}
         />
       );
+      redCar = (
+        <Container id="redCar" className="redCar">
+          <Image
+            src="/images/red.png"
+            alt="RedCar"
+            width={50}
+            height={100}
+            className={carstyles.redCar}
+            style={{ left: redCarLeft as unknown as number }}
+          />
+        </Container>
+      );
     }
     return (
       <Container>
@@ -145,16 +158,7 @@ class CarGame extends React.Component<DispatchProp, CarGameProps> {
         </Center>
         <Container id="game" h="600px" className={carstyles.game}>
           {blueCar}
-          <Container id="redCar" className="redCar">
-            <Image
-              src="/images/red.png"
-              alt="RedCar"
-              width={50}
-              height={100}
-              className={carstyles.redCar}
-              style={{ left: redCarLeft as unknown as number }}
-            />
-          </Container>
+          {redCar}
         </Container>
         {scoreCard}
       </Container>
